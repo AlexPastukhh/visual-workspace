@@ -3,14 +3,14 @@
 [CmdletBinding()]
 param(
     [ValidateSet('Sync', 'Clone', 'Pull')]
-    [string]$Mode = 'Sync'
-)
+    [string]$Mode = 'Sync',
+    [ValidatePattern('^[A-Za-z0-9._/-]+$')]
+    [string])
 
 $ErrorActionPreference = 'Stop'
 $Root = 'C:\Users\alexa\Repos'
 $Target = Join-Path $Root 'visual-workspace'
 $Remote = 'https://github.com/AlexPastukhh/visual-workspace.git'
-$Branch = 'main'
 
 if (-not (Get-Command git.exe -ErrorAction SilentlyContinue)) {
     throw 'Git for Windows is not installed or git.exe is not in PATH.'

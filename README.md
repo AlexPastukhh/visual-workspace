@@ -32,7 +32,7 @@ For subsequent synchronization of the default branch:
 git -C "C:\Users\alexa\Repos\visual-workspace" pull --ff-only origin main
 ```
 
-Alternatively, run the optional Windows helper script once it is obtained locally. It will clone the missing folder or fast-forward an existing clean `main` checkout.
+Alternatively, run the optional Windows helper script once it is obtained locally. It will clone the missing folder or fast-forward an existing clean checkout of the selected branch. For the current initial Blender work, use `-Branch work/initial-visual-workspace-20261101`; after that work is merged, use the default `main` branch.
 
 **Important:** the Linux and Windows directories are separate Git clones, not shared mounts. Changes created in Docker become available in Windows only after the appropriate reviewed branch is merged/pushed to the remote branch and Windows pulls it. GitHub Actions, antivirus checks and the Windows trusted admission pipeline are still future work; a successful download alone does not make a file safe to execute.
 

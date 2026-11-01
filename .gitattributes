@@ -1,5 +1,7 @@
 # Keep executable and source files portable between Linux and Windows.
 * text=auto
+*.md text eol=lf
+*.txt text eol=lf
 *.sh text eol=lf
 *.py text eol=lf
 *.json text eol=lf

@@ -1,0 +1,19 @@
+# Installed dependencies and tools
+node_modules/
+.venv/
+.local-tools/
+.tools/
+# Generated caches
+__pycache__/
+*.py[cod]
+.godot/
+.cache/
+# Editor autosaves and backups (keep native .blend/.kra projects)
+*.blend1
+*.blend2
+*.kra~
+*~
+# Temporary previews, not selected deliverables
+tmp/
+temp/
+renders/drafts/

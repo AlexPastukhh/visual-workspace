@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420" viewBox="0 0 600 420">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#102346"/><stop offset="1" stop-color="#387ca1"/></linearGradient></defs>
+<rect width="600" height="420" fill="url(#sky)"/><circle cx="463" cy="92" r="48" fill="#ffd9a3"/>
+<path d="M0 282 L111 132 L187 247 L283 105 L409 267 L503 156 L600 263 V420 H0Z" fill="#203e62"/>
+<path d="M0 349 Q112 262 241 340 T600 320V420H0Z" fill="#186a72"/>
+<g id="house"><rect x="209" y="261" width="172" height="117" rx="4" fill="#ecb877"/>
+<path d="M191 270 L296 182 L399 270Z" fill="#c05b57" stroke="#803b50" stroke-width="6" stroke-linejoin="round"/>
+<rect x="282" y="312" width="42" height="66" rx="6" fill="#533f5a"/>
+<rect x="229" y="294" width="38" height="34" fill="#beeaf2" stroke="#755c64" stroke-width="7"/>
+<rect x="340" y="294" width="24" height="34" fill="#beeaf2" stroke="#755c64" stroke-width="7"/></g>
+<path d="M0 378 Q150 357 288 385 T600 372 V420H0Z" fill="#123c4a"/></svg>

@@ -35,6 +35,6 @@ The second iteration opened the first saved result, added window trim, mullions 
 
 - This is Blender background automation, not interactive GUI control.
 - CPU-only Cycles rendering; the container has two CPU cores and no GPU device.
-- The launcher sets Blender's user config and scripts paths under `.local-tools/`.
+- The launcher uses the shared binary/runtime under `.local-tools/`, but keeps Blender user config, scripts, datafiles, extensions, XDG state and temporary files under the current Worktree's ignored `.fortis-state/blender/`.
 - The current 4 GiB RAM limit is enough for this small house scene; complex scenes may need more memory.
-- Krita and Godot are not part of this runtime yet.
+- Krita execution in this container is not established yet. Godot 4.7.2 is available through `tools/godot.sh`; the tested 2D/3D animation project and its test commands are documented in `projects/game-animation-mvp/README.md`.

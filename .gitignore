@@ -1,9 +1,11 @@
-# Installed dependencies and tools
+# Installed dependencies and shared tools
 node_modules/
 .venv/
 .local-tools/
 .tools/
-# Generated caches
+# Per-Worktree application settings, caches and temporary state
+.fortis-state/
+# Generated project caches
 __pycache__/
 *.py[cod]
 .godot/

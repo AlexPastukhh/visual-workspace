@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "3d_animation",
+  "source_type": "numbered_png_sequence",
+  "fps": 24,
+  "time_origin_seconds": 0,
+  "frame_count": 24,
+  "frame_pattern": "frames/frame_%04d.png",
+  "contact_sheet": "contact_sheet.png",
+  "note": "All timestamps are relative to this clip. Visual inspection must include actual PNGs, not just file paths or metadata."
+}

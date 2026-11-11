@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "asset_id": "northlight-beacon-2d",
+  "kind": "2d_scene",
+  "project_root": "../..",
+  "scene": "res://assets/northlight-beacon-2d/preview.tscn",
+  "capture": {
+    "fps": 12,
+    "time_control": "qa_set_time",
+    "duration_seconds": 0.5,
+    "resolution": [
+      1280,
+      720
+    ],
+    "contact_sheet_max_frames": 6,
+    "contact_sheet_columns": 6,
+    "tile_size": [
+      320,
+      180
+    ],
+    "multiview_samples_per_phase": 0
+  },
+  "actors": [
+    {
+      "id": "subject",
+      "node_path": "Subject",
+      "dimension": "2d",
+      "forward_axis": [
+        1,
+        0
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "id": "inspect",
+      "start": 0.0,
+      "end": 0.5,
+      "focus": "Check Northlight badge silhouette, teal/amber contrast, full framing, and static stability."
+    }
+  ],
+  "qa_modules": [
+    "common"
+  ],
+  "dependencies": [
+    "assets/northlight-beacon-2d/preview.tscn",
+    "assets/northlight-beacon-2d/source/northlight.svg",
+    "project.godot",
+    "qa/clip_sampler.gd",
+    "qa/stage_2d.gd"
+  ]
+}

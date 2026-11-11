@@ -1,0 +1,21 @@
+# Installed dependencies and shared tools
+node_modules/
+.venv/
+.local-tools/
+.tools/
+# Per-Worktree application settings, caches and temporary state
+.fortis-state/
+# Generated project caches
+__pycache__/
+*.py[cod]
+.godot/
+.cache/
+# Editor autosaves and backups (keep native .blend/.kra projects)
+*.blend1
+*.blend2
+*.kra~
+*~
+# Temporary previews, not selected deliverables
+tmp/
+temp/
+renders/drafts/

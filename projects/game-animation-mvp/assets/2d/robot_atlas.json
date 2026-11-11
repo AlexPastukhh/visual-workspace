@@ -1,0 +1,81 @@
+{
+  "canvas": [
+    512,
+    64
+  ],
+  "frame_size": [
+    64,
+    64
+  ],
+  "frames": [
+    {
+      "name": "idle_a",
+      "x": 0,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "idle_b",
+      "x": 64,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "walk_a",
+      "x": 128,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "walk_b",
+      "x": 192,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "walk_c",
+      "x": 256,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "walk_d",
+      "x": 320,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "jump_a",
+      "x": 384,
+      "y": 0,
+      "duration_ms": 120
+    },
+    {
+      "name": "jump_b",
+      "x": 448,
+      "y": 0,
+      "duration_ms": 120
+    }
+  ],
+  "animations": {
+    "idle": [
+      "idle_a",
+      "idle_b"
+    ],
+    "walk": [
+      "walk_a",
+      "walk_b",
+      "walk_c",
+      "walk_d"
+    ],
+    "run": [
+      "walk_a",
+      "walk_c"
+    ],
+    "jump": [
+      "jump_a",
+      "jump_b"
+    ]
+  },
+  "source": "Hand-authored vector-like raster drawing in Python; not AI-generated."
+}

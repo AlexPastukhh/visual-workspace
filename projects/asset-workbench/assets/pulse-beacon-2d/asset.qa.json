@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "asset_id": "pulse-beacon-2d",
+  "kind": "2d_scene",
+  "project_root": "../..",
+  "scene": "res://assets/pulse-beacon-2d/preview.tscn",
+  "capture": {
+    "fps": 24,
+    "time_control": "qa_set_time",
+    "duration_seconds": 2.0,
+    "resolution": [
+      1280,
+      720
+    ],
+    "contact_sheet_max_frames": 24,
+    "contact_sheet_columns": 6,
+    "tile_size": [
+      320,
+      180
+    ],
+    "multiview_samples_per_phase": 0
+  },
+  "actors": [
+    {
+      "id": "subject",
+      "node_path": "Subject/Content/Beacon",
+      "dimension": "2d",
+      "forward_axis": [
+        1,
+        0
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "id": "clip_00",
+      "start": 0.0,
+      "end": 2.0,
+      "focus": "Review Pulse: appearance, timing, continuity and loop policy.",
+      "expected_clip": "Pulse"
+    }
+  ],
+  "qa_modules": [
+    "common",
+    "2d-animation"
+  ],
+  "dependencies": [
+    "assets/pulse-beacon-2d/preview.tscn",
+    "assets/pulse-beacon-2d/source/beacon.tscn",
+    "project.godot",
+    "qa/clip_sampler.gd",
+    "qa/stage_2d.gd"
+  ]
+}

@@ -1,0 +1,367 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fortis.local/visual-workspace/asset-contract.schema.json",
+  "title": "Visual Workspace asset QA manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "asset_id",
+    "kind",
+    "project_root",
+    "scene",
+    "capture",
+    "actors",
+    "phases",
+    "qa_modules",
+    "dependencies"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "asset_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "kind": {
+      "enum": [
+        "2d_scene",
+        "3d_scene"
+      ]
+    },
+    "project_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scene": {
+      "type": "string",
+      "pattern": "^res://"
+    },
+    "capture": {
+      "type": "object",
+      "required": [
+        "fps",
+        "duration_seconds",
+        "resolution",
+        "time_control"
+      ],
+      "properties": {
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "time_control": {
+          "const": "qa_set_time"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 120
+        },
+        "resolution": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 320,
+              "maximum": 3840
+            },
+            {
+              "type": "integer",
+              "minimum": 240,
+              "maximum": 2160
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "multiview_samples_per_phase": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "contact_sheet_max_frames": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 48
+        },
+        "contact_sheet_columns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "tile_size": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 80,
+              "maximum": 1280
+            },
+            {
+              "type": "integer",
+              "minimum": 60,
+              "maximum": 720
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "multiview": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "actor_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "target_offset": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "distance": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "height": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "fov": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 170
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "actors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "node_path",
+          "dimension",
+          "forward_axis"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]*$"
+          },
+          "node_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dimension": {
+            "enum": [
+              "2d",
+              "3d"
+            ]
+          },
+          "forward_axis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          },
+          "ground_y": {
+            "type": "number"
+          },
+          "ground_tolerance": {
+            "type": "number",
+            "minimum": 0
+          },
+          "tracked_children": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "character": {
+            "type": "object",
+            "required": [
+              "skeleton_path",
+              "foot_bones",
+              "motion_mode"
+            ],
+            "properties": {
+              "skeleton_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "animation_player_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "animation_tree_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "playback_property": {
+                "type": "string",
+                "minLength": 1
+              },
+              "foot_bones": {
+                "type": "object",
+                "required": [
+                  "left",
+                  "right"
+                ],
+                "properties": {
+                  "left": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "right": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "motion_mode": {
+                "enum": [
+                  "forward",
+                  "strafe",
+                  "reverse",
+                  "stationary",
+                  "mixed"
+                ]
+              },
+              "loop_states": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "jump_state": {
+                "type": "string",
+                "minLength": 1
+              },
+              "landing_policy": {
+                "enum": [
+                  "hold_final_pose_until_phase_end",
+                  "transition_to_idle",
+                  "not_applicable"
+                ]
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "animation_player_path"
+                ]
+              },
+              {
+                "required": [
+                  "animation_tree_path"
+                ]
+              }
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "playback_property"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "animation_tree_path"
+                  ]
+                }
+              }
+            ],
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "start",
+          "end",
+          "focus"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]*$"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "focus": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "expected_clip": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "qa_modules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "common",
+          "2d-animation",
+          "multi-actor-motion",
+          "3d-character",
+          "3d-vehicle"
+        ]
+      },
+      "uniqueItems": true,
+      "contains": {
+        "const": "common"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}

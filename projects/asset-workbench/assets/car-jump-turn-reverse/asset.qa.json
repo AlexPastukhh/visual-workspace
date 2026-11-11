@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "asset_id": "car-jump-turn-reverse",
+  "kind": "3d_scene",
+  "project_root": "../..",
+  "scene": "res://scenes/car_jump_turn_reverse.tscn",
+  "capture": {
+    "fps": 24,
+    "time_control": "qa_set_time",
+    "duration_seconds": 6.5,
+    "resolution": [
+      1280,
+      720
+    ],
+    "multiview_samples_per_phase": 3,
+    "contact_sheet_max_frames": 24,
+    "contact_sheet_columns": 6,
+    "tile_size": [
+      320,
+      180
+    ]
+  },
+  "actors": [
+    {
+      "id": "car",
+      "node_path": "Car",
+      "dimension": "3d",
+      "forward_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ground_y": 0.0,
+      "ground_tolerance": 0.01,
+      "tracked_children": [
+        "Wheel_LF",
+        "Wheel_RF",
+        "Wheel_LR",
+        "Wheel_RR"
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "id": "drive_forward",
+      "start": 0.0,
+      "end": 2.0,
+      "focus": "Car travels straight forward. Facing vector and velocity should align."
+    },
+    {
+      "id": "jump",
+      "start": 2.0,
+      "end": 2.875,
+      "focus": "Check takeoff, jump arc, apex, attitude and a captured grounded landing frame; no hovering or ground penetration."
+    },
+    {
+      "id": "turn_180",
+      "start": 2.875,
+      "end": 4.0,
+      "focus": "Check continuous yaw rotation through 180 degrees around the vertical axis."
+    },
+    {
+      "id": "reverse",
+      "start": 4.0,
+      "end": 6.5,
+      "focus": "Car continues in world +Z while facing -Z; confirm reverse motion relative to the vehicle's own forward direction."
+    }
+  ],
+  "qa_modules": [
+    "common",
+    "3d-vehicle"
+  ],
+  "dependencies": [
+    "project.godot",
+    "scenes/car_jump_turn_reverse.tscn",
+    "scripts/car_jump_turn_reverse.gd",
+    "assets/car-jump-turn-reverse/car.glb",
+    "assets/car-jump-turn-reverse/source/car_source.blend",
+    "assets/car-jump-turn-reverse/source/generate_car.py"
+  ]
+}

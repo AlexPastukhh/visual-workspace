@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "asset_id": "planes-dual-pass",
+  "kind": "2d_scene",
+  "project_root": "../..",
+  "scene": "res://scenes/planes_dual_pass.tscn",
+  "capture": {
+    "fps": 24,
+    "time_control": "qa_set_time",
+    "duration_seconds": 7.0,
+    "resolution": [1280, 720],
+    "multiview_samples_per_phase": 0,
+    "contact_sheet_max_frames": 24,
+    "contact_sheet_columns": 6,
+    "tile_size": [320, 180]
+  },
+  "actors": [
+    {
+      "id": "upper",
+      "node_path": "UpperPlane",
+      "dimension": "2d",
+      "forward_axis": [1.0, 0.0]
+    },
+    {
+      "id": "lower",
+      "node_path": "LowerPlane",
+      "dimension": "2d",
+      "forward_axis": [1.0, 0.0]
+    }
+  ],
+  "phases": [
+    {
+      "id": "outbound",
+      "start": 0.0,
+      "end": 3.0,
+      "focus": "Upper moves left-to-right; lower moves right-to-left. Check opposite velocities, facing, vertical ordering and spacing."
+    },
+    {
+      "id": "turnaround",
+      "start": 3.0,
+      "end": 4.0,
+      "focus": "Both aircraft turn continuously through 180 degrees at opposite ends without a facing snap or lane change."
+    },
+    {
+      "id": "return",
+      "start": 4.0,
+      "end": 7.0,
+      "focus": "Upper returns right-to-left; lower returns left-to-right. Check that facing agrees with each velocity."
+    }
+  ],
+  "qa_modules": ["common", "2d-animation", "multi-actor-motion"],
+  "dependencies": [
+    "project.godot",
+    "scenes/planes_dual_pass.tscn",
+    "scripts/planes_dual_pass.gd",
+    "assets/planes-dual-pass/source/upper-plane.svg",
+    "assets/planes-dual-pass/source/lower-plane.svg"
+  ]
+}

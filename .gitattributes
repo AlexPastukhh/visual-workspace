@@ -1,0 +1,20 @@
+# Keep executable and source files portable between Linux and Windows.
+* text=auto
+*.md text eol=lf
+*.txt text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.svg text eol=lf
+*.obj text eol=lf
+*.mtl text eol=lf
+*.ps1 text eol=crlf
+# Native design projects and rendered images are binary.
+*.blend binary
+*.blend[0-9] binary
+*.kra binary
+*.ora binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.glb binary

@@ -1,0 +1,256 @@
+[
+  {
+    "id": 1,
+    "label": "2D idle after settling",
+    "frames": 18,
+    "expect": {
+      "mode": "2d",
+      "state": "idle",
+      "grounded": true,
+      "sprite_changed": true
+    }
+  },
+  {
+    "label": "2D action out of range does nothing",
+    "click": "Action",
+    "frames": 4,
+    "expect": {
+      "door_open": false,
+      "action_count": 0
+    },
+    "id": 2
+  },
+  {
+    "id": 3,
+    "label": "2D keyboard walk",
+    "keys": [
+      "D"
+    ],
+    "frames": 24,
+    "expect": {
+      "state": "walk",
+      "x_min": 280,
+      "x_max": 340,
+      "sprite_changed": true
+    }
+  },
+  {
+    "label": "2D left key reverses movement",
+    "keys": [
+      "A"
+    ],
+    "frames": 6,
+    "expect": {
+      "state": "walk",
+      "x_max": 280
+    },
+    "id": 4
+  },
+  {
+    "id": 5,
+    "label": "2D run towards relay",
+    "keys": [
+      "D",
+      "SHIFT"
+    ],
+    "frames": 40,
+    "expect": {
+      "state": "run",
+      "x_min": 680,
+      "x_max": 760
+    }
+  },
+  {
+    "label": "2D closed gate blocks player",
+    "keys": [
+      "D",
+      "SHIFT"
+    ],
+    "frames": 24,
+    "expect": {
+      "door_open": false,
+      "x_min": 835,
+      "x_max": 847,
+      "won": false
+    },
+    "id": 6
+  },
+  {
+    "id": 7,
+    "label": "2D native jump button",
+    "click": "Jump",
+    "frames": 8,
+    "expect": {
+      "seen_state": "jump",
+      "grounded": false
+    }
+  },
+  {
+    "id": 8,
+    "label": "2D land and return idle",
+    "frames": 20,
+    "expect": {
+      "state": "idle",
+      "grounded": true
+    }
+  },
+  {
+    "id": 9,
+    "label": "2D native action button opens gate",
+    "click": "Action",
+    "frames": 20,
+    "expect": {
+      "door_open": true,
+      "action_count": 1
+    }
+  },
+  {
+    "id": 10,
+    "label": "2D reach exit",
+    "keys": [
+      "D",
+      "SHIFT"
+    ],
+    "frames": 36,
+    "expect": {
+      "won": true,
+      "x_min": 1080
+    }
+  },
+  {
+    "id": 11,
+    "label": "3D native level button",
+    "click": "Mode3D",
+    "frames": 18,
+    "expect": {
+      "mode": "3d",
+      "state": "idle",
+      "grounded": true
+    }
+  },
+  {
+    "label": "3D action out of range does nothing",
+    "keys": [
+      "E"
+    ],
+    "frames": 4,
+    "expect": {
+      "door_open": false,
+      "action_count": 0
+    },
+    "id": 12
+  },
+  {
+    "id": 13,
+    "label": "3D keyboard walk",
+    "keys": [
+      "D"
+    ],
+    "frames": 24,
+    "expect": {
+      "state": "walk",
+      "x_min": -2,
+      "x_max": -1,
+      "clip_advanced": true
+    }
+  },
+  {
+    "label": "3D left key reverses movement",
+    "keys": [
+      "A"
+    ],
+    "frames": 6,
+    "expect": {
+      "state": "walk",
+      "x_max": -2.1
+    },
+    "id": 14
+  },
+  {
+    "id": 15,
+    "label": "3D run towards relay",
+    "keys": [
+      "D",
+      "SHIFT"
+    ],
+    "frames": 21,
+    "expect": {
+      "state": "run",
+      "x_min": 1,
+      "x_max": 2
+    }
+  },
+  {
+    "label": "3D closed gate blocks player",
+    "keys": [
+      "D",
+      "SHIFT"
+    ],
+    "frames": 16,
+    "expect": {
+      "door_open": false,
+      "x_min": 2.6,
+      "x_max": 2.85,
+      "won": false
+    },
+    "id": 16
+  },
+  {
+    "id": 17,
+    "label": "3D keyboard jump",
+    "keys": [
+      "SPACE"
+    ],
+    "frames": 8,
+    "expect": {
+      "seen_state": "jump",
+      "grounded": false
+    }
+  },
+  {
+    "id": 18,
+    "label": "3D land",
+    "frames": 24,
+    "expect": {
+      "state": "idle",
+      "grounded": true
+    }
+  },
+  {
+    "id": 19,
+    "label": "3D keyboard interaction opens gate",
+    "keys": [
+      "E"
+    ],
+    "frames": 20,
+    "expect": {
+      "door_open": true,
+      "action_count": 1
+    }
+  },
+  {
+    "id": 20,
+    "label": "3D reach exit",
+    "keys": [
+      "D",
+      "SHIFT"
+    ],
+    "frames": 24,
+    "expect": {
+      "won": true,
+      "x_min": 5
+    }
+  },
+  {
+    "id": 21,
+    "label": "Restart via native button",
+    "click": "Restart",
+    "frames": 18,
+    "expect": {
+      "mode": "3d",
+      "won": false,
+      "door_open": false,
+      "x_max": -3.8
+    }
+  }
+]

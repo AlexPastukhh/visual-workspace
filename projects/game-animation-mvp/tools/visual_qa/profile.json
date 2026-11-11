@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "project_id": "game-animation-mvp",
+  "scenes": {
+    "2d": "res://scenes/demo_2d.tscn",
+    "3d": "res://scenes/demo_3d.tscn"
+  },
+  "capture": {
+    "duration_seconds": 12.0,
+    "fixed_fps": 24,
+    "max_schedule_drift_frames": 2,
+    "2d_segments": {
+      "idle": [[0.0, 2.0], [10.0, 12.0]],
+      "walk": [[2.0, 5.0]],
+      "run": [[5.0, 8.0]],
+      "jump": [[8.0, 9.9]]
+    },
+    "2d_samples_per_segment": {
+      "idle": 24, "walk": 30, "run": 45, "jump": 24
+    },
+    "3d_segments": {
+      "idle": [[0.0, 2.0], [10.0, 12.0]],
+      "walk": [[2.0, 5.0]],
+      "run": [[5.0, 8.0]],
+      "jump": [[8.0, 10.0]]
+    },
+    "3d_samples_per_segment": {
+      "idle": 24, "walk": 24, "run": 24, "jump": 24
+    },
+    "3d_multiview_samples_per_state": 12,
+    "contact_sheet_max_frames": 24,
+    "contact_sheet_columns": 6,
+    "tile_width": 320,
+    "tile_height": 180
+  },
+  "2d": {
+    "actor_property": "actor",
+    "sprite_property": "sprite",
+    "state_property": "current_state",
+    "elapsed_property": "elapsed",
+    "auto_demo_property": "auto_demo"
+  },
+  "3d": {
+    "actor_property": "actor",
+    "model_property": "model",
+    "animation_player_property": "animation_player",
+    "playback_property": "playback",
+    "status_property": "status",
+    "state_property": "current_state",
+    "elapsed_property": "elapsed",
+    "front_local_axis": [0.0, 0.0, 1.0],
+    "foot_bones": ["Foot.L", "Foot.R"],
+    "camera_views": ["front", "side", "top", "perspective"]
+  },
+  "expectations": {
+    "2d_loop": {"idle": true, "walk": true, "run": true, "jump": false},
+    "2d_run_must_be_independent": false,
+    "3d_loop": {"Idle": true, "Walk": true, "Run": true, "Jump": false},
+    "3d_facing_alignment_min": 0.9,
+    "3d_facing_alignment_required": false,
+    "jump_state_after_landing": "hold_final_pose_until_segment_end"
+  }
+}

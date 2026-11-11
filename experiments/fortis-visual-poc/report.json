@@ -1,0 +1,7 @@
+{
+  "2d": "SVG paths and individual pixels; raster output via resvg",
+  "3d": "OBJ polygon geometry; SVG orthographic preview generated from same faces",
+  "mesh_faces": 11,
+  "mesh_vertices": 42,
+  "warning": "Blender and Godot not involved yet"
+}

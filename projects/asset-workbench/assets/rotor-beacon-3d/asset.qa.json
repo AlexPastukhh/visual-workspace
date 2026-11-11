@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "asset_id": "rotor-beacon-3d",
+  "kind": "3d_scene",
+  "project_root": "../..",
+  "scene": "res://assets/rotor-beacon-3d/preview.tscn",
+  "capture": {
+    "fps": 24,
+    "time_control": "qa_set_time",
+    "duration_seconds": 2.0,
+    "resolution": [
+      1280,
+      720
+    ],
+    "contact_sheet_max_frames": 24,
+    "contact_sheet_columns": 6,
+    "tile_size": [
+      320,
+      180
+    ],
+    "multiview_samples_per_phase": 3,
+    "multiview": {
+      "actor_id": "subject",
+      "target_offset": [
+        0,
+        1,
+        0
+      ],
+      "distance": 7,
+      "height": 1.5,
+      "fov": 42
+    }
+  },
+  "actors": [
+    {
+      "id": "subject",
+      "node_path": "Subject",
+      "dimension": "3d",
+      "forward_axis": [
+        0,
+        0,
+        1
+      ],
+      "tracked_children": [
+        "Rotor"
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "id": "clip_00",
+      "start": 0.0,
+      "end": 2.0,
+      "focus": "Review Sweep: appearance, timing, continuity and loop policy.",
+      "expected_clip": "Sweep"
+    }
+  ],
+  "qa_modules": [
+    "common"
+  ],
+  "dependencies": [
+    "assets/rotor-beacon-3d/preview.tscn",
+    "assets/rotor-beacon-3d/source/beacon.tscn",
+    "project.godot",
+    "qa/clip_sampler.gd",
+    "qa/stage_3d.gd"
+  ]
+}

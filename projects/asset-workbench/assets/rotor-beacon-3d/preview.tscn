@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://qa/stage_3d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/rotor-beacon-3d/source/beacon.tscn" id="2"]
+
+[node name="AssetPreview" type="Node3D"]
+script = ExtResource("1")
+content_scene = ExtResource("2")
+clips = Array[String](["Sweep"])
+animation_player_path = NodePath("")
+seconds_per_phase = 2.0

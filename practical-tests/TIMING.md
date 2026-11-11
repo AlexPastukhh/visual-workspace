@@ -62,6 +62,29 @@ prompt ID, assigned case/order IDs, workspace HEAD and dirty status as
 observable, and evidence paths. Avoid extensive telemetry or custom runners
 that themselves dominate the task.
 
+## Optional diagnostic for report-heavy runs (V09)
+
+T4→T5 may mix **reasoning/composing**, **file write/tool latency** and
+**verification**. Do **not** diagnose its bottleneck merely from the total
+or assume every second was spent typing text. V09 adds two **observed**
+UTC marks without changing T0–T5:
+
+- **R1:** all case reports, short summary and timing content are drafted
+  but no final report file write has begun. T4→R1 is composition.
+- **R2:** the initial four report files have been saved. R1→R2 includes
+  storage/tool wait and any corrections before first completed write.
+- **T5:** the saved files have been checked. R2→T5 is readback and any
+  corrections, including tool waits.
+
+Record exact UTC timestamps, compute T4→R1, R1→R2, R2→T5,
+and check their sum against T4→T5. Use minimal necessary calls:
+save each compact report once, favor one grouped readback, and preserve
+frame-by-frame evidence, written-brief compliance and independent verdicts.
+Do **not** repeatedly regenerate the same detailed narrative.
+If the final T5 value is appended after T5, explicitly disclose this
+small unmeasured tail as in the general protocol. These extra marks
+are optional for production and other visual prompts.
+
 ## Interpretation / limitations
 
 - The interval before the first clock call and the period after T5,

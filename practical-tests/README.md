@@ -29,6 +29,7 @@ in its own unique Workfiles run directory. It must not edit the repository.
 | [V05 — 2D pair, basic](prompts/V05-review-2d-pair.md) | Two 2D cases, separate evidence, measured full time |
 | [V06 — 3D trio, intermediate](prompts/V06-review-3d-trio.md) | Three 3D cases with varied movement, measured full time |
 | [V08 — mixed pair, everyday default](prompts/V08-review-mixed-pair.md) | One 2D + one 3D, independent verdicts, measured |
+| [V09 — mixed pair, optimized reporting](prompts/V09-review-mixed-pair-reporting.md) | Same input/quality as V08; separate time spent drafting, writing, checking reports |
 | [V07 — mixed five, extended](prompts/V07-review-mixed-five.md) | Broad 2D/3D stress test, five verdicts, measured |
 | [C01 — create 2D asset](prompts/C01-create-2d-asset.md) | Written brief → editable 2D art → Godot preview |
 | [C02 — create 3D asset](prompts/C02-create-3d-asset.md) | Written brief → Blender model → Godot preview |
@@ -44,6 +45,20 @@ send **one written order per new chat**: C01/C02 = simple static object,
 C03/C04 = medium animated asset, C05 = difficult playable integration.
 C06 remains an exceptional multi-order capability test. Do not bundle
 unrelated production orders just to amortize bootstrap.
+
+**Reporting performance comparison:** the original V08 remains immutable.
+V09 checks the *same two inputs* (`clip-m4`, `clip-r2`) with the same
+full-resolution image coverage, per-case verdicts and four report outputs,
+but keeps reports compact and measures T4→T5 in three subphases.
+Run **V09 in a new chat** for the next measurement. Compare outcome quality,
+actual frame coverage, T0→T5, T4→T5 and the extra R1/R2 marks; count
+differences in prompt, model/config, cache/network/tool conditions.
+The previous mixed-pair run reported **549.912 seconds** T0→T5 and
+**282.707 seconds** T4→T5. That interval includes tool waiting; it is
+*not evidence* that writing text alone required 282.707 seconds.
+Its self-described "V08-like" invocation is a useful historical baseline,
+not a controlled identical-prompt replicate. A faster run with missed
+frames/incorrect verdicts is a regression, not an optimization.
 
 **Every new recommended prompt measures time**, from the first clock
 reading *before workspace README* through final verified output, using

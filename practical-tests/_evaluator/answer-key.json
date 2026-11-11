@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "warning": "EVALUATOR ONLY. Do not copy or read this file in a blind review session. This is not OS-enforced secrecy within a shared repo.",
+  "cases": {
+    "clip-k7": {
+      "kind": "2d_animation",
+      "expected": "no_known_defect",
+      "baseline": "planes-dual-pass; turnaround 24 FPS",
+      "accept": "Smooth continuous turnaround of both aircraft; no jump, no clipping or lane crossing in intended sequence.",
+      "caveat": "No production-game physics is claimed."
+    },
+    "clip-m4": {
+      "kind": "2d_animation",
+      "expected": "defect",
+      "category": "single_frame_discontinuity",
+      "local_frame": 12,
+      "time_seconds": 0.5,
+      "detail": "Frame 12 was replaced by the original frame 0; the aircraft suddenly flip back to the initial orientation, then jump forward again at frame 13.",
+      "accept": "Detect the discontinuity around local frames 11-13 without access to the key."
+    },
+    "clip-r2": {
+      "kind": "3d_animation",
+      "expected": "no_known_defect",
+      "baseline": "gamebot-humanoid; jump 24 FPS",
+      "accept": "Takeoff, apex, descent, landing and intentional grounded final-pose hold; no midair teleport.",
+      "caveat": "Fixture is deterministic and does not prove a production physics controller or calibrated foot sliding."
+    },
+    "clip-t9": {
+      "kind": "3d_animation",
+      "expected": "defect",
+      "category": "single_frame_teleport",
+      "local_frame": 12,
+      "time_seconds": 0.5,
+      "detail": "Frame 12 is replaced by the ground-level starting frame. The robot drops instantaneously mid-jump and resumes in the next frame.",
+      "accept": "Detect discontinuity at local frame 12 with adjacent frames, not merely claim generic poor animation."
+    },
+    "clip-w8": {
+      "kind": "3d_animation",
+      "expected": "defect",
+      "category": "stopped_non_looping_walk",
+      "local_frames": "approximately 20-23 through 35",
+      "detail": "Historical Game Animation Lab Walk clip reaches an end pose and stops changing, rather than looping continuously. This fixture intentionally comes from an older failed capture.",
+      "accept": "Detect the frozen gait in latter part of the clip. An image-only viewer should not pretend to know exact engine loop settings without metrics."
+    }
+  },
+  "evaluation_protocol": {
+    "visual": "For each case judge defect/no defect, describe temporal evidence (frame and time), cite visible observation and distinguish speculation. Measure true positives, true negatives, false positives and misses; assess localization separately.",
+    "authoring": "Use the written task brief as ground truth. Check requested deliverable presence, 2D/3D form, clip names and durations, Godot import/runtime, actual PNGs, final game integration if required, visual quality and evidence. Technical tests do not substitute for visual assessment.",
+    "confidence": "Fixtures are demonstrative seeded controls; author has not independently certified all as flawless production assets."
+  }
+}

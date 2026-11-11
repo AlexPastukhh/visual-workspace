@@ -1,28 +1,50 @@
 # visual-workspace — Backlog
 
-Этот файл — единое место для **будущих** улучшений визуальной доставки.
-Сценарий и критерии приёмки: [UC-VIS-001](use-cases/media-github-review.md#uc-vis-001).
+Единственный список будущих улучшений; актуальный цикл и ограничения:
+[UC-VIS-009](use-cases/media-github-review.md#uc-vis-009).
 
-## Следующие улучшения
+## Приоритет: единый Issue и управляемая история ревизий
 
-1. **Положительный живой E2E PNG.** Создать тестовое PNG из настоящего run,
-   пройти `github.publish_visual_review` → Owner ASK → GitHub Issue/attachments
-   → verified URL/receipt/readback. Не смешивать unit tests с live acceptance.
-2. **Typed видео-вложения (`.mp4`, `.webm`, при необходимости `.mov`).** В
-   Fortis Gateway спроектировать отдельный проверенный маршрут с bounded file
-   validation, TLS, owner-ASK, идемпотентным run, durable progress/receipts,
-   защитой от частичных удалённых эффектов и проверкой реального playback.
-   Учесть лимиты GitHub и поддерживаемые кодеки; не подключать GitHub CLI/PAT
-   в Docker Repo как обход Gateway.
-3. **Оригиналы 3D и viewer.** Определить поддержанные исходные форматы
-   (`.stl`, `.glb`, `.blend`), приватное хранение, GitHub blob/release/attachment
-   и download/viewer ссылки, правила безопасности и QA. Для STL проверить
-   нативный GitHub viewer на реальном файле; для остальных viewer не
-   предполагать. Добавить typed Gateway операции до обещания auto-upload.
-4. **Удобный единый отчёт.** Связать PNG-превью, исходный артефакт, версию,
-   hash, длительность, QA и подтверждённые ссылки в одном Issue; при
-   анимации показывать poster + playable media; при 3D — ракурсы + viewer.
-   Проверять приватную доступность для владельца перед статусом «готово».
+1. **Gateway: append-revision в уже существующий Issue.** Сделать отдельную
+   typed owner-ASK операцию для добавления версии `vN` как нового комментария
+   к Issue первого результата: точный `issueNumber`/repository, `asset_id`,
+   immutable `run_id`/`requestId`, verified original Issue identity, owner
+   access, SHA-256/size списка PNG, durable per-revision reservation/receipts,
+   protection against duplicate or partial effects, strict upload budget,
+   readback and latest-index updates. Не перезаписывать существующие
+   вложения и не смешивать независимые заказы. При `UNCERTAIN`: расследование,
+   а не второй publish для того же результата.
+2. **Index/state и источник каждой версии.** В Issue показывать историю
+   `v1 SUPERSEDED → v2 REJECTED → v3 ACCEPTED`, изменения и ссылку на
+   исходный Git SHA/проверенный архив оригинала. Добавление/переключение
+   latest без удаления прежних комментариев; source provenance/retention
+   проверять до объявления `REPRODUCIBLE`.
+3. **Положительный PNG E2E.** Один настоящий PNG → staged → ASK →
+   приватный GitHub Issue → attachments → receipt/URL/readback.
+   Затем проверка второй версии с новой разрешённой операцией (пункт 1).
 
-Все изменения Gateway и публикации проходят его собственные UC/PR/CI/owner
-процедуры; этот backlog не даёт права обходить policy.
+## Другие форматы и доставка
+
+4. **Typed видео/GIF attachment.** Разрешённый `.mp4`/`.webm` с проверкой
+   codec/playback, границами размера, полным TLS/ASK/receipt/idempotency,
+   хранением оригинала; PNG-постер не считать записью видео.
+5. **3D source/model/viewer.** Версионированные `.stl`/`.glb`/`.blend`,
+   безопасное хранение и viewer/download, проверенный STL browser preview
+   только когда GitHub содержит настоящий файл. Без прямого PAT/git push.
+6. **Retention и контролируемая очистка.** Явное правило для published
+   snapshots, source Git commits, исходных больших бинарников, project-local
+   `.fortis-state` и Workfiles. Автоматический purge не включать, пока
+   не проверена возможность восстановления обязательных опубликованных
+   версий; отдельные точные cleanup-scopes и retention/backup evidence.
+7. **Свести со зрелым WORKFLOW.** После принятия отдельной рабочей ветки
+   `work/initial-visual-workspace-20261101` добавить ссылки на `UC-VIS-009`
+   в общий `WORKFLOW.md` и реестр `UC-VIS-001`–`008`, не создавая
+   параллельный цикл. Не менять/чистить чужую dirty рабочую ветку.
+8. **Gameplay acceptance.** Явная связка rendered review → accepted PR/CI
+   → owner GitHub merge → guarded Mirror Windows main → Godot тест и
+   возврат замечаний; фиксировать проверенную версию источников и факт
+   запуска владельцем. Не подменять Godot доказательство PNG/скриншотом.
+
+Изменения Gateway выполняются в его собственном репозитории и релизном
+цикле. Документация не даёт права обходить ASK, менять credentials
+или копировать защищённые Gateway volumes ради версии картинки.

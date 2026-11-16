@@ -63,6 +63,11 @@ PNG/кадры и сопоставляет результат с письмен�
 контактный лист заменой полноразмерному просмотру или статичный preview
 доказательством игрового поведения.
 
+- [Asset Workbench](projects/asset-workbench/README.md) — минимальные 2D/3D сцены.
+- [Blackjack Underworld UI mockups](projects/blackjack-underworld-mockups/README.md) — редактируемые UI-состояния, не готовая игра.
+- [Animation Relay](projects/playable-animation-demo/README.md) — проверяемое управление и анимация в игре.
+- [QA Registry](qa/INDEX.md) и [Tool index](tools/README.md) — доступные проверки и инструменты.
+
 Blender/Godot и их библиотеки устанавливаются отдельно от Git, в
 игнорируемой `.local-tools` на Docker primary. В task worktree использовать
 `./tools/link-shared-tools.sh`; не коммитить бинарники среды. QA-кэш,

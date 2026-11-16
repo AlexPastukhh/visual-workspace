@@ -19,6 +19,7 @@ Docker QA-кэш не является вечным архивом.
 - [Реестр задач: 2D, 3D, анимация, интеграция в Godot](docs/use-cases/README.md)
 - [QA: как выбрать проверки](qa/INDEX.md) и [возможности инструментов](tools/README.md)
 - [Asset Workbench — минимальные 2D/3D сцены](projects/asset-workbench/README.md)
+- [Blackjack Underworld — UI sketches](projects/blackjack-underworld-mockups/README.md) — три редактируемых состояния интерфейса; визуальный прототип, не готовая игра.
 - [Animation Relay — проверяемое управление и анимация в игре](projects/playable-animation-demo/README.md)
 
 Для новой задачи ИИ выбирает сценарий, создаёт исходники в **своём** task

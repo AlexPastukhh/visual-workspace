@@ -10,8 +10,13 @@ When a result is ready for the **owner to review**, use the single
 [UC-VIS-009: versioned media review and GitHub handoff](https://github.com/AlexPastukhh/visual-workspace/blob/main/docs/use-cases/media-github-review.md#uc-vis-009).
 It owns issue/revision links, owner approval, reproducible source provenance and retention;
 this document owns production and technical QA. Do not publish every internal draft.
-Current Gateway publishes each PNG review run to a **new** Issue, not a revision
-comment in the previous Issue; do not promise same-Issue history until implemented.
+Target model: one Issue per logical asset/order; v1 creates it, v2+ are new
+comments in that same Issue, and independent orders get separate Issues. Current
+live Gateway still lacks `append_visual_revision`; until its capability appears,
+do not promise same-Issue revisions. A separate Issue for a later version is only
+an owner-approved temporary fallback. The source candidate and activation
+handoff are tracked in [UC-VIS-009](docs/use-cases/media-github-review.md#uc-vis-009)
+and [docs/handoffs](docs/handoffs/README.md).
 
 The goal is a good asset matching the task, with a short path to useful visual feedback
 and efficient corrections. A successful tool run is evidence, not the definition of success.

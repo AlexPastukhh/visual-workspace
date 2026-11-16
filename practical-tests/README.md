@@ -8,6 +8,13 @@ For each independent creation order, the **task's written brief** is the
 acceptance reference. Asset-level briefs/manifests in the existing projects
 remain their own source of truth; this kit does not replace them.
 
+This kit currently tests visual inspection and asset/game creation; it does
+**not** yet run the real UC-VIS-009 owner-review loop (v1 → owner feedback →
+v2 comment in the same Issue). Practical blind tests do not publish fixtures
+or create GitHub Issues by default. Add a separate immutable versioned-review
+prompt only after `append_visual_revision` is advertised by the live Gateway;
+see [the two ordered handoffs](../docs/handoffs/README.md).
+
 ## Primary method: send a ready-made prompt to a new chat
 
 Open a **fresh chat with Fortis Repo**, copy the complete text of ONE file

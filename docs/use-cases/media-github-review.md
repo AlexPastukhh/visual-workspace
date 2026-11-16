@@ -21,22 +21,25 @@ Godot-проект у себя на Windows после синхронизаци�
   PNG/кадры, описание различий, статус ревизии, проверенные ссылки; ранние
   опубликованные варианты остаются видимыми как история, не подменяют файлы
   проекта. Issue и Git-исходники имеют **разную идентичность и назначение**.
-- **Gateway:** авторизация, владелец `ASK`, одноразовая публикация, durable
-  receipts и обработка неопределённого исхода. Прямой GitHub PAT/CLI/HTTP
-  upload со стороны ИИ не является разрешённым fallback.
+- **Gateway:** авторизация, policy per operation (`ALLOW`/`ASK`/`DENY`),
+  одноразовые writes, durable receipts и обработка неопределённого исхода.
+  На 2026-11-17 v1 publisher live `ALLOW`; revision source policy — отдельный
+  `ASK` для `visual-workspace`, но append API ещё не live. Всегда читать
+  capabilities перед write. Прямой GitHub PAT/CLI/HTTP upload со стороны ИИ
+  не является разрешённым fallback.
 - **Owner:** оценивает изображение/анимацию по ссылке и задаёт изменения;
   для игры принимает Source PR/merge, выполняет защищённый Mirror Pull Windows
   `main` и самостоятельно проверяет проект в Godot.
 
 ### Как открывается Issue: сейчас и в желаемом цикле
 
-| Событие | Сейчас — работающий PNG MVP | Целевой versioned-review workflow (ещё НЕ реализован) |
+| Событие | Текущее live-состояние (2026-11-17) | Целевая модель после активации revision API |
 | --- | --- | --- |
-| ИИ сгенерировал локальный кадр/QA | Issue не создаётся автоматически | Тоже нет Issue до запросa публикации |
-| Показ первой ревизии `v1` | Новый уникальный `run_id` → staged PNG → owner `ASK` → **создаётся Issue только после подтверждения** → PNG вложения → receipt/проверенный URL | При первой подтверждённой публикации создаётся **один Issue на ассет/заказ**, записывается `issueNumber` |
-| Владелец просит изменить `v1` | ИИ правит исходник в Docker; `v2` с новым `run_id` и `requestId` создаёт **новый Issue**. В его описании можно указать проверенный URL `v1`; старый Issue автоматически не изменяется | Новая версия помещается **комментарием в тот же Issue** с собственными файлами/QA/исходным SHA; исходная версия не перезаписывается |
-| `v1` отвергнута, `v2` актуальна | По ссылкам видно обе версии, но **единый журнал и latest-pointer автоматически не ведутся** | `v1=SUPERSEDED/REJECTED`, `v2=LATEST_FOR_REVIEW`, позже `ACCEPTED`; первая карточка Issue содержит актуальный индекс версий |
-| Результат неопределён | `DISPATCHED`/`UNCERTAIN`: STOP, investigation по тому же UUID | Тот же запрет, плюс durable per-Issue/per-revision idempotency |
+| ИИ сделал внутренний draft/QA | Issue не создаётся автоматически | То же: публиковать только выбранную QA-проверенную версию |
+| Показ первой ревизии `v1` | `client.github.publish_visual_review()` создаёт новый приватный Issue с PNG. Live policy сейчас `ALLOW` для `visual-workspace`; всегда перепроверять capabilities | Один Issue на логический ассет/заказ; сохранить `issueNumber` и `baseRunId` |
+| Владелец просит изменить `v1` | `append_visual_revision` в live capabilities отсутствует. Текущий publisher создаст новый Issue; делать это только если владелец явно согласовал отдельный Issue. Иначе дождаться активации revision API | `client.github.append_visual_revision()` добавляет новую версию комментарием в **тот же Issue** с отдельными PNG/QA/source SHA |
+| `v1` устарела, `v2` актуальна | Автоматического общего version index/latest pointer нет; версии связаны только явными ссылками между Issue | Сохранять v1 и все комментарии; маркировать статусы/изменения в ревизионном комментарии. Центральный latest pointer пока не входит в минимальный API |
+| Результат неопределён | `DISPATCHED`/`UNCERTAIN`: STOP, разбор того же UUID, не создавать новую заявку | То же; плюс durable reservation по Issue/revision/run до upstream effect |
 
 **Принцип:** один Issue на одну логическую единицу обратной связи
 (например, «персонаж X», «анимация бега X» или один согласованный составной
@@ -75,14 +78,17 @@ Godot-проект у себя на Windows после синхронизаци�
    `/workspace/repo/Workfiles/<project>/<run_id>/.../*.png`. Новый `run_id`
    для каждой действительно новой версии, **не** новый случайный UUID для
    повторения неоднозначной публикации.
-5. **Запросить публикацию.** Только если владелец запросил показ или
-   согласована контрольная точка: через
+5. **Запросить первую публикацию.** Только если владелец запросил показ
+   или согласована контрольная точка: через
    `client.github.publish_visual_review()` для `visual-workspace`. Клиент
-   отправляет PNG по machine TLS, затем создаёт Fortis `ASK`. Владелец
-   подтверждает публикацию в [Owner Portal](http://localhost:19203).
-   `PENDING`/`APPROVED` ещё **не** являются опубликованным Issue. При
-   исполнении Gateway создаёт Issue и прикрепляет PNG, затем сверяет
-   Issue/receipt. **Не публиковать каждый промежуточный кадр автоматически.**
+   отправляет PNG по machine TLS; фактическая policy зависит от live Gateway.
+   На проверке 2026-11-17 `visualReview.publishPolicy=ALLOW` и операция была
+   в `allowGitHub`, а не `askGitHub`. Не обещать Owner ASK для v1 и не
+   предполагать, что policy останется такой: перед каждым новым действием
+   читать live capabilities. Если policy вернёт `ASK`, ждать owner decision;
+   `PENDING`/`APPROVED` сами по себе не являются опубликованным Issue.
+   После `EXECUTED` проверить Issue/receipt/readback. **Не публиковать каждый
+   промежуточный кадр автоматически.**
 6. **Проверить выдачу ссылки.** Получить `EXECUTED`, `url`,
    `uploadedFiles`, проверить Issue и превью через разрешённый Gateway READ;
    приватная ссылка должна открываться владельцу с доступом к репозиторию.
@@ -91,11 +97,16 @@ Godot-проект у себя на Windows после синхронизаци�
 7. **Принять комментарии и создать следующую версию.** Сохранить исходный
    текст/задачу владельца, связать с `asset_id` и конкретной `vN`; изменить
    **Docker-исходник**, а не вложенный PNG. Запустить необходимые QA,
-   получить новый `run_id` и новую публикацию. **Сейчас** — отдельный Issue
-   со ссылкой на предыдущую проверенную версию; прежние Issue остаются.
-   Пока Gateway не умеет `append_revision`, **не обещать** владельцу новую
-   картинку в прежнем Issue. Для будущего режима — комментарий в том же Issue,
-   status и индекс без удаления истории.
+   получить новый `run_id`, сохранить точный `sourceSha` и подготовить 1–5 PNG.
+   До появления `append_visual_revision` в live capabilities не обещать
+   добавление в прежний Issue. Отдельный новый Issue — только временный
+   вариант при явном согласии владельца; иначе остановиться после подготовки
+   v2 и дождаться API. После активации revision API v2+ отправлять
+   `client.github.append_visual_revision()` в тот же проверенный Issue:
+   это новый comment с отдельными вложениями, а не редактирование Issue body
+   или старых комментариев. Для каждой ревизии требуется отдельный owner ASK;
+   v1 `ALLOW` не наследуется. При `PENDING` ждать, при `UNCERTAIN` расследовать
+   тот же requestId, не создавать новый UUID и не продвигать следующую версию.
 8. **Закрепить результат.** После принятия владельцем отметить выбранную
    версию и её source SHA; ссылки на отклонённые версии оставить для
    сравнения с пометкой «отклонена/заменена». `ISSUE_REVIEWED` ≠
@@ -115,7 +126,7 @@ Godot-проект у себя на Windows после синхронизаци�
 
 | Слой | Что действительно остаётся | Можно ли очистить |
 | --- | --- | --- |
-| GitHub Issue + PNG-вложения | Опубликованные ревизии доступны по соответствующим Issue, пока GitHub/репозиторий и вложения доступны; **сейчас каждый run = отдельный Issue** | Не удалять автоматически ради исправления. Старые, не принятые варианты маркировать в описании/в сообщении ссылкой, но не выдавать их за текущие |
+| GitHub Issue + PNG-вложения | Issue #5 — проверенная первая публикация v1; текущий live publisher создаёт отдельный Issue на каждый run. Same-Issue revision пока не live | Не удалять автоматически. После активации append API новые версии добавлять отдельными комментариями; старые Issue/комментарии/вложения сохранять |
 | Git-исходники | Только явно закоммиченные/доставленные исходные файлы; старые состояния можно найти по их SHA при сохранённой истории | Не переписывать историю, не `force`/reset ради очистки. Git не архивирует игнорируемые файлы и кэши |
 | Docker task worktree | Текущая изменяемая работа и ещё не принятые исходники | Только через штатный Fortis `cleanup_task`, после merge/проверки и сохранения нужного source. Удаление worktree **не** равно удалению Git-коммитов |
 | Project-local `.fortis-state`, Godot `.godot`, Workfiles | Промежуточные рендеры, пофазный QA, временные кадры, игнорируемые файлы; уникальные run-папки сейчас не перезаписываются штатным QA-runner | **Не гарантированы навсегда.** Очистка — только выбранных точных путей после проверки нужности, source/QA/backup, без массового `clean`/`prune` |
@@ -145,85 +156,130 @@ Godot-проект у себя на Windows после синхронизаци�
 но это отдельное действие, не результат автоматической публикации ИИ.
 Любая реальная ссылка на оригинал должна быть отдельно проверена.
 
-### Typed вызов PNG (только отдельный новый Issue в текущем Gateway)
+### Typed provider calls and current limits
+
+Первая версия (`v1`) использует существующий
+`client.github.publish_visual_review(...)`. Он создаёт Issue и прикрепляет
+1–5 PNG. Это единственный визуальный write, который подтверждён в live
+capabilities на 2026-11-17; его фактическая policy на эту дату — `ALLOW`
+для `visual-workspace`. Перед каждым использованием перечитывать capabilities.
+
+Для следующих версий предусмотрен typed метод
+`client.github.append_visual_revision(...)`. В исходниках Fortis Approvals
+уже есть `prepare_visual_revision(...)`, `append_visual_revision(...)`,
+строгий контракт, adapter, runtime policy `ASK` и offline-тесты. Но метод
+**не объявлен в live Gateway capabilities** на 2026-11-17. До его активации
+не вызывать его и не считать same-Issue revision работающей. Полный контракт
+и handoff активации — в [Handoff 01](../handoffs/01-activate-append-visual-revision.md).
+
+Будущий вызов v2+ имеет такой shape (пример для понимания контракта, не
+инструкция вызывать его до live activation):
 
 ```python
 import uuid
 from fortis_approvals.workflow.client import default_client
 
 c = default_client()
-request_id = str(uuid.uuid4())  # Один новый ID на одну НОВУЮ публикацию.
-reply = c.github.publish_visual_review(
+preview = c.github.prepare_visual_revision(
     repository='visual-workspace',
-    run_id='sprite-walk-v2-20261111',  # Уникальный run новой версии.
-    title='Sprite walk — v2 — движение и исправления',
-    description='Исправлен тайминг. Предыдущая версия: <вставить проверенный Issue URL v1>',
-    media=[{'path': '/workspace/repo/Workfiles/sprite/sprite-walk-v2-20261111/frame.png',
-            'name': 'Ключевой кадр'}],
-    qa_summary='Проверены выбранные кадры и границы анимации',
+    issue_number=5,
+    base_run_id='northlight-beacon-e2e-v3-20261117',
+    asset_id='northlight-beacon-2d',
+    revision=2,
+    run_id='northlight-beacon-v2-<unique-run-suffix>',
+    source_sha='<full-40-character-source-commit>',
+    description='Owner-requested visual corrections',
+    media=[{'path': '/workspace/repo/Workfiles/<run-id>/preview.png',
+            'name': 'Northlight Beacon v2'}],
+    qa_summary='QA findings and inspected evidence',
     duration_seconds=120,
-    request_id=request_id,
-    reason='Показать владельцу вторую версию визуального результата',
 )
-# До подтверждения владельцем это обычно PENDING, а не Issue URL.
-# После одобрения: читать c.result(request_id), c.details(request_id);
-# использовать только подтверждённый URL из EXECUTED receipt.
+request_id = str(uuid.uuid4())  # Persist this exact ID before submitting.
+reply = c.github.append_visual_revision(
+    repository='visual-workspace', issue_number=5,
+    base_run_id='northlight-beacon-e2e-v3-20261117',
+    asset_id='northlight-beacon-2d', revision=2,
+    run_id='northlight-beacon-v2-<unique-run-suffix>',
+    source_sha='<full-40-character-source-commit>',
+    description='Owner-requested visual corrections',
+    media=[{'path': '/workspace/repo/Workfiles/<run-id>/preview.png',
+            'name': 'Northlight Beacon v2'}],
+    qa_summary='QA findings and inspected evidence', duration_seconds=120,
+    request_id=request_id, reason='Show owner the requested v2 revision',
+    expected_payload_sha256=preview['payloadSha256'],
+)
+# PENDING => wait for owner ASK. Never submit a new UUID after an unknown outcome.
 ```
 
-Пример ответа после успешного readback:
+The revision action performs a GitHub Issue **comment creation** with a stable
+revision marker and uploaded PNG references. It does not create a second Issue,
+edit the Issue body, replace v1, or delete earlier comments. Its source contract
+requires the exact open private ordinary Issue created by the same Gateway,
+original `baseRunId`/durable reservation, same `assetId`, next revision number,
+unique `runId`, full source Git SHA and 1–5 valid PNGs. The revision policy is
+`ASK` for `visual-workspace` and `DENY` elsewhere; it never inherits v1's
+`ALLOW`. A lost POST response / `UNCERTAIN` requires read-only investigation
+of the same request and durable evidence; never blind-replay or advance to v3.
 
-> **Sprite walk, версия 2:** [сюда вставить проверенный URL GitHub Issue v2].
-> Что изменено: тайминг и фаза старта. QA: проверены ключевые кадры и
-> границы цикла. **Предыдущая версия:** [проверенная ссылка v1],
-> устарела. **Исходники:** сохранённый Git SHA или честно «ещё локально».
-> **Статус:** готово к визуальному просмотру, не эквивалентно проверке
-> полного движения/игрового запуска.
+### Verified implementation snapshot — 2026-11-17
 
-## Как связать этот UC с общим производственным workflow
+- Live `default_client().capabilities(refresh=True)` advertises
+  `publish_visual_review` under `allowGitHub`, `visualReview.publishPolicy=ALLOW`,
+  and the typed Issue reads `list_issues`, `get_issue`, `list_issue_comments`.
+  It does **not** advertise `append_visual_revision` under `askGitHub`.
+- Live Issue [#5 — Northlight Beacon v1](https://github.com/AlexPastukhh/visual-workspace/issues/5)
+  is open and its readback contains one PNG attachment reference and zero
+  comments. Its run marker is `northlight-beacon-e2e-v3-20261117`; a run marker
+  identifies a publication run, **not** the human-facing revision number.
+- Fortis Approvals source already contains the typed prepare/append methods,
+  strict contract, adapter and ASK policy. The focused offline suite
+  `test_visual_revisions.py` passes 9/9 on the inspected source checkout.
+  These source tests are not a live Gateway test and do not activate the image.
+- Therefore v1 publication/readback has a positive live E2E; v2 same-Issue
+  comment delivery has **not** yet passed live E2E. Do not claim the full
+  versioned workflow is production-ready until that test passes.
 
-В отдельной **пока не слитой** рабочей ветке `visual-workspace` уже есть
-`WORKFLOW.md` и реестр `UC-VIS-001`–`UC-VIS-008`. Там авторитетная
-процедура создания/QA, **этот UC её не заменяет**. После принятия той ветки
-добавить ссылки на **один** `UC-VIS-009` в точках передачи результатов:
+### Relation to the production workflow
 
-| Уже подготовленный UC | Когда вызывать UC-VIS-009 |
-| --- | --- |
-| `UC-VIS-001` 2D/3D-ассет | Первый пригодный для обсуждения рендер и каждая версия по замечаниям |
-| `UC-VIS-002` анимация | После кадрового/временного QA, с честной оговоркой что PNG не видео |
-| `UC-VIS-003` интеграция в игру | Результат для визуального обсуждения, **затем** отдельный PR/CI/merge/Mirror → проверка Godot Windows |
-| `UC-VIS-004` визуальная проверка | Передача владельцу QA-evidence, findings, ссылок и статуса |
-| `UC-VIS-005` составная задача | Один Issue на логический заказ либо отдельный Issue на независимые результаты |
-| `UC-VIS-006` просмотр внешнего видео | Только если есть запрос на публикацию результатов ревью; не смешивать с декодированием видео |
-| `UC-VIS-007` несколько заказов | У каждого независимого заказа своя версия/Issue/источник |
-| `UC-VIS-008` тест нового чата | Не публиковать закрытые контрольные данные и не создавать Issue без запроса |
-
-Встроить эти **backlinks только после merge** соответствующего исходного
-workflow; сейчас его рабочий каталог содержит незавершённые чужие изменения,
-поэтому менять его из этой ветки или копировать параллельный `WORKFLOW.md`
-нельзя. Настоящий общий workflow останется один, с UC-009 в точках показа.
+- [WORKFLOW.md](../../WORKFLOW.md) owns creation, correction, visual QA and
+  game integration. This UC owns the owner-facing Issue/revision lifecycle.
+- [UC-VIS-001–005](README.md) call this UC only when an owner-facing review is
+  requested; one logical asset/order gets one Issue, independent orders get
+  separate Issues.
+- [UC-VIS-006](README.md) may provide reviewed video/frame evidence, but PNG
+  Issue previews do not become video playback evidence.
+- [UC-VIS-007](README.md) keeps parallel worktree/path ownership separate;
+  each independent owner-review thread has its own Issue.
+- [UC-VIS-008](README.md) practical blind tests do not publish fixture answers
+  or create Issues by default. Clean-chat owner-review tests are a separate,
+  explicitly authorized integration exercise described in
+  [Handoff 02](../handoffs/02-validate-workflow-and-cold-chats.md).
 
 ## STOP / acceptance
 
-- `PENDING` или `APPROVED` — Issue ещё не подтверждён; ссылку не выдумывать.
-- `DISPATCHED`, `UNCERTAIN`, потерянный response — не создавать новую заявку,
-  прежде чем разрешённый read-only разбор подтвердит исход по **тому же** UUID;
-  применять [UC-GW-009](https://github.com/AlexPastukhh/fortis-approvals/blob/main/docs/use-cases/incidents.md#uc-gw-009). `CLOSED_UNCONFIRMED` не означает отсутствия GitHub эффекта.
-- Для **PNG**: `EXECUTED`, durable receipt с URL и числом файлов, readback
-  приватного Issue/вложений; только тогда можно сообщать GitHub-ссылку.
-- Для **модели/видео**: подтвердить прямую ссылку на фактический оригинал и
-  viewer/playback; иначе `PREVIEW_ONLY`, не `FULL_MEDIA_DELIVERED`.
-- Для **игры**: source merge и Mirror receipt, затем реальная проверка
-  владельцем в Godot; Issue/PNG не равнозначны `GAMEPLAY_ACCEPTED`.
-- Фактического положительного live Issue/PNG E2E в истории Gateway на дату
-  подготовки этого документа не обнаружено; наличие typed метода и unit
-  tests не следует выдавать за end-to-end acceptance.
+- Check live capabilities before every write. Source code or offline tests do
+  not prove a method is live. If `append_visual_revision` is absent, stop the
+  same-Issue write path; do not silently substitute a new Issue.
+- `PENDING`/`APPROVED` are not a published Issue/comment. Wait for the owner
+  decision and verify the final state.
+- `DISPATCHED`, `UNCERTAIN`, lost response or `CLOSED_UNCONFIRMED`: investigate
+  the **same** request ID and durable evidence using
+  [UC-GW-009](https://github.com/AlexPastukhh/fortis-approvals/blob/main/docs/use-cases/incidents.md#uc-gw-009).
+  Do not create a replacement UUID or next revision while the effect is unknown.
+- For PNG, require `EXECUTED`, matching receipt, exact Issue/comment readback,
+  marker, source SHA and attachment references. Readback links do not prove
+  remote image bytes; owner browser inspection is still required.
+- For video/3D originals, require a separately verified original-file link
+  and actual playback/viewer. Otherwise report `PREVIEW_ONLY`.
+- For game delivery, source PR/CI/owner merge and Mirror receipt precede the
+  owner's actual Godot-on-Windows acceptance. Issue/PNG is not gameplay proof.
 
 ## Точные контракты
 
 [Fortis Gateway PNG MVP](https://github.com/AlexPastukhh/fortis-approvals/blob/main/fortis_approvals/integrations/github/README.md#visual-review-png-mvp) ·
-[UC-GW-009 (неизвестный исход)](https://github.com/AlexPastukhh/fortis-approvals/blob/main/docs/use-cases/incidents.md#uc-gw-009) ·
+[Append visual revision source contract](https://github.com/AlexPastukhh/fortis-approvals/blob/main/fortis_approvals/integrations/github/README.md#append-visual-revision-to-an-existing-issue--source-candidate-not-live) ·
+[UC-GW-003 — typed operation](https://github.com/AlexPastukhh/fortis-approvals/blob/main/docs/use-cases/integrations.md#uc-gw-003) ·
+[UC-GW-005 — owner-managed release](https://github.com/AlexPastukhh/fortis-approvals/blob/main/docs/use-cases/releases.md#uc-gw-005) ·
+[UC-GW-009 — unknown outcome](https://github.com/AlexPastukhh/fortis-approvals/blob/main/docs/use-cases/incidents.md#uc-gw-009) ·
 [UC-CONT-002/003 (Git/PR/Gateway)](https://github.com/AlexPastukhh/fortis-container/blob/main/docs/use-cases/delivery.md#uc-cont-002) ·
-[UC-CONT-005 (Mirror Windows)](https://github.com/AlexPastukhh/fortis-container/blob/main/docs/use-cases/delivery.md#uc-cont-005) ·
-[UC-MIR-002](https://github.com/AlexPastukhh/docke-windows-mirror/blob/main/docs/use-cases/windows-sync.md#uc-mir-002) ·
-[GitHub attachments](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files) ·
-[GitHub non-code and STL](https://docs.github.com/en/repositories/working-with-files/using-files/working-with-non-code-files).
+[UC-CONT-005 (Mirror Windows)](https://github.com/AlexPastukhh/fortis-container/blob/main/docs/use-cases/delivery.md#uc-cont-005).

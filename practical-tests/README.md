@@ -44,6 +44,9 @@ in its own unique Workfiles run directory. It must not edit the repository.
 | [C04 — create 3D animation](prompts/C04-create-3d-animation.md) | Original 3D rig/animation, import, review |
 | [C05 — make a playable game](prompts/C05-create-playable-game.md) | Asset + animation + controller, gameplay and input testing |
 | [C06 — two independent orders](prompts/C06-create-multiple-orders.md) | *Optional* multi-order stress test; not the default production order |
+| [VR01 v1 — versioned GitHub owner review](prompts/VR01-versioned-review-v1.md) | One fresh chat; original asset v1 → real owner feedback → v2 same-Issue, typed ALLOW, browser proof; only with explicit owner authorization |
+
+**Cold-chat execution matrix:** [CLEAN-CHAT-MATRIX-20261119.md](CLEAN-CHAT-MATRIX-20261119.md) distinguishes prepared prompts from NOT RUN independent tests. VR01 uses real public GitHub side effects only after explicit owner authorization and cannot be executed autonomously in this chat.
 
 **Recommended default:** send **V08** for a fast cross-dimension review
 (two cases and one bootstrap) or **V05** / **V06** for focused 2D / 3D

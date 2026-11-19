@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
   <title>Northlight navigation beacon</title>
-  <desc>Symmetrical teal compass beacon on a dark octagonal plate with an amber north pointer.</desc>
+  <desc>Symmetrical teal compass beacon on a dark octagonal plate with a coral-pink north pointer.</desc>
   <defs>
     <linearGradient id="shell" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#214259"/>
@@ -19,16 +19,16 @@
   <circle cx="128" cy="128" r="80" fill="#081b2a" stroke="#2fb7b3" stroke-width="4"/>
   <circle cx="128" cy="128" r="71" fill="none" stroke="#7df5e8" stroke-width="1.5" stroke-dasharray="2 7" opacity=".75"/>
   <circle cx="128" cy="128" r="56" fill="#112e3b" stroke="#285767" stroke-width="2"/>
-  <!-- Cardinal tick bars; north is highlighted in amber. -->
-  <path d="M128 39 V62" stroke="#ffc66e" stroke-width="6" stroke-linecap="round"/>
+  <!-- Cardinal tick bars; north is highlighted in coral-pink. -->
+  <path d="M128 39 V62" stroke="#ff6d88" stroke-width="6" stroke-linecap="round"/>
   <path d="M128 194 V217 M39 128 H62 M194 128 H217" stroke="#7bd9d4" stroke-width="5" stroke-linecap="round"/>
   <path d="M70 70 L81 81 M175 175 L186 186 M70 186 L81 175 M175 81 L186 70" stroke="#639797" stroke-width="3" stroke-linecap="round"/>
   <!-- Primary sharp compass rose, readable even when displayed small. -->
   <path d="M128 64 L149 108 L192 128 L149 148 L128 192 L107 148 L64 128 L107 108 Z" fill="url(#teal)" stroke="#d1fff5" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M128 64 L149 108 L128 128 L107 108 Z" fill="#f5c16f" stroke="#ffe3a7" stroke-width="1.5"/>
+  <path d="M128 64 L149 108 L128 128 L107 108 Z" fill="#ff718b" stroke="#ffd3dc" stroke-width="1.5"/>
   <path d="M128 192 L149 148 L128 128 L107 148 Z" fill="#006f82" opacity=".72"/>
   <circle cx="128" cy="128" r="17" fill="#0b2434" stroke="#d9fff6" stroke-width="3"/>
-  <circle cx="128" cy="128" r="7" fill="#ffc66e"/>
+  <circle cx="128" cy="128" r="7" fill="#ff718b"/>
   <!-- Small glints help convey polish without introducing raster detail. -->
   <circle cx="59" cy="59" r="2.5" fill="#9ceae0" opacity=".8"/>
   <circle cx="197" cy="197" r="2.5" fill="#9ceae0" opacity=".8"/>

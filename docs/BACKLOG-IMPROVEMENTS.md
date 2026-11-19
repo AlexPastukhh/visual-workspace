@@ -19,32 +19,28 @@
   launchers, workbench и playable animation demo уже приняты. Улучшать их
   только при обнаружении конкретного воспроизводимого пробела.
 
-## P0 — включить same-Issue revisions в production
+## P0 — завершено: Gateway и same-Issue v2 E2E (2026-11-19)
 
-1. **Fortis Gateway: активировать `append_visual_revision`.**
-   В Fortis Approvals source уже присутствуют `prepare_visual_revision()`,
-   `append_visual_revision()`, строгий GitHub contract, native adapter,
-   route allowlist, runtime `ASK` для `visual-workspace` и offline suite
-   `test_visual_revisions.py` (9/9 PASS на проверенном source checkout).
-   Но live capabilities на 2026-11-17 метод не объявляют. Не дублировать
-   готовый код: сначала аудитировать gaps, затем довести UC-GW-003/005,
-   exact-SHA CI, owner-managed Gateway image release и live readback.
-   Требуемое live доказательство: `append_visual_revision` объявлен в
-   `askGitHub` только для `visual-workspace`; `publish_visual_review`
-   остаётся совместимым; чужие репозитории получают DENY.
-2. **Настоящий v2 E2E в том же Issue.**
-   Проверить `prepare_visual_revision` → typed append → owner ASK/WebAuthn
-   → `EXECUTED` receipt → GitHub comment/attachment readback. Убедиться,
-   что номер Issue тот же, v1 body/PNG не изменились, появился ровно один
-   v2 comment с marker, `assetId`, `baseRunId`, `runId`, revision и source SHA.
-   Owner должен открыть реальную PNG в браузере. Не считать unit test или
-   ссылку на attachment доказательством доступности байтов.
-3. **Исходная публикация #5 — кандидат, не гарантированный target.**
-   Перед использованием проверить, что Gateway может доказать исходную
-   durable reservation/baseRunId для Issue #5. Если доказательства нет,
-   не обходить precondition: создать новый согласованный v1 Issue после
-   live release и тестировать v2 на нём. Не отправлять новый Issue для v2
-   без явного согласия владельца.
+1. **Live Gate / image release:** `append_visual_revision` и
+   `publish_visual_review` доступны для публичного `visual-workspace`;
+   обе операции в `allowGitHub`, `appendRevisionPolicy=ALLOW`.
+   Новый Gateway (включая исправление public-repo preflight) установлен
+   через owner-managed UC-GW-005, Backup/Promote выполнены.
+   Проверенный Windows Primary: image
+   `sha256:60febecf08f1aafabd7369914141b779250b786a74a1d21500c54cbdc0642fb3`,
+   `running/healthy/unless-stopped`.
+2. **Настоящий v1 → v2:** [Issue #5](https://github.com/AlexPastukhh/visual-workspace/issues/5)
+   сохранил v1 body/PNG; одна [v2 revision comment](https://github.com/AlexPastukhh/visual-workspace/issues/5#issuecomment-7010209589)
+   с новой PNG, revision marker и полным source SHA. Exact `EXECUTED`
+   requestId `3a2f326d-b839-46cc-928c-b697cef338c2`, commentId
+   `7010209589`; оригинальная reservation доказана через readback.
+   Owner ответил **«все нормально»** после предложения открыть PNG в
+   браузере. Релевантный Godot QA: 6/6 статичных кадров 1280×720,
+   19.515s на import/capture/sheet (не время полного чата).
+3. **Scope:** проверен **один** static 2D E2E. Это не означает, что
+   автоматические latest pointer/status, видео/GLB публикация,
+   длительное архивирование, игровой запуск или независимые clean chats
+   уже испытаны. Source PR/CI/owner merge v2 остаётся отдельным шагом.
 
 ## P1 — сделать версионную историю удобнее
 
@@ -79,17 +75,19 @@
    → source PR/CI → owner GitHub merge → guarded Mirror Pull Windows main
    → реальная проверка Godot на Windows. PNG preview не заменяет runtime.
 
-## Текущий проверенный срез — 2026-11-17
+## Текущий проверенный срез — 2026-11-19
 
-- Live `publish_visual_review`: `ALLOW` только для `visual-workspace`;
-  PNG-only, 1–5 файлов, до 10 MiB каждый.
-- Live `append_visual_revision`: отсутствует в capabilities; same-Issue v2+
-  ещё не доступен.
-- Issue #5: открыт, одна PNG reference, ноль comments. Run marker
-  `northlight-beacon-e2e-v3-20261117` — это run ID, не revision label.
-- Fortis Approvals source candidate: commit
-  `bdb3ec581db7157b05f5d6c5282c7d3a7b6d0a35`; focused offline tests 9/9.
-  Это не deployed image и не live E2E.
+- Live policy: `publishPolicy=ALLOW` и `appendRevisionPolicy=ALLOW`,
+  1–5 PNG до 10 MiB, `visual-workspace` публичный. Capabilities не
+  хардкодить; проверять заново перед каждой публикацией.
+- Owner-reviewed GitHub E2E: v1 Issue #5 + один v2 comment;
+  оригинальная PNG reference и body не изменились. Byte-for-byte remote
+  attachment verification через GitHub API не утверждается.
+- В редакторе: v2 source Git SHA
+  `06b0c9fe3ae9ae1ce7effe83e128045c711701b3`; не путать с
+  последующим merge SHA. Принятие картинки владельцем ещё не source merge.
+- Clean-chat V08/C03/C04/C05/VR01 и optional C06: **NOT RUN**;
+  готовый план — [матрица](../practical-tests/CLEAN-CHAT-MATRIX-20261119.md).
 
 ## Передача работы
 

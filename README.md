@@ -1,6 +1,6 @@
 # visual-workspace
 
-Приватный репозиторий визуальных проектов и результатов. Производство,
+Публичный репозиторий визуальных проектов и результатов. Производство,
 визуальное QA, интеграция в игру и публикация владельцу — связанные, но
 отдельные этапы.
 
@@ -14,41 +14,38 @@
 - [Готовые handoffs](docs/handoffs/README.md) — два задания для отдельных
   чатов: активация revision API и последующая сквозная проверка.
 - [Практические тесты UC-VIS-008](practical-tests/README.md) — готовые
-  промпты для проверки новых чатов.
+  промпты для проверки новых чатов, включая [VR01 — versioned review](practical-tests/prompts/VR01-versioned-review-v1.md) и [матрицу независимых прогонов](practical-tests/CLEAN-CHAT-MATRIX-20261119.md).
 
 ## Модель версий
 
-**Целевая и нормативная модель:** один приватный GitHub Issue на одну
-логическую единицу обратной связи (ассет или согласованный заказ).
+**Действующая модель:** один GitHub Issue на одну логическую единицу
+обратной связи (ассет или согласованный заказ). В публичном репозитории
+описания и PNG доступны всем: не публиковать секреты или частные материалы.
 v1 создаёт Issue; v2, v3 и следующие ревизии добавляются новыми
 комментариями с отдельными PNG, QA и source SHA в **тот же Issue**.
 Независимые заказы получают отдельные Issue. Внутренние черновики не
 публикуются. PR создаётся после принятия результата владельцем, а не
 на каждый визуальный вариант.
 
-**Текущее live-состояние на 2026-11-17:**
+**Проверенное live-состояние на 2026-11-19:**
 
-- `publish_visual_review` доступен только для `visual-workspace`; live
-  `visualReview.publishPolicy=ALLOW`, PNG-only, 1–5 файлов до 10 MiB каждый.
-  Перед каждой операцией всё равно перечитывать live capabilities.
-- `append_visual_revision` в live capabilities пока отсутствует. Поэтому
-  добавление `v2+` в тот же Issue пока **не работает**. Не обещать его и не
-  вызывать source-only метод.
-- Первая публикация подтверждена: [Issue #5 — Northlight Beacon v1](https://github.com/AlexPastukhh/visual-workspace/issues/5)
-  открыт, содержит одну PNG-ссылку; при последнем readback комментариев нет.
-- В исходниках Fortis Approvals уже есть source candidate
-  `prepare_visual_revision` / `append_visual_revision`, контракт, adapter,
-  ASK policy и 9/9 focused offline tests. Это не live activation и не E2E.
-
-## Как работать до активации revision API
-
-Для первой согласованной версии можно использовать `publish_visual_review`.
-Если владелец просит следующую версию, сначала проверить live capabilities.
-Пока `append_visual_revision` отсутствует, не подменять целевую модель
-автоматическим созданием нового Issue: отдельный Issue для следующей версии
-допустим только с явным согласием владельца; иначе подготовить v2 локально
-и дождаться API. При неизвестном исходе любого write расследовать исходный
-request ID, не создавать повторную заявку.
+- `publish_visual_review` и `append_visual_revision` объявлены в
+  `allowGitHub` для `visual-workspace`, policy обоих методов — **ALLOW**.
+  `appendRevisionPolicy=ALLOW`, source-gated same-Issue comments v2+.
+  Другие GitHub-операции не наследуют этот scope. Capabilities проверять
+  `c.capabilities(refresh=True)` **перед каждым write**.
+- Публикация ограничена 1–5 PNG до 10 MiB на файл. Вторая версия
+  публикуется с исходным `issueNumber`, `baseRunId`, `assetId`, следующим
+  `revision`, **новыми** `runId`/`requestId`, полным source Git SHA и
+  `expected_payload_sha256` локальной подготовки.
+- **E2E подтверждён:** [Northlight Beacon v1 — Issue #5](https://github.com/AlexPastukhh/visual-workspace/issues/5)
+  сохранила body/PNG; [v2 — один комментарий](https://github.com/AlexPastukhh/visual-workspace/issues/5#issuecomment-7010209589)
+  с новой PNG, Git SHA и `EXECUTED` receipt. Владелец сообщил, что PNG
+  отображается нормально. Это **ISSUE_REVIEWED**, не `SOURCE_MERGED`
+  или `GAMEPLAY_ACCEPTED`.
+- Потерянный ответ, `UNCERTAIN` или другой недоказанный эффект:
+  **STOP, расследование того же requestId по UC-GW-009**, без второго
+  UUID, повторного комментария или нового Issue как fallback.
 
 Git/Docker остаются источником редактируемых исходников. Issue — витрина
 и обсуждение; PNG-превью не является оригиналом `.blend`/`.glb` или видео.

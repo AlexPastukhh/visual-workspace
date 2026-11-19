@@ -1,7 +1,8 @@
 # Handoff 02 — проверить versioned review, обновить UC и испытать чистые чаты
 
-**Для второго отдельного чистого чата.** Этот handoff запускается только
-после завершения Handoff 01 и owner-managed activation нового метода.
+**Исторический handoff второго чата, правила актуализированы 2026-11-19.**
+Запускался после owner-managed activation нового метода; действующая
+revision policy — **ALLOW**, по прямой поправке владельца, а не ASK.
 
 ## ОБЯЗАТЕЛЬНОЕ ПРЕДУСЛОВИЕ — проверь в самом начале
 
@@ -14,12 +15,12 @@
    `c = default_client()`
    `caps = c.capabilities(refresh=True)`.
 2. Убедись, что `append_visual_revision` присутствует в
-   `caps['askGitHub']` для текущего actor и repository
+   `caps['allowGitHub']` для текущего actor и repository
    `visual-workspace`.
 3. Убедись, что доступны оба typed метода:
    `c.github.prepare_visual_revision` и
    `c.github.append_visual_revision`.
-4. Проверь, что policy именно ASK для revision write, а не ALLOW/DENY,
+4. Проверь, что policy именно ALLOW для revision write, а не ASK/DENY,
    и что live Gateway/image identity соответствует релизу из Handoff 01.
 
 **Если хотя бы одно условие не выполнено — STOP.** Ничего не публикуй,
@@ -66,12 +67,13 @@ reservation/baseRunId. Если не доказывает — не обходи 
 2. Подготовь PNG и вызови `prepare_visual_revision(...)`; проверь
    `payloadSha256`, список media, размеры и SHA-256. Это локальный
    read-only preview, не GitHub write.
-3. Убедись, что повторная подготовка не создаёт stage, ASK или comment.
+3. Убедись, что повторная подготовка не создаёт stage, approval или comment.
 4. Проверь негативные входы без upstream side effects: wrong repository,
    wrong issue, wrong baseRunId, asset mismatch, revision gap/duplicate,
    invalid source SHA, repeated runId, >5 PNG, invalid/oversize PNG.
-5. Подтверди, что revision write требует отдельный ASK и не наследует
-   v1 publish ALLOW. Не симулируй owner WebAuthn и не подменяй его.
+5. Подтверди, что revision write имеет отдельный scoped ALLOW для
+   `visual-workspace` (не глобальное разрешение comment/write).
+   Защиту original Issue/reservation и негативные кейсы не обходить.
 
 ## Этап B — настоящий v1 → v2 E2E в одном Issue
 
@@ -94,9 +96,10 @@ reservation/baseRunId. Если не доказывает — не обходи 
 5. Подготовь v2 через `prepare_visual_revision`, затем один раз вызови
    `append_visual_revision` с новым immutable requestId, новым runId,
    тем же Issue number/baseRunId/assetId, revision=2 и preview hash.
-6. Если ответ PENDING — ждать owner decision в Owner Portal. Не повторять
-   call, не менять UUID, не отправлять второй request. После approval
-   дождаться EXECUTED и прочитать receipt.
+6. В действующей конфигурации ALLOW успешный вызов даёт EXECUTED.
+   Если policy меняется на ASK и ответ PENDING — ждать Owner Portal;
+   никогда не менять UUID или повторять write при неизвестном исходе.
+   Для EXECUTED прочитать durable receipt.
 7. Через Gateway READ проверь:
    - номер Issue у v2 тот же, что у v1;
    - Issue body и v1 PNG reference не изменились;
@@ -121,7 +124,7 @@ reservation/baseRunId. Если не доказывает — не обходи 
 - `README.md`: current live capabilities и краткая модель версий.
 - `WORKFLOW.md`: когда и как показывать владельцу, что делать до/после v1.
 - `docs/use-cases/media-github-review.md` (UC-VIS-009): точный typed flow,
-  ASK/ALLOW scope, receipt/readback, revision comments, source provenance,
+  действующий ALLOW scope, receipt/readback, revision comments, source provenance,
   retention и реальные ограничения.
 - `docs/use-cases/README.md`: корректные ссылки и границы UC-VIS-001–009.
 - `docs/BACKLOG-IMPROVEMENTS.md`: закрыть только реально принятые задачи;
@@ -187,7 +190,7 @@ editable source, Godot import, actual gameplay, version identity and Issue histo
 
 ## Критерии завершения
 
-- Live append capability и ASK policy доказаны до начала.
+- Live append capability и scoped ALLOW policy доказаны до начала.
 - Настоящий v2 comment создан в том же Issue, receipt и readback совпадают,
   v1 осталась нетронутой, владелец проверил PNG в браузере.
 - Документы и backlog отражают только проверенные факты.

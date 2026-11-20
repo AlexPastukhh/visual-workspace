@@ -48,6 +48,7 @@ in its own unique Workfiles run directory. It must not edit the repository.
 | [C06 — two independent orders](prompts/C06-create-multiple-orders.md) | *Optional* multi-order stress test; not the default production order |
 | [VR01 v1 — versioned GitHub owner review](prompts/VR01-versioned-review-v1.md) | One fresh chat; original asset v1 → real owner feedback → v2 same-Issue, typed ALLOW, browser proof; only with explicit owner authorization |
 | [SC01–SC05 — multi-message versioned production scenarios](scenarios/README.md) | Reuse A01–A05; create v1, then two real owner change messages and v2/v3 comments in the original Issue |
+| [SV01–SV03 — sequential visual QA scenarios](review-scenarios/README.md) | Two primary grouped read-only defect-review scenarios; third optional 2D→3D context switch |
 
 **Cold-chat execution matrix:** [CLEAN-CHAT-MATRIX-20261119.md](CLEAN-CHAT-MATRIX-20261119.md) distinguishes prepared prompts from NOT RUN independent tests. **Scenario matrix:** [SCENARIO-MATRIX-20261120.md](SCENARIO-MATRIX-20261120.md) tracks SC01–SC05 separately; they are all initially NOT RUN. VR01 uses real public GitHub side effects only after explicit owner authorization and cannot be executed autonomously in this chat.
 
@@ -87,6 +88,14 @@ against each written brief. For all visual cases, compare with the evaluator-onl
 answer key **only after** submission. Do not give the tested chat the key,
 an old review or a verdict. These prompts are normal user requests,
 not a special instruction format or automated agent execution.
+
+## Sequential visual defect review scenarios — SV01–SV03
+
+Two **primary** scenarios cover the existing five visual clips without combining unrelated work: [SV01 2D turnaround pair](review-scenarios/SV01/01-review-k7.md) and [SV02 3D jump/Walk group](review-scenarios/SV02/01-review-jumps.md). The [optional SV03 2D→3D switch](review-scenarios/SV03/01-review-2d.md) probes context switching using previously seen fixture IDs; it **does not** add new cases or independent observations of the model. [Scenario instructions](review-scenarios/README.md) and [execution matrix](REVIEW-SCENARIO-MATRIX-20261120.md) have exact two-message sequences.
+
+Each SVxx starts in a new Fortis Repo chat, receives message 01, submits an independent review and timing, then receives message 02 **in the same chat**. The tested chat must not read later prompts, evaluator-only keys, old reports, or upcoming cases before the owner sends each part. Every clip gets a separate PASS/FAIL/UNCERTAIN and exact full-resolution frame evidence; conclusions in one part cannot stand in for analysis of another.
+
+All SVxx visual cases and main repository stay read-only, with one Workfiles report folder per scenario. No task worktree, GitHub Issue, media publication or owner review. The historical V01–V09 prompts remain immutable; these scenarios are **additional** longitudinal tests, and cases within a chat are correlated. To test independently again, repeat the same fixed scenario in another fresh chat.
 
 ## Multi-message owner change scenarios
 

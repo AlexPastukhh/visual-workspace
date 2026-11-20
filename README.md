@@ -14,7 +14,7 @@
 - [Готовые handoffs](docs/handoffs/README.md) — два задания для отдельных
   чатов: активация revision API и последующая сквозная проверка.
 - [Практические тесты UC-VIS-008](practical-tests/README.md) — готовые
-  промпты для проверки новых чатов, включая [VR01 — versioned review](practical-tests/prompts/VR01-versioned-review-v1.md) и [матрицу независимых прогонов](practical-tests/CLEAN-CHAT-MATRIX-20261119.md).
+  промпты для проверки новых чатов, включая [VR01 — versioned review](practical-tests/prompts-tool-safe/VR01-versioned-review-v1.md) и [матрицу независимых прогонов](practical-tests/CLEAN-CHAT-MATRIX-20261119.md).
 
 ## Модель версий
 
@@ -70,6 +70,8 @@ Blender/Godot и их библиотеки устанавливаются отд
 `./tools/link-shared-tools.sh`; не коммитить бинарники среды. QA-кэш,
 временные рендеры и Workfiles не являются автоматически сохранённой
 Git-версией.
+
+**Инструменты при практических тестах:** используются Visual Workspace, Fortis Repo, редактируемые SVG/Blender/Godot исходники и настоящие runtime PNG. **AI image generation / image_gen не заменяет исполнение задачи или QA**; ограничения продублированы в каждом актуальном сценарном сообщении и в шаблонах незапланированных исправлений. [Парные ссылки на этапы и независимую оценку](practical-tests/scenarios/README.md), [SV пары](practical-tests/review-scenarios/README.md), [contract результатов](practical-tests/UNIT-SUBMISSION-CONTRACT.md).
 
 Практические тесты UC-VIS-008 имеют отдельные [сценарные последовательности SC01–SC05](practical-tests/scenarios/README.md): первоначальное задание и два последующих сообщения в одном чате, v1 Issue и v2/v3 комментарии, с оценкой по [новой матрице](practical-tests/SCENARIO-MATRIX-20261120.md).
 

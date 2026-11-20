@@ -101,3 +101,7 @@ One SVxx = one chat and one Workfiles run folder, **not** one independent model 
 ## Unit-gate decision and interventions
 
 For a scenario graded **after each work unit by another chat**, use the more detailed [unit decision template](unit-gates/decision-template.md) and [intervention ledger](unit-gates/intervention-ledger-template.md). The scorecard for the whole scenario cannot overwrite a first-pass FAIL with a successful repair. Track actual GitHub revision number separately from immutable planned file names v2/v3; never report the independent evaluator as the original runner.
+
+## Provenance of generated images (current guarded kit)
+
+Check that SC production used actual Visual Workspace/Fortis Repo editable SVG/Blender/Godot sources and exported/runtime PNGs. A ChatGPT image_gen or other AI image-generation substitution violates the production test regardless of image attractiveness. Examine actual tool-call evidence where available; otherwise record provenance as UNKNOWN, not proven absent. Planned work and evaluator messages are paired next to each other in [SC](../scenarios/README.md) and [SV](../review-scenarios/README.md) indexes. Unplanned steps use [paired message authoring](unit-gates/author-unplanned-pair.md).

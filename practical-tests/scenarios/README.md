@@ -7,6 +7,25 @@ For **each** SCxx, open a different new chat with Fortis Repo:
 3. Open the new PNG in a browser. Then send only `SCxx/03-change-v3.md` in the **same chat**. Verify source changes, QA, unique revision and the next version in the original Issue. Obtain independent per-unit evaluation. Record actual owner acceptance or specific additional feedback; never fabricate acceptance.
 4. **After each submitted work unit**, a **different evaluator chat** checks raw Workfiles/source and Gateway readback before the runner's own summary. Save the decision under `/workspace/repo/Workfiles/visual-workspace-practical-tests/evaluations/<run-id>/<unit-id>/`. Advance only after the owner reviews the [unit gate](../_evaluator/unit-gates/README.md).
 Do **not** send all three prompts to one chat in one message. Do **not** run stages 02/03 in fresh chats: remembering a task and continuing a revision is the subject of this test. A completely new run of SCxx starts from a **new chat** and gets its own Issue.
+## Парные ссылки на плановые этапы
+
+В каждой ячейке две ссылки: **выполнить** в прежнем чате-исполнителе, затем **оценить** в новом отдельном чате. Для запуска оценки передай фактический runId из ответа исполнителя. Файлы соседствуют в одном каталоге SCxx, но исполнитель не читает evaluate.md.
+
+| Сценарий | Этап 01 | Этап 02 | Этап 03 |
+| --- | --- | --- | --- |
+| SC01 | [Работа 01](SC01/01-create-v1.md) · [Оценка 01](SC01/01-evaluate.md) | [Работа 02](SC01/02-change-v2.md) · [Оценка 02](SC01/02-evaluate.md) | [Работа 03](SC01/03-change-v3.md) · [Оценка 03](SC01/03-evaluate.md) |
+| SC02 | [Работа 01](SC02/01-create-v1.md) · [Оценка 01](SC02/01-evaluate.md) | [Работа 02](SC02/02-change-v2.md) · [Оценка 02](SC02/02-evaluate.md) | [Работа 03](SC02/03-change-v3.md) · [Оценка 03](SC02/03-evaluate.md) |
+| SC03 | [Работа 01](SC03/01-create-v1.md) · [Оценка 01](SC03/01-evaluate.md) | [Работа 02](SC03/02-change-v2.md) · [Оценка 02](SC03/02-evaluate.md) | [Работа 03](SC03/03-change-v3.md) · [Оценка 03](SC03/03-evaluate.md) |
+| SC04 | [Работа 01](SC04/01-create-v1.md) · [Оценка 01](SC04/01-evaluate.md) | [Работа 02](SC04/02-change-v2.md) · [Оценка 02](SC04/02-evaluate.md) | [Работа 03](SC04/03-change-v3.md) · [Оценка 03](SC04/03-evaluate.md) |
+| SC05 | [Работа 01](SC05/01-create-v1.md) · [Оценка 01](SC05/01-evaluate.md) | [Работа 02](SC05/02-change-v2.md) · [Оценка 02](SC05/02-evaluate.md) | [Работа 03](SC05/03-change-v3.md) · [Оценка 03](SC05/03-evaluate.md) |
+
+**Версия:** все текущие сообщения содержат прямой запрет AI-генерации изображений и требуют работу через Fortis Repo в Visual Workspace. Ранее выполненные этапы (например, SC01.01, Issue #11) относятся к прежнему Git HEAD промптов. Эти изменения являются новой редакцией, а не переписыванием исторического запуска.
+
+**Маршрут:** после каждого этапа исполнитель сохраняет `.../runs/<runId>/reports/units/<unitId>/submission.md`, оценщик — `.../evaluations/<runId>/<unitId>/decision.md`. [Полный контракт](../UNIT-SUBMISSION-CONTRACT.md).
+
+**Внеплановые исправления:** по [процедуре создания пары](../_evaluator/unit-gates/author-unplanned-pair.md) оркестратор одновременно готовит сообщение исправления в тот же чат и сообщение независимой оценки в другой чат; оба требуют Visual Workspace/Fortis Repo и запрещают image_gen.
+
+
 ## Fixed assignments
 | ID | Base unchanged brief | v2 requirement | v3 requirement |
 | --- | --- | --- | --- |

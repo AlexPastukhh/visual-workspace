@@ -9,6 +9,8 @@ Evaluate **exactly one already-submitted work unit** from an existing Visual Wor
 - `GitHub Issue number/comment`: <if published; may be N/A for SV>
 - `submitted unit prompt path`: <exact accepted prompt>
 
+Сначала найди подтверждённый маршрут результатов `/workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<runId>/reports/units/<unitId>/submission.md` по [контракту](../../UNIT-SUBMISSION-CONTRACT.md) (если run старый и файла нет, проверь реально существующие пути, не выдумывай handoff). Используй только реальные исходники/PNG/QA через Fortis Repo. **Не вызывай image_gen и не генерируй синтетические иллюстрации для оценки.** Подмена рабочего результата генерацией изображений ИИ — критическая проблема производственного теста; если журнал вызовов исполнителя недоступен, явно отмечай проверку инструментария UNKNOWN, а не утверждай отсутствие image_gen.
+
 Read `/workspace/repo/README.md` and accepted `visual-workspace` documentation, applicable use cases, original brief and `practical-tests/_evaluator/unit-gates/README.md`. Verify source and Workfiles paths independently. Do not write to the runner's folders, original source, repo or GitHub. Use only evaluator-owned Workfiles output.
 
 **To reduce anchoring**, inspect the actual unmodified source/export, full-resolution Godot/Blender/runtime screenshots, controller/animation QA (where required), and exact GitHub Issue/receipts **before** reading the runner's self-review or any pre-existing audit. Record observations first. Then check claims, source provenance and all required evidence against the original written brief plus real later owner messages. If the evidence is unavailable, say INCONCLUSIVE rather than substituting a description.

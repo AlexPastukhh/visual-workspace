@@ -1,12 +1,12 @@
-# UC-VIS-008 + UC-VIS-009 — scenario execution matrix v1 (2026-11-20)
-**All new independent SC01–SC05 runs: NOT RUN.** Preparing prompts and activating Gateway methods is not evidence that a new chat completed the sequence. The original V01–V09 / C01–C06 / VR01 prompts and results remain separately attributed.
+# UC-VIS-008 + UC-VIS-009 — scenario execution matrix v2 (paired evaluators + guarded prompts) (2026-11-20)
+**Current guarded prompt edition: NOT RUN as a controlled comparable suite.** The earlier SC01.01 v1 was actually published as Issue #11 under a prior prompt revision; preserve that partial evidence separately, not retroactively as a guarded prompt result. The original V01–V09 / C01–C06 / VR01 prompts and results remain separately attributed.
 | ID | Initial message | Owner change 1 | Owner change 2 | Current state | Evidence / T0–T5 |
 | --- | --- | --- | --- | --- | --- |
-| SC01 | [create v1](scenarios/SC01/01-create-v1.md) | [v2](scenarios/SC01/02-change-v2.md) | [v3](scenarios/SC01/03-change-v3.md) | NOT RUN | None |
-| SC02 | [create v1](scenarios/SC02/01-create-v1.md) | [v2](scenarios/SC02/02-change-v2.md) | [v3](scenarios/SC02/03-change-v3.md) | NOT RUN | None |
-| SC03 | [create v1](scenarios/SC03/01-create-v1.md) | [v2](scenarios/SC03/02-change-v2.md) | [v3](scenarios/SC03/03-change-v3.md) | NOT RUN | None |
-| SC04 | [create v1](scenarios/SC04/01-create-v1.md) | [v2](scenarios/SC04/02-change-v2.md) | [v3](scenarios/SC04/03-change-v3.md) | NOT RUN | None |
-| SC05 | [create v1](scenarios/SC05/01-create-v1.md) | [v2](scenarios/SC05/02-change-v2.md) | [v3](scenarios/SC05/03-change-v3.md) | NOT RUN | None |
+| SC01 | [work 01](scenarios/SC01/01-create-v1.md) · [review 01](scenarios/SC01/01-evaluate.md) | [work 02](scenarios/SC01/02-change-v2.md) · [review 02](scenarios/SC01/02-evaluate.md) | [work 03](scenarios/SC01/03-change-v3.md) · [review 03](scenarios/SC01/03-evaluate.md) | NOT RUN | None |
+| SC02 | [work 01](scenarios/SC02/01-create-v1.md) · [review 01](scenarios/SC02/01-evaluate.md) | [work 02](scenarios/SC02/02-change-v2.md) · [review 02](scenarios/SC02/02-evaluate.md) | [work 03](scenarios/SC02/03-change-v3.md) · [review 03](scenarios/SC02/03-evaluate.md) | NOT RUN | None |
+| SC03 | [work 01](scenarios/SC03/01-create-v1.md) · [review 01](scenarios/SC03/01-evaluate.md) | [work 02](scenarios/SC03/02-change-v2.md) · [review 02](scenarios/SC03/02-evaluate.md) | [work 03](scenarios/SC03/03-change-v3.md) · [review 03](scenarios/SC03/03-evaluate.md) | NOT RUN | None |
+| SC04 | [work 01](scenarios/SC04/01-create-v1.md) · [review 01](scenarios/SC04/01-evaluate.md) | [work 02](scenarios/SC04/02-change-v2.md) · [review 02](scenarios/SC04/02-evaluate.md) | [work 03](scenarios/SC04/03-change-v3.md) · [review 03](scenarios/SC04/03-evaluate.md) | NOT RUN | None |
+| SC05 | [work 01](scenarios/SC05/01-create-v1.md) · [review 01](scenarios/SC05/01-evaluate.md) | [work 02](scenarios/SC05/02-change-v2.md) · [review 02](scenarios/SC05/02-evaluate.md) | [work 03](scenarios/SC05/03-change-v3.md) · [review 03](scenarios/SC05/03-evaluate.md) | NOT RUN | None |
 ## Execution gates
 - One SCxx = **one new chat with three sequential user messages**. Subsequent stages must be sent only after owner inspection and independently verifiable prior output; never all at once.
 - Every new SCxx run gets unique `/workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<run-id>/` and distinct registered source task; each owner-shown source version must be committed at a different full Git SHA.
@@ -17,3 +17,9 @@
 ## Priority
 Run **SC01 first** to establish 2D static change/history, independently evaluate it, then SC02 3D, SC03 2D animation, SC04 3D animation, SC05 game. Gate later public publications on actual lessons from previous scenario; failures do not authorize automatic retries or bypasses.
 **VR01 remains a distinct historical single-review integration baseline**; the new scenarios test production plus multiple separate real owner requests. V01–V09 remain visual QA without mandatory GitHub side effects. C01–C06 remain Workfiles-only historical creation baselines.
+
+## Pre-guarded evidence tracked separately
+
+- **SC01.01 earlier prompt**: first v1 created on 2026-11-20, Issue [#11](https://github.com/AlexPastukhh/visual-workspace/issues/11), original source SHA a15ae3599da230b15c332e90643b631cfdc568e6, runId sc01-hex-crystal-v1-20261120-1050; evaluator-owned Workfiles contains a qualified non-blind APPROVED_WITH_NOTES decision (not a compliant fully blind score). This original prompt did **not** yet contain the new no-image_gen tool guard or per-unit submission locator. Do not relabel old evidence as an execution of this revised edition.
+- A reported deviation after the subsequent SC01.02 user message (use of AI image generation) motivated the explicit guard. This is a **user report**, not independently verified complete stage evidence; do not mark SC01.02 PASS or assume an accepted source revision/comment without readback.
+- Exact runner source prompt SHA and tool-call history matter; use independent evaluation, not a synthetic generated image, to determine whether the following stage met the Visual Workspace acceptance contract.

@@ -131,3 +131,7 @@ For message 01, retain the existing visual-review UTC T0–T5 definitions. T5 en
 | S2.5 | All second-part reports and timing verified immediately before final reply |
 
 Report **T5−T0** for the first part, **S2.5−S2.0** active second-part wall-clock, S2.2−S2.0 first-preview time, each clip's own actual open/complete timestamps, and S2.5−T0 total *elapsed including owner wait*. Do not equate elapsed inter-message delay with active model work; label the T5→S2.0 interval owner wait/chat interruption. If user never sends message 02, second-part timestamps are **not measured**, not zero. One scenario has one run-id and Workfiles folder but multiple per-clip review files.
+
+## Unplanned repairs and independent evaluator clock
+
+After each owner-requested extra repair R1/R2 in the same running chat, record true UTC `R1.0` (message received), `R1.1` (plan), `R1.2` (first inspected correction), `R1.3` (source and QA ready), `R1.4` (same-Issue revision receipt/readback where applicable), and `R1.5` (evidence saved and verified). Use a separate prefix per repair; actual stage IDs are **not** GitHub revision numbers. Report added active rework time and human/evaluator waiting separately from the first-attempt time. The different evaluator chat measures its own effort in evaluator-owned Workfiles, **outside** the runner's T0–T5/S/R marks. Do not invent zero for missing observations. [Unit-gate protocol](_evaluator/unit-gates/README.md).

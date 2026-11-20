@@ -97,6 +97,10 @@ Each SVxx starts in a new Fortis Repo chat, receives message 01, submits an inde
 
 All SVxx visual cases and main repository stay read-only, with one Workfiles report folder per scenario. No task worktree, GitHub Issue, media publication or owner review. The historical V01–V09 prompts remain immutable; these scenarios are **additional** longitudinal tests, and cases within a chat are correlated. To test independently again, repeat the same fixed scenario in another fresh chat.
 
+## Independent work-unit evaluation and unplanned repair steps
+
+Use [the independent evaluator unit gates](_evaluator/unit-gates/README.md) **after each** submitted scenario part, not only the end. A different chat reviews raw source/images/QA/receipts. If it finds an objectively material defect, the owner pauses the planned next message and sends a separate corrective instruction in the **original runner chat**. Re-evaluate that intervention and preserve its extra source SHA, same-Issue revision, first-pass FAIL and rework time. The original immutable prompts remain unchanged; SV blind-review interventions must not leak expected defect labels.
+
 ## Multi-message owner change scenarios
 
 Use the [SC01–SC05 index](scenarios/README.md) for the exact sequence and

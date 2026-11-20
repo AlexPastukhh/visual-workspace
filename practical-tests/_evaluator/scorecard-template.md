@@ -97,3 +97,7 @@ Final whole-scenario status: PASS / PARTIAL / FAIL / BLOCKED / NOT RUN. Record o
 | Independent verdict, limitations, stage status | | |
 
 One SVxx = one chat and one Workfiles run folder, **not** one independent model observation per clip. Report T5→S2.0 user-wait interval separately. SV03 repeats existing clips and is optional. Full scenario verdict only after both messages, and evaluator-only scoring only after final submission.
+
+## Unit-gate decision and interventions
+
+For a scenario graded **after each work unit by another chat**, use the more detailed [unit decision template](unit-gates/decision-template.md) and [intervention ledger](unit-gates/intervention-ledger-template.md). The scorecard for the whole scenario cannot overwrite a first-pass FAIL with a successful repair. Track actual GitHub revision number separately from immutable planned file names v2/v3; never report the independent evaluator as the original runner.

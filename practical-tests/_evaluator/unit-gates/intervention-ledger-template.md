@@ -18,3 +18,5 @@ Example revision mapping when a published v1 needs rework:
 | SC01.03 | Original planned shape change | Same-Issue comment revision v4 |
 
 Do not change the actual order of published revisions, invent owner feedback, or replace existing Issue media. Preserve the initial FAIL and the later recovery outcome separately.
+
+Every unplanned stage must have the **paired** runner/reviewer messages under evaluations/<runId>/interventions/<repairUnitId>/ (01-to-runner.md and 02-to-evaluator.md). Both explicitly demand Visual Workspace/Fortis Repo and prohibit image_gen and synthetic substitute imagery. The reviewer uses reports/units/<repairUnitId>/submission.md, or explicitly verified historical evidence, and records a separate decision. See [author-unplanned-pair.md](author-unplanned-pair.md).

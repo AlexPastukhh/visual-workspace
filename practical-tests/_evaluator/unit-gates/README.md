@@ -2,6 +2,12 @@
 
 **Purpose:** a separate chat evaluates each completed work unit *before* the owner advances a multi-message scenario. This extends existing UC-VIS-008, UC-VIS-009, SC01–SC05, and SV01–SV03. It does not change accepted scenario prompts, historical fixtures, their answers, or Gateway APIs.
 
+## Готовые пары шагов и фиксированные адреса
+
+Для всех запланированных SC01–SC05 и SV01–SV03 теперь есть **две соседние ссылки на каждый шаг** — [SC: выполнить / оценить](../../scenarios/README.md) и [SV: выполнить / оценить](../../review-scenarios/README.md). В чате-исполнителе отправляется только задание; оценочный промпт — в **отдельном новом чате**, с фактическим runId. Результат исполнитель записывает по [контракту unit submission](../../UNIT-SUBMISSION-CONTRACT.md) в `runs/<runId>/reports/units/<unitId>/submission.md`. Оценщик пишет `evaluations/<runId>/<unitId>/decision.md`. Исторические прогоны без handoff читаются по существующим файлам без создания вымышленного handoff.
+
+Если нужен дополнительный этап, оркестратор [создаёт сразу пару сообщений](author-unplanned-pair.md) по [шаблону исправления](repair-runner-template.md) и [шаблону проверки](repair-evaluator-template.md) в отдельном evaluator-owned Workfiles каталоге. В обоих сообщениях **обязательно**: Visual Workspace + Fortis Repo, редактируемые реальные исходники/кадры, запрет image_gen и любой AI picture-generation вместо задачи. Не путать логический unitId с фактической GitHub ревизией после дополнительного комментария.
+
 ## Separation of responsibilities
 
 - **Runner chat:** executes SCxx/SVxx parts, edits source only when authorized, captures raw QA/receipts, and writes under its own unique `Workfiles/visual-workspace-practical-tests/runs/<run-id>/`. The runner never reads `_evaluator/`, independently written assessments or any hidden key.

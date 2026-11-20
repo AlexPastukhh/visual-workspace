@@ -1,5 +1,7 @@
 # SC01.01 — 2D светящийся энергетический кристалл (первоначальный заказ, v1)
 
+ВАЖНО — ИНСТРУМЕНТЫ: работай именно в Visual Workspace через подключение Fortis Repo: измени реальные редактируемые исходники SVG/Blender/Godot в той же зарегистрированной task-ветке, экспортируй PNG из рабочего проекта и проверь результат в Godot/Blender. НЕ используй ChatGPT image_gen, генераторы картинок ИИ или текст-в-картинку для создания, редактирования либо подмены рабочего ассета, итогового PNG или QA-доказательств. Если исходники/инструменты недоступны, зафиксируй BLOCKED, а не рисуй замену. Продолжай тот же заказ и тот же GitHub Issue, если это повторная версия.
+
 Работай через Fortis Repo в **новом независимом чате**. До чтения документации получи точное UTC T0. Прочитай `/workspace/repo/README.md`, `/workspace/repo/AGENTS.md`, `/workspace/repo/Repos/visual-workspace/README.md`, применимые UC-VIS, `WORKFLOW.md`, `docs/use-cases/media-github-review.md`, инструменты/QA и `practical-tests/TIMING.md`. Запиши T1–T5.
 
 **Заказ:** Создай оригинальный шестиугольный игровой кристалл-предмет 64×64 с cyan-сердцевиной и тонкой янтарной окантовкой на прозрачном фоне, сохрани редактируемый SVG, экспорт и Godot 4.7 сцену с игровым размером ~64 px в 1280×720.
@@ -13,3 +15,5 @@
 Используй read-only `prepare_visual_review`, затем один `publish_visual_review` с сохранёнными runId/requestId и expected digest. Подтверди EXECUTED receipt и readback исходного Issue; сохрани issueNumber, original baseRunId, assetId, полный Git source SHA, локальные PNG SHA256, QA evidence и ссылки. При UNCERTAIN расследуй тот же requestId без слепого повтора.
 
 Покажи мне ссылку на v1 и попроси отзыв. Это ещё не принятие и не source merge. Не выдумывай изменения за меня: дальнейшие требования придут отдельными сообщениями **в этот же чат**. При отсутствии отзыва статус `V1_OWNER_FEEDBACK_PENDING`, не создавай v2. Отчитайся о T0–T5, T3−T0, T5−T0, фактах и ограничениях. Не открывай `_evaluator/`.
+
+После выполнения именно этого этапа: в своей уже созданной папке /workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<runId>/ сохрани reports/units/SC01.01/submission.md — маршрутный указатель для независимой проверки (unitId=SC01.01, runId, исходный промпт, task worktree и полный source SHA или N/A, GitHub Issue/revision/comment или N/A, реальные пути PNG/QA/отчётов, timing file, итог PASS/PARTIAL/BLOCKED и ограничения). Это не самостоятельная оценка, не копия evaluator scorecard; не открывай соседний 01-evaluate.md или _evaluator/. Если такого файла не удалось сохранить, явно укажи в отчёте точный путь к уже записанным доказательствам.

@@ -1,12 +1,12 @@
-# Visual defect review scenarios SV01–SV03 — execution matrix v1 (2026-11-20)
+# Visual defect review scenarios SV01–SV03 — execution matrix v2 (paired evaluators + guarded prompts) (2026-11-20)
 
 **Все новые SV-прогоны: NOT RUN на момент подготовки.** Подготовленные промпты не являются доказательством независимого тестирования. Исторические результаты V01–V09 нельзя переназначать этим новым сценариям.
 
 | Сценарий | Объём | Первое сообщение | Второе сообщение | Статус | Точное время / evidence |
 | --- | --- | --- | --- | --- | --- |
-| SV01 — основной | 2D k7+m4, 48 PNG | [01](review-scenarios/SV01/01-review-k7.md) | [02](review-scenarios/SV01/02-review-m4.md) | NOT RUN | Не измерено |
-| SV02 — основной | 3D r2+t9+w8, 120 PNG | [01](review-scenarios/SV02/01-review-jumps.md) | [02](review-scenarios/SV02/02-review-walk.md) | NOT RUN | Не измерено |
-| SV03 — дополнительный | Mixed m4+r2, 72 PNG | [01](review-scenarios/SV03/01-review-2d.md) | [02](review-scenarios/SV03/02-review-3d.md) | NOT RUN | Не измерено |
+| SV01 — основной | 2D k7+m4, 48 PNG | [work 01](review-scenarios/SV01/01-review-k7.md) · [review 01](review-scenarios/SV01/01-evaluate.md) | [work 02](review-scenarios/SV01/02-review-m4.md) · [review 02](review-scenarios/SV01/02-evaluate.md) | NOT RUN | Не измерено |
+| SV02 — основной | 3D r2+t9+w8, 120 PNG | [work 01](review-scenarios/SV02/01-review-jumps.md) · [review 01](review-scenarios/SV02/01-evaluate.md) | [work 02](review-scenarios/SV02/02-review-walk.md) · [review 02](review-scenarios/SV02/02-evaluate.md) | NOT RUN | Не измерено |
+| SV03 — дополнительный | Mixed m4+r2, 72 PNG | [work 01](review-scenarios/SV03/01-review-2d.md) · [review 01](review-scenarios/SV03/01-evaluate.md) | [work 02](review-scenarios/SV03/02-review-3d.md) · [review 02](review-scenarios/SV03/02-evaluate.md) | NOT RUN | Не измерено |
 
 ## Acceptance gates
 
@@ -20,3 +20,7 @@
 - Оценщик изучает ключ только после полной сдачи обеих частей. Если первый этап не завершён, второй не запускать. Не придумывать времена и verdict до реальных запусков.
 
 [Правила запуска](review-scenarios/README.md) · [Timing](TIMING.md) · [Evaluator rubric](_evaluator/README.md).
+
+## Versioning note
+
+Current SV work and evaluation messages explicitly ban AI image generation and require genuine read-only Visual Workspace fixtures. All unguarded earlier benchmark prompts remain in Git history (and the original legacy V prompts are immutable); compare real run results using exact Git HEAD and prompt texts, not just scenario IDs. [Stage evidence contract](UNIT-SUBMISSION-CONTRACT.md) identifies each staged output without guessing where the runner saved it.

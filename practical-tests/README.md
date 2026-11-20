@@ -17,10 +17,18 @@ chat**: create/publish v1, owner change/publish v2 in the same Issue, then
 owner change/publish v3 in the same Issue. These are different test IDs and
 cannot be counted as completed historical C01–C05 runs.
 
+**Набор промптов с явным ограничением инструментов:** для нового запуска C01–C06, V01–V09 и VR01 используйте [prompts-tool-safe/](prompts-tool-safe/) (16 копий со стартовым запретом image_gen и требованием Visual Workspace/Fortis Repo). Оригиналы [prompts/](prompts/) оставлены byte-identical исторической базой, чтобы не менять прошлые benchmark. SC/SV теперь имеют по отдельной [паре «задание / независимая проверка»](scenarios/README.md) / [SV](review-scenarios/README.md) на каждый шаг. У всех активных этапов и внеплановых ремонтов запрет AI image generation написан **в самом пользовательском промпте**, включая короткие follow-ups; одного README недостаточно.
+
+## Paired evaluation launch notes (current prompt revision)
+
+For SC01–SC05: [paired work/evaluation links](scenarios/README.md). For SV01–SV03: [paired work/evaluation links](review-scenarios/README.md). Each evaluator receives the exact **runId** and reads the actual stage handoff path specified by [UNIT-SUBMISSION-CONTRACT](UNIT-SUBMISSION-CONTRACT.md). If the runner did not write one (historical run), the evaluator verifies existing evidence without inventing a file. Additional corrections must be [authored as two messages together](_evaluator/unit-gates/author-unplanned-pair.md), both explicitly disallowing image_gen.
+
+The active scenario prompts are a **new, guarded Git revision** of the original planning kit; compare results within exact prompt versions rather than treating the former SC01.01/SC01.02 wording as identical to this one. The original 16 single-prompt benchmarks still exist unchanged under [prompts/](prompts/); [prompts-tool-safe/](prompts-tool-safe/) is the supported choice for a new manual run.
+
 ## Primary method: send a ready-made prompt to a new chat
 
 Open a **fresh chat with Fortis Repo**, copy the complete text of ONE file
-from [prompts/](prompts/) and send it as your ordinary user request.
+from [prompts-tool-safe/](prompts-tool-safe/) and send it as your ordinary user request.
 All delivered prompts use the canonical accepted main at
 `/workspace/repo/Repos/visual-workspace/`; they do not rely on the
 preserved `initial-visual-workspace` task tree. No
@@ -31,26 +39,26 @@ in its own unique Workfiles run directory. It must not edit the repository.
 
 | Ready-to-send prompt | What it checks |
 | --- | --- |
-| [V01 — review five animations](prompts/V01-review-all.md) | Historical larger visual review prompt (untimed) |
-| [V02 — review one animation](prompts/V02-review-one.md) | Historical single visual review prompt (untimed) |
-| [V03 — one 2D animation, separate chat](prompts/V03-review-2d.md) | Historical independent cold test (no measured timing) |
-| [V04 — one 3D animation, separate chat](prompts/V04-review-3d.md) | Historical independent cold test (no measured timing) |
-| [V05 — 2D pair, basic](prompts/V05-review-2d-pair.md) | Two 2D cases, separate evidence, measured full time |
-| [V06 — 3D trio, intermediate](prompts/V06-review-3d-trio.md) | Three 3D cases with varied movement, measured full time |
-| [V08 — mixed pair, everyday default](prompts/V08-review-mixed-pair.md) | One 2D + one 3D, independent verdicts, measured |
-| [V09 — mixed pair, optimized reporting](prompts/V09-review-mixed-pair-reporting.md) | Same input/quality as V08; separate time spent drafting, writing, checking reports |
-| [V07 — mixed five, extended](prompts/V07-review-mixed-five.md) | Broad 2D/3D stress test, five verdicts, measured |
-| [C01 — create 2D asset](prompts/C01-create-2d-asset.md) | Written brief → editable 2D art → Godot preview |
-| [C02 — create 3D asset](prompts/C02-create-3d-asset.md) | Written brief → Blender model → Godot preview |
-| [C03 — create 2D animation](prompts/C03-create-2d-animation.md) | Original 2D art, clips, loops, visual review |
-| [C04 — create 3D animation](prompts/C04-create-3d-animation.md) | Original 3D rig/animation, import, review |
-| [C05 — make a playable game](prompts/C05-create-playable-game.md) | Asset + animation + controller, gameplay and input testing |
-| [C06 — two independent orders](prompts/C06-create-multiple-orders.md) | *Optional* multi-order stress test; not the default production order |
-| [VR01 v1 — versioned GitHub owner review](prompts/VR01-versioned-review-v1.md) | One fresh chat; original asset v1 → real owner feedback → v2 same-Issue, typed ALLOW, browser proof; only with explicit owner authorization |
+| [V01 — review five animations](prompts-tool-safe/V01-review-all.md) | Historical larger visual review prompt (untimed) |
+| [V02 — review one animation](prompts-tool-safe/V02-review-one.md) | Historical single visual review prompt (untimed) |
+| [V03 — one 2D animation, separate chat](prompts-tool-safe/V03-review-2d.md) | Historical independent cold test (no measured timing) |
+| [V04 — one 3D animation, separate chat](prompts-tool-safe/V04-review-3d.md) | Historical independent cold test (no measured timing) |
+| [V05 — 2D pair, basic](prompts-tool-safe/V05-review-2d-pair.md) | Two 2D cases, separate evidence, measured full time |
+| [V06 — 3D trio, intermediate](prompts-tool-safe/V06-review-3d-trio.md) | Three 3D cases with varied movement, measured full time |
+| [V08 — mixed pair, everyday default](prompts-tool-safe/V08-review-mixed-pair.md) | One 2D + one 3D, independent verdicts, measured |
+| [V09 — mixed pair, optimized reporting](prompts-tool-safe/V09-review-mixed-pair-reporting.md) | Same input/quality as V08; separate time spent drafting, writing, checking reports |
+| [V07 — mixed five, extended](prompts-tool-safe/V07-review-mixed-five.md) | Broad 2D/3D stress test, five verdicts, measured |
+| [C01 — create 2D asset](prompts-tool-safe/C01-create-2d-asset.md) | Written brief → editable 2D art → Godot preview |
+| [C02 — create 3D asset](prompts-tool-safe/C02-create-3d-asset.md) | Written brief → Blender model → Godot preview |
+| [C03 — create 2D animation](prompts-tool-safe/C03-create-2d-animation.md) | Original 2D art, clips, loops, visual review |
+| [C04 — create 3D animation](prompts-tool-safe/C04-create-3d-animation.md) | Original 3D rig/animation, import, review |
+| [C05 — make a playable game](prompts-tool-safe/C05-create-playable-game.md) | Asset + animation + controller, gameplay and input testing |
+| [C06 — two independent orders](prompts-tool-safe/C06-create-multiple-orders.md) | *Optional* multi-order stress test; not the default production order |
+| [VR01 v1 — versioned GitHub owner review](prompts-tool-safe/VR01-versioned-review-v1.md) | One fresh chat; original asset v1 → real owner feedback → v2 same-Issue, typed ALLOW, browser proof; only with explicit owner authorization |
 | [SC01–SC05 — multi-message versioned production scenarios](scenarios/README.md) | Reuse A01–A05; create v1, then two real owner change messages and v2/v3 comments in the original Issue |
 | [SV01–SV03 — sequential visual QA scenarios](review-scenarios/README.md) | Two primary grouped read-only defect-review scenarios; third optional 2D→3D context switch |
 
-**Cold-chat execution matrix:** [CLEAN-CHAT-MATRIX-20261119.md](CLEAN-CHAT-MATRIX-20261119.md) distinguishes prepared prompts from NOT RUN independent tests. **Scenario matrix:** [SCENARIO-MATRIX-20261120.md](SCENARIO-MATRIX-20261120.md) tracks SC01–SC05 separately; they are all initially NOT RUN. VR01 uses real public GitHub side effects only after explicit owner authorization and cannot be executed autonomously in this chat.
+**Cold-chat execution matrix:** [CLEAN-CHAT-MATRIX-20261119.md](CLEAN-CHAT-MATRIX-20261119.md) distinguishes prepared prompts from NOT RUN independent tests. **Scenario matrix:** [SCENARIO-MATRIX-20261120.md](SCENARIO-MATRIX-20261120.md) tracks SC01–SC05 separately; historical first-stage SC01 evidence is noted there, and current revised prompt runs are distinct. VR01 uses real public GitHub side effects only after explicit owner authorization and cannot be executed autonomously in this chat.
 
 **Recommended default:** send **V08** for a fast cross-dimension review
 (two cases and one bootstrap) or **V05** / **V06** for focused 2D / 3D
@@ -119,8 +127,11 @@ GitHub publication. The new SCxx.01 prompts explicitly authorize their own
 public PNG v1 Issue; later user messages authorize the corresponding changes.
 Check live Gateway policies before **each** write. Never treat PNG preview as
 proof of animation playback, 3D source delivery or actual gameplay acceptance.
-All 15 SCxx prompt texts are immutable once accepted. For retesting with changed
-instructions, create a new SC ID/version rather than edit the historical run.
+The earlier SCxx prompts and first-pass results remain traceable at their exact
+accepted Git SHAs; this tooling-safe revision explicitly changes the current
+prompt text and must be recorded as a **new prompt version**. Do not silently
+merge results of older and newer prompt versions into an identical benchmark.
+For future repetitions, record the exact accepted HEAD and runId.
 
 ## Testing strategy: independence versus time
 

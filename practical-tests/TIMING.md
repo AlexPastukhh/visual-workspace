@@ -102,3 +102,17 @@ are optional for production and other visual prompts.
 - Legacy V03/V04 runs completed before this protocol have quality
   results, but **no comparable total timing**. Never retroactively infer
   their duration from prose or timestamps embedded in a path.
+
+## Extension: multi-message versioned scenarios SC01–SC05
+The original T0–T5 definition is **unchanged** for the *first* message of a scenario. Record T0 before README, T1 after bootstrap, T2 after brief/plan, T3 after first real inspected Godot full-size frame, T4 after v1 creation/QA, T5 after the v1 report is saved and checked. T5 closes **only stage 01**, not the full owner-review conversation.
+For later **messages in the same chat**, record observed UTC marks in the same `timing.md` (never invent timestamps):
+| Mark | Meaning for stage N = 2 or 3 |
+| --- | --- |
+| `S{N}.0` | First available container clock after receiving the owner's new message, before source changes |
+| `S{N}.1` | New requirement reconciled against prior brief/version and update plan ready |
+| `S{N}.2` | First actual full-size image of the changed source viewed in Godot |
+| `S{N}.3` | Source revision and required runtime/visual QA completed |
+| `S{N}.4` | GitHub revision receipt and same-Issue READ verified; mark unavailable if blocked |
+| `S{N}.5` | Per-stage report and timing saved and checked, before replying to owner |
+Report `S2.5−S2.0` and `S3.5−S3.0` separately; also report time to changed preview (`S{N}.2−S{N}.0`), time until publication and write/readback waits. Do not add stage durations to get end-to-end elapsed time when there are human feedback delays: additionally record the actual wall elapsed `S3.5−T0` and each observed interval between prior stage completion and next user message **as owner wait / chat interruption**, not active agent work. If no owner message arrives, follow-up timestamps are unavailable, not zero.
+Record exact source SHA, GitHub requestId and actual Issue/comment evidence alongside each stage; do not substitute a fast cached render for end-to-end timing. For playable SC05, keep real controller/input test duration separate from screenshot/GitHub timings. A scenario is not completed by a v1 or v2 T5 alone.

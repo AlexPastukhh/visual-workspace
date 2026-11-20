@@ -8,12 +8,14 @@ For each independent creation order, the **task's written brief** is the
 acceptance reference. Asset-level briefs/manifests in the existing projects
 remain their own source of truth; this kit does not replace them.
 
-This kit currently tests visual inspection and asset/game creation; it does
-**not** yet run the real UC-VIS-009 owner-review loop (v1 → owner feedback →
-v2 comment in the same Issue). Practical blind tests do not publish fixtures
-or create GitHub Issues by default. Add a separate immutable versioned-review
-prompt only after `append_visual_revision` is advertised by the live Gateway;
-see [the two ordered handoffs](../docs/handoffs/README.md).
+The original V01–V09 and C01–C06 benchmark prompts remain **immutable**:
+visual blind tests and standard C-creation tests do not publish fixtures or
+GitHub Issues by default. The historical VR01 prompt exercises one versioned
+owner review. New [scenario tests SC01–SC05](scenarios/README.md) reuse the
+existing A01–A05 briefs, but add **three separate user messages in one new
+chat**: create/publish v1, owner change/publish v2 in the same Issue, then
+owner change/publish v3 in the same Issue. These are different test IDs and
+cannot be counted as completed historical C01–C05 runs.
 
 ## Primary method: send a ready-made prompt to a new chat
 
@@ -45,8 +47,9 @@ in its own unique Workfiles run directory. It must not edit the repository.
 | [C05 — make a playable game](prompts/C05-create-playable-game.md) | Asset + animation + controller, gameplay and input testing |
 | [C06 — two independent orders](prompts/C06-create-multiple-orders.md) | *Optional* multi-order stress test; not the default production order |
 | [VR01 v1 — versioned GitHub owner review](prompts/VR01-versioned-review-v1.md) | One fresh chat; original asset v1 → real owner feedback → v2 same-Issue, typed ALLOW, browser proof; only with explicit owner authorization |
+| [SC01–SC05 — multi-message versioned production scenarios](scenarios/README.md) | Reuse A01–A05; create v1, then two real owner change messages and v2/v3 comments in the original Issue |
 
-**Cold-chat execution matrix:** [CLEAN-CHAT-MATRIX-20261119.md](CLEAN-CHAT-MATRIX-20261119.md) distinguishes prepared prompts from NOT RUN independent tests. VR01 uses real public GitHub side effects only after explicit owner authorization and cannot be executed autonomously in this chat.
+**Cold-chat execution matrix:** [CLEAN-CHAT-MATRIX-20261119.md](CLEAN-CHAT-MATRIX-20261119.md) distinguishes prepared prompts from NOT RUN independent tests. **Scenario matrix:** [SCENARIO-MATRIX-20261120.md](SCENARIO-MATRIX-20261120.md) tracks SC01–SC05 separately; they are all initially NOT RUN. VR01 uses real public GitHub side effects only after explicit owner authorization and cannot be executed autonomously in this chat.
 
 **Recommended default:** send **V08** for a fast cross-dimension review
 (two cases and one bootstrap) or **V05** / **V06** for focused 2D / 3D
@@ -84,6 +87,27 @@ against each written brief. For all visual cases, compare with the evaluator-onl
 answer key **only after** submission. Do not give the tested chat the key,
 an old review or a verdict. These prompts are normal user requests,
 not a special instruction format or automated agent execution.
+
+## Multi-message owner change scenarios
+
+Use the [SC01–SC05 index](scenarios/README.md) for the exact sequence and
+[2026-11-20 matrix](SCENARIO-MATRIX-20261120.md). One scenario **starts** in a
+fresh chat; the owner then sends step 02 and step 03 as **new messages in that
+same chat**, only after reviewing the previous GitHub PNG. The version change is
+a legitimate new design request, not necessarily a defect fix. The agent must
+preserve the continuing task and revised requirements, edit the **same source**,
+perform relevant QA and publish v2/v3 as separate comments on the original
+Fortis-created Issue. The one permitted exception to A01–A05 Workfiles-only
+output is committed **editable source** in a registered task worktree for
+reproducible revision SHA; QA and reports stay in isolated Workfiles.
+
+The original C01–C06 prompts remain strictly Workfiles-only and do not grant
+GitHub publication. The new SCxx.01 prompts explicitly authorize their own
+public PNG v1 Issue; later user messages authorize the corresponding changes.
+Check live Gateway policies before **each** write. Never treat PNG preview as
+proof of animation playback, 3D source delivery or actual gameplay acceptance.
+All 15 SCxx prompt texts are immutable once accepted. For retesting with changed
+instructions, create a new SC ID/version rather than edit the historical run.
 
 ## Testing strategy: independence versus time
 

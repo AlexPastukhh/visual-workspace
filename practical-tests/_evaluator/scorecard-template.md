@@ -62,3 +62,23 @@ task; separate correctness from speed. For comparing two revisions,
 keep prompt/input/expected evidence fixed, describe changes and run
 the same task in independent chats where possible. One success is a
 smoke test, not proof of a general reliability percentage.
+
+## Multi-message SCxx extension (fill after each submitted message)
+| Field | v1 initial | v2 owner change | v3 owner change |
+| --- | --- | --- | --- |
+| Real owner message / requirement deltas | | | |
+| Source paths and full Git SHA | | | |
+| Original requirements still applicable | | | |
+| Edited source comparison actually checked | | | |
+| Godot/Blender QA and inspected full-size PNGs | | | |
+| Real animation/controller/runtime tests if required | | | |
+| Local media SHA256, PNG count and byte sizes | | | |
+| issueNumber / baseRunId / assetId | | | |
+| revision / runId / requestId | | | |
+| EXECUTED receipt and commentId (v2+) | | | |
+| GitHub Issue + comment / unchanged earlier versions | | | |
+| Owner browser inspection and explicit status | | | |
+| Timing T0–T5 or S2/S3 stage clock marks | | | |
+| Stage verdict / blocker / uncertainty | | | |
+Verify exactly **one** original Issue, no extra Issue for v2/v3, and **one comment each** for v2 and v3; three **different source Git SHAs**. Compare requested change and unchanged requirements per version, not only new PNG links. Owner messages arrive sequentially in the **same chat**; all stages are correlated.
+Final whole-scenario status: PASS / PARTIAL / FAIL / BLOCKED / NOT RUN. Record owner-wait intervals separately from active stage durations. Score `ISSUE_REVIEWED`, `SOURCE_MERGED`, `GAMEPLAY_ACCEPTED` separately. A missing third user message must not be graded as a failed v3 change.

@@ -116,3 +116,18 @@ For later **messages in the same chat**, record observed UTC marks in the same `
 | `S{N}.5` | Per-stage report and timing saved and checked, before replying to owner |
 Report `S2.5−S2.0` and `S3.5−S3.0` separately; also report time to changed preview (`S{N}.2−S{N}.0`), time until publication and write/readback waits. Do not add stage durations to get end-to-end elapsed time when there are human feedback delays: additionally record the actual wall elapsed `S3.5−T0` and each observed interval between prior stage completion and next user message **as owner wait / chat interruption**, not active agent work. If no owner message arrives, follow-up timestamps are unavailable, not zero.
 Record exact source SHA, GitHub requestId and actual Issue/comment evidence alongside each stage; do not substitute a fast cached render for end-to-end timing. For playable SC05, keep real controller/input test duration separate from screenshot/GitHub timings. A scenario is not completed by a v1 or v2 T5 alone.
+
+## Extension: sequential read-only visual QA scenarios SV01–SV03
+
+For message 01, retain the existing visual-review UTC T0–T5 definitions. T5 ends **the first part only**. For message 02 in the **same chat** (different clips, same single Workfiles run), record real UTC milestones without restarting the original T0/T1 bootstrap:
+
+| Mark | Event |
+| --- | --- |
+| S2.0 | First accessible container UTC clock after receiving the next owner message |
+| S2.1 | Newly assigned brief/capture read and inspection plan ready |
+| S2.2 | First real full-resolution PNG of the second part visually inspected |
+| S2.3 | All second-part clips inspected; individual verdicts frozen |
+| S2.4 | Individual reports, combined summary and timing draft saved |
+| S2.5 | All second-part reports and timing verified immediately before final reply |
+
+Report **T5−T0** for the first part, **S2.5−S2.0** active second-part wall-clock, S2.2−S2.0 first-preview time, each clip's own actual open/complete timestamps, and S2.5−T0 total *elapsed including owner wait*. Do not equate elapsed inter-message delay with active model work; label the T5→S2.0 interval owner wait/chat interruption. If user never sends message 02, second-part timestamps are **not measured**, not zero. One scenario has one run-id and Workfiles folder but multiple per-clip review files.

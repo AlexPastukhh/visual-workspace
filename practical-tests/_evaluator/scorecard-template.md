@@ -82,3 +82,18 @@ smoke test, not proof of a general reliability percentage.
 | Stage verdict / blocker / uncertainty | | | |
 Verify exactly **one** original Issue, no extra Issue for v2/v3, and **one comment each** for v2 and v3; three **different source Git SHAs**. Compare requested change and unchanged requirements per version, not only new PNG links. Owner messages arrive sequentially in the **same chat**; all stages are correlated.
 Final whole-scenario status: PASS / PARTIAL / FAIL / BLOCKED / NOT RUN. Record owner-wait intervals separately from active stage durations. Score `ISSUE_REVIEWED`, `SOURCE_MERGED`, `GAMEPLAY_ACCEPTED` separately. A missing third user message must not be graded as a failed v3 change.
+
+## SVxx — sequential read-only review extension (complete after both messages)
+
+| Field | Message 01 | Message 02 |
+| --- | --- | --- |
+| Scenario ID, exact prompt file, accepted main HEAD / dirty | | |
+| Input clips and per-case written brief/capture | | |
+| Actual original full-size PNG frame IDs opened for each case | | |
+| Separate per-case PASS/FAIL/UNCERTAIN and frame/time evidence | | |
+| Per-case TP/TN/FP/FN, localization, false positives (evaluator only) | | |
+| UTC T0–T5 or S2.0–S2.5, first full-resolution preview and clip intervals | | |
+| Files submitted and verified before the next user message | | |
+| Independent verdict, limitations, stage status | | |
+
+One SVxx = one chat and one Workfiles run folder, **not** one independent model observation per clip. Report T5→S2.0 user-wait interval separately. SV03 repeats existing clips and is optional. Full scenario verdict only after both messages, and evaluator-only scoring only after final submission.

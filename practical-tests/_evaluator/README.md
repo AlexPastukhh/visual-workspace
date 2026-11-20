@@ -124,3 +124,9 @@ Evaluate each **completed two-message scenario as ONE correlated chat-run**, nev
 Require that message 01 submitted its **own** independent per-case report(s) **before** message 02 appeared, and preserve those conclusions without post-hoc rewriting. For message 02 confirm it used its newly assigned brief/capture, actually opened original full-size frames, and formed a separate PASS/FAIL/UNCERTAIN rather than borrowing the previous result. No assumption that a group must contain a failing clip; do not leak hidden labels in prompts or evaluator feedback.
 
 After the **final submission only**, apply the existing evaluator key per case for TP/TN/FP/FN, frame/time localization and invented defects. Group by chat as well as by case. SV03 repeats m4/r2, so duplicate evaluations do not increase fixture diversity or independent model sample counts. Preserve actual first-part T0–T5 and second-part S2.0–S2.5 with owner wait reported separately. Visual QA remains read-only and must not create GitHub Issues/PRs. The original V01–V09 results remain historical and must not be relabeled as SV runs.
+
+## Independent gates for each submitted work unit
+
+The reusable [unit-gate protocol](unit-gates/README.md), [independent reviewer prompt](unit-gates/independent-review-prompt.md), [decision record](unit-gates/decision-template.md), and [intervention ledger](unit-gates/intervention-ledger-template.md) formalize an **evaluation after every completed scenario work unit in a distinct chat**. Preserve the runner's initial Workfiles and first-pass result. Unplanned repairs are additional units; actual same-Issue GitHub revision numbers can shift relative to filenames of planned v2/v3 prompts.
+
+For SV blind tests, do not reveal the hidden answer key to the runner before the full scenario completes. Coached re-review counts as recovery, never as first-pass independent detection.

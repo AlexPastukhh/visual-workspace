@@ -8,6 +8,11 @@ For each independent creation order, the **task's written brief** is the
 acceptance reference. Asset-level briefs/manifests in the existing projects
 remain their own source of truth; this kit does not replace them.
 
+**Проектирование новых тестовых Actions и выбор сложности:** общие
+переиспользуемые принципы принадлежат [UC-VIS-008](../docs/use-cases/README.md#uc-vis-008).
+Здесь остаются конкретные промпты, fixtures, контракты оценки и процедура запуска;
+исторические имена SC/SV/RS не переименовываются задним числом.
+
 The original V01–V09 and C01–C06 benchmark prompts remain **immutable**:
 visual blind tests and standard C-creation tests do not publish fixtures or
 GitHub Issues by default. The historical VR01 prompt exercises one versioned

@@ -20,12 +20,12 @@ variants:
     steps:
       - unit_id: SV01.01
         work_prompt: practical-tests/actions/VT11/prompts/01-review.md
-        evaluation_prompt: practical-tests/review-scenarios/SV01/01-evaluate.md
+        evaluation_prompt: practical-tests/actions/VT11/prompts/01-evaluate.md
         case_ids:
           - clip-k7
       - unit_id: SV01.02
         work_prompt: practical-tests/actions/VT11/prompts/02-review.md
-        evaluation_prompt: practical-tests/review-scenarios/SV01/02-evaluate.md
+        evaluation_prompt: practical-tests/actions/VT11/prompts/02-evaluate.md
         case_ids:
           - clip-m4
     legacy_sources:

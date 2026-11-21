@@ -21,13 +21,13 @@ variants:
     steps:
       - unit_id: SV02.01
         work_prompt: practical-tests/actions/VT12/prompts/01-review.md
-        evaluation_prompt: practical-tests/review-scenarios/SV02/01-evaluate.md
+        evaluation_prompt: practical-tests/actions/VT12/prompts/01-evaluate.md
         case_ids:
           - clip-r2
           - clip-t9
       - unit_id: SV02.02
         work_prompt: practical-tests/actions/VT12/prompts/02-review.md
-        evaluation_prompt: practical-tests/review-scenarios/SV02/02-evaluate.md
+        evaluation_prompt: practical-tests/actions/VT12/prompts/02-evaluate.md
         case_ids:
           - clip-w8
     legacy_sources:

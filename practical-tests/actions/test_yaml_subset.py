@@ -54,6 +54,25 @@ variants:
                     self.assertIs(type(flag), bool)
                     self.assertEqual(flag, id in creation)
 
+    def test_visual_review_uses_keyed_scoring_not_second_detection(self):
+        for id in ('VT11', 'VT12'):
+            doc = parse((ROOT / id / 'visual-testing.yaml').read_text(encoding='utf-8'))
+            self.assertEqual(doc['kind'], 'visual_review')
+            for variant in doc['variants']:
+                self.assertIs(variant['human_review_required'], False)
+                self.assertEqual(len(variant['steps']), 2)
+                for number, step in enumerate(variant['steps'], 1):
+                    with self.subTest(action=id, stage=number):
+                        path = step['evaluation_prompt']
+                        self.assertTrue(path.startswith(f'practical-tests/actions/{id}/prompts/'))
+                        content = (ROOT.parent.parent / path).read_text(encoding='utf-8')
+                        self.assertIn('DEFECT-SCORING.md', content)
+                        if number == 1:
+                            self.assertIn('только процессный gate', content)
+                        else:
+                            self.assertIn('answer-key.json', content)
+                            self.assertIn('defect-score.md', content)
+
     def test_reject_non_contract_yaml(self):
         invalid = [
             'name: x\nname: y\n',               # duplicates

@@ -131,7 +131,22 @@ def check_catalog() -> tuple[int, int]:
                     assert doc['kind'] == 'evaluation'
                 else:
                     assert '_evaluator/' not in step['work_prompt']
-                    resolve_repo_path(step['evaluation_prompt'])
+                    evaluator_file = resolve_repo_path(step['evaluation_prompt'])
+                    if doc['kind'] == 'visual_review':
+                        # Grader of detection != second independently detecting agent.
+                        # Preserve older SV evaluators as historical definitions,
+                        # but keep all new Action-runs on answer-key comparison.
+                        expected_prefix = f'practical-tests/actions/{folder.name}/prompts/'
+                        assert step['evaluation_prompt'].startswith(expected_prefix), step['evaluation_prompt']
+                        evaluator_text = evaluator_file.read_text(encoding='utf-8')
+                        assert 'DEFECT-SCORING.md' in evaluator_text, evaluator_file
+                        assert 'не' in evaluator_text.lower() and 'анализ' in evaluator_text.lower(), evaluator_file
+                        assert v['human_review_required'] is False, key
+                        if step == v['steps'][0]:
+                            assert 'процессный gate' in evaluator_text.lower(), evaluator_file
+                        if step == v['steps'][-1]:
+                            assert 'answer-key.json' in evaluator_text, evaluator_file
+                            assert 'defect-score.md' in evaluator_text, evaluator_file
                 for case in step.get('case_ids', []):
                     assert case in inp['visual_cases'], (step['unit_id'], case)
                 stage_count += 1

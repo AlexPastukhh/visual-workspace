@@ -58,6 +58,17 @@ Record failures and rework without altering a fixed benchmark prompt.
 
 ## Visual detection scoring (per case)
 
+**Роль оценщика — сравнивать результат испытуемого с evaluator-only key,
+а не проводить собственный повторный поиск дефектов по PNG/анимации.**
+Первый unit слепого SV01/SV02 проверяется только на корректность процесса
+и замороженные индивидуальные ответы. После завершения всех частей
+сопоставляй их с `answer-key.json`, при необходимости проверив целостность
+seeded fixtures через `verify_seeded.py`. Ключ содержит известные
+контрольные метки, а не гарантирует отсутствие любых художественных
+особенностей; спор с эталоном отмечай отдельно, не переписывай key.
+Для новых VT11/VT12 точный порядок —
+[протокол проверки обнаружения](../actions/DEFECT-SCORING.md).
+
 - 2 points: correct fault/no-fault verdict. No-defect controls count.
 - 1 point: accurate temporal localization for a defective case (local frame
   index and/or time, within a relevant short interval); for a control, correct

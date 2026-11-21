@@ -28,9 +28,11 @@ The executor and evaluator are **different chats**. Each completed scenario stag
   критерии. До неё он **не начинает** ревью и не пишет `decision.md`.
   Чат фиксирует только `TECHNICAL_ONLY / NOT_FINAL`, а не полный PASS.
   Общий исход после обоих отзывов принадлежит owner/orchestrator.
-- `false`: обычная независимая чат-проверка. Слепые SV01/SV02 по-прежнему
-  используют свои специальные evaluator-промпты и не раскрывают ключ раньше
-  времени.
+- `false`: независимая чат-проверка без обязательного human gate. В
+  новых Actions VT11/VT12 применяются [специальные evaluator-промпты и
+  сравнение ответов с эталоном](actions/DEFECT-SCORING.md): **не** повторный
+  визуальный поиск. Первый unit — process-only, сравнение с ключом — после
+  завершения второго. Исторические SV evaluator-промпты не переписываются.
 
 См. [единый порядок](actions/HUMAN-REVIEW.md). Старые SC/RS/SV prompts и
 прежние outcomes не переписываются задним числом, и наличие human flag

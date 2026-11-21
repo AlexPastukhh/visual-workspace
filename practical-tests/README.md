@@ -25,6 +25,12 @@ For SC01–SC05: [paired work/evaluation links](scenarios/README.md). For SV01�
 
 The active scenario prompts are a **new, guarded Git revision** of the original planning kit; compare results within exact prompt versions rather than treating the former SC01.01/SC01.02 wording as identical to this one. The original 16 single-prompt benchmarks still exist unchanged under [prompts/](prompts/); [prompts-tool-safe/](prompts-tool-safe/) is the supported choice for a new manual run.
 
+## Новые сценарии создания по референсу — RS01–RS04
+
+[Каталог RS-сценариев](reference-scenarios/README.md) дополняет, но не заменяет существующие SC01–SC05. Четыре пилота с CC0 PNG и проверяемыми SHA256: близкое повторение 2D-иконки, сохранение геометрии при локальном изменении, объединение двух референсов и реконструкция настоящей 3D-модели по изометрическому изображению. У каждого логического шага рядом лежит парный [independent evaluate](reference-scenarios/SCENARIO-CATALOG.md) промпт. Не требуется прогонять все RS одновременно: [фасетный каталог](reference-scenarios/SCENARIO-CATALOG.md) помогает подбирать точечные испытания для разработки и регрессии, не навязывая жёсткие группы.
+
+Все новые RS — NOT RUN, результаты существующих SC остаются историческими. Исполнитель использует только Visual Workspace/Fortis Repo и реальную самостоятельно построенную редактируемую графику, а не image_gen или вставку готового PNG. Рабочие артефакты и независимые оценочные решения сохраняются по общему unit-submission contract.
+
 ## Primary method: send a ready-made prompt to a new chat
 
 Open a **fresh chat with Fortis Repo**, copy the complete text of ONE file
@@ -55,6 +61,7 @@ in its own unique Workfiles run directory. It must not edit the repository.
 | [C05 — make a playable game](prompts-tool-safe/C05-create-playable-game.md) | Asset + animation + controller, gameplay and input testing |
 | [C06 — two independent orders](prompts-tool-safe/C06-create-multiple-orders.md) | *Optional* multi-order stress test; not the default production order |
 | [VR01 v1 — versioned GitHub owner review](prompts-tool-safe/VR01-versioned-review-v1.md) | One fresh chat; original asset v1 → real owner feedback → v2 same-Issue, typed ALLOW, browser proof; only with explicit owner authorization |
+| [RS01–RS04 — reference-driven production scenarios](reference-scenarios/README.md) | Pinned CC0 PNG references; exact recreation, local edits, multi-reference fusion, single-view-to-3D; choose only relevant tests |
 | [SC01–SC05 — multi-message versioned production scenarios](scenarios/README.md) | Reuse A01–A05; create v1, then two real owner change messages and v2/v3 comments in the original Issue |
 | [SV01–SV03 — sequential visual QA scenarios](review-scenarios/README.md) | Two primary grouped read-only defect-review scenarios; third optional 2D→3D context switch |
 

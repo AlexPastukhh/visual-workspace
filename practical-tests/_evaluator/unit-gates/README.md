@@ -35,6 +35,10 @@ Maintain [intervention-ledger-template.md](intervention-ledger-template.md) in a
 
 **Do not retroactively edit fixed prompts or outcomes.** Preserve original unit output and first-attempt FAIL. Evaluate recovery separately (number of interventions, active rework time, owner wait, incremental cost, regressions). Report both first-pass quality and eventual accepted quality. Source/Issue SHAs and times must be observational, not invented.
 
+## RS — independent checks for creating from pinned references
+
+Reference-driven production units RS01–RS04 are an **additional authoring scenario family** using the same work-unit gates as SC. They are not a new mandatory suite. Read [RS scenario index](../../reference-scenarios/README.md) and [frozen CC0 reference provenance](../../reference-scenarios/references/PROVENANCE.md). Grade the actual supplied pinned PNG by visual criteria (silhouette, key features, layout/perspective, color/shading), while separately grading editable source, actual Godot/Blender runtime, SHA and same-Issue history. For single-view 3D reconstruction, judge reference alignment in the shown view and plausible fully three-dimensional geometry in unseen views, **not** unknowable pixel truth on hidden surfaces. Reference plagiarism-by-import/tracing or AI image generation cannot be marked independent recreation. If the provenance/tool trace is unavailable, state UNKNOWN instead of inventing a check. The owner can select cases by tags rather than running every test.
+
 ## Two kinds of scenarios require different feedback
 
 - **SC01–SC05 creation/change:** evaluator may disclose concrete rubric-backed defects to the owner, who sends a narrow repair message to the runner. Subjective owner preferences are *planned or new design changes*, not mandatory defect fixes unless they contradict the brief.

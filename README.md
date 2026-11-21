@@ -73,6 +73,8 @@ Git-версией.
 
 **Инструменты при практических тестах:** используются Visual Workspace, Fortis Repo, редактируемые SVG/Blender/Godot исходники и настоящие runtime PNG. **AI image generation / image_gen не заменяет исполнение задачи или QA**; ограничения продублированы в каждом актуальном сценарном сообщении и в шаблонах незапланированных исправлений. [Парные ссылки на этапы и независимую оценку](practical-tests/scenarios/README.md), [SV пары](practical-tests/review-scenarios/README.md), [contract результатов](practical-tests/UNIT-SUBMISSION-CONTRACT.md).
 
+Новые [сценарии создания по референсу RS01–RS04](practical-tests/reference-scenarios/README.md) проверяют визуальную точность повторения, сохранение деталей при изменениях, композицию двух образцов и построение 3D по одному 2D-виду. Референсы CC0 закреплены в репозитории с SHA256; все RS тесты пока NOT RUN. [Гибкий каталог для выборочных прогонов](practical-tests/reference-scenarios/SCENARIO-CATALOG.md).
+
 Практические тесты UC-VIS-008 имеют отдельные [сценарные последовательности SC01–SC05](practical-tests/scenarios/README.md): первоначальное задание и два последующих сообщения в одном чате, v1 Issue и v2/v3 комментарии, с оценкой по [новой матрице](practical-tests/SCENARIO-MATRIX-20261120.md).
 
 [Оценка каждой отдельной единицы работы независимым чатом](practical-tests/_evaluator/unit-gates/README.md) позволяет остановить сценарий, добавить внеплановое исправление с отдельным ID и затем продолжить исходные этапы, сохраняя историю.

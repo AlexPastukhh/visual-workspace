@@ -1,0 +1,25 @@
+schema_version: 1
+action_id: VT10
+kind: reference_creation
+capability: reconstruct_3d_from_2d
+difficulty_basis: visual_detail
+default_variant: isometric-crate-3d-l2
+variants:
+  - id: isometric-crate-3d-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: Исходный ящик умеренно детализирован; пространственная реконструкция — сложная операция, но не
+        автоматический L3.
+    inputs:
+      brief: null
+      reference_pngs:
+        - path: practical-tests/reference-scenarios/references/crate-reference.png
+          sha256: 3e9ea5e033788a814aeb09ee4202c52f37050bcee54476812a9e11b52c8d5588
+      visual_cases: []
+    steps:
+      - unit_id: VT10.crate.01
+        work_prompt: practical-tests/actions/VT10/prompts/create.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/reference-scenarios/RS04/01-work.md

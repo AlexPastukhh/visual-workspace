@@ -18,12 +18,12 @@ variants:
         - clip-m4
     steps:
       - unit_id: SV01.01
-        work_prompt: practical-tests/review-scenarios/SV01/01-review-k7.md
+        work_prompt: practical-tests/actions/VT11/prompts/01-review.md
         evaluation_prompt: practical-tests/review-scenarios/SV01/01-evaluate.md
         case_ids:
           - clip-k7
       - unit_id: SV01.02
-        work_prompt: practical-tests/review-scenarios/SV01/02-review-m4.md
+        work_prompt: practical-tests/actions/VT11/prompts/02-review.md
         evaluation_prompt: practical-tests/review-scenarios/SV01/02-evaluate.md
         case_ids:
           - clip-m4

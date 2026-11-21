@@ -20,3 +20,17 @@ variants:
         evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
     legacy_sources:
       - practical-tests/prompts-tool-safe/C01-create-2d-asset.md
+  - id: bomb-text-l1
+    difficulty:
+      level: L1
+      basis: visual_detail
+      rationale: Округлый силуэт, горловина, фитиль и два блика; текст без доступа к картинке.
+    inputs:
+      brief: null
+      reference_pngs: []
+      visual_cases: []
+    steps:
+      - unit_id: VT01.bomb.01
+        work_prompt: practical-tests/actions/VT01/prompts/create-bomb.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources: []

@@ -1,0 +1,10 @@
+schema_version: 1
+id: reference-operations-v1
+description: Разные возможности на уже закреплённых 2D изображениях, выборочный запуск без обязательной публикации.
+items:
+  - action_id: VT07
+    variant_id: top-down-crate-l2
+  - action_id: VT09
+    variant_id: crate-barrel-fusion-l2
+  - action_id: VT10
+    variant_id: isometric-crate-3d-l2

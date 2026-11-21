@@ -1,70 +1,38 @@
 #!/usr/bin/env python3
 """Read-only structural and input-integrity check for the local Action test kit.
 
-Requires PyYAML (see requirements-check.txt). Does not execute Actions or read
-hidden evaluator answers. For pre-merge PR16 review only, use
---candidate-reference-root; default readiness requires files in this Git tree.
+Uses a small strict subset of YAML, without external Python packages.
+Does not execute Actions or read hidden evaluator answers. Reference PNGs
+must already be in the accepted Git tree: never substitute another worktree.
 """
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
 from pathlib import Path
 import re
-import sys
-
-try:
-    import yaml
-except ImportError as exc:
-    raise SystemExit('PyYAML is required: pip install -r practical-tests/actions/requirements-check.txt') from exc
+from yaml_subset import parse as parse_catalog_yaml
 
 
 ACTIONS = Path(__file__).resolve().parent
 REPO = ACTIONS.parent.parent
-EXPECTED_V1 = {'VT01', 'VT02', 'VT07', 'VT08', 'VT11', 'VT12', 'VT15'}
+REQUIRED_ACTIONS = {'VT01', 'VT02', 'VT03', 'VT04', 'VT07', 'VT08', 'VT09', 'VT10', 'VT11', 'VT12', 'VT15'}
 CORE_KEYS = {'name', 'category', 'instruction', 'workflow', 'schedule'}
 KINDS = {'authoring', 'reference_creation', 'reference_edit', 'visual_review', 'evaluation'}
 BASES = {'visual_detail', 'defect_detectability', 'not_applicable'}
 
 
-class StrictLoader(yaml.SafeLoader):
-    def compose_node(self, parent, index):
-        if self.check_event(yaml.AliasEvent):
-            raise ValueError('YAML aliases are prohibited')
-        return super().compose_node(parent, index)
-
-    def construct_mapping(self, node, deep=False):
-        seen = set()
-        for key, _ in node.value:
-            k = self.construct_object(key, deep=deep)
-            if not isinstance(k, str) or k in seen:
-                raise ValueError(f'duplicate/non-text YAML key: {k!r}')
-            seen.add(k)
-        return super().construct_mapping(node, deep=deep)
-
-
 def read_yaml(file: Path) -> dict:
-    raw = file.read_text(encoding='utf-8')
-    assert len(raw) <= 64_000, file
-    doc = yaml.load(raw, Loader=StrictLoader)
-    assert isinstance(doc, dict), file
-    return doc
+    return parse_catalog_yaml(file.read_text(encoding='utf-8'))
 
 
-def resolve_repo_path(value: str, candidate_root: Path | None, *, allow_candidate: bool) -> tuple[Path, bool]:
+def resolve_repo_path(value: str) -> Path:
     assert isinstance(value, str) and value and not value.startswith('/'), value
     assert '\\' not in value and all(x not in ('', '.', '..') for x in value.split('/')), value
     local = REPO / value
     assert local.resolve().is_relative_to(REPO.resolve()), value
-    if local.is_file():
-        return local, False
-    if allow_candidate and candidate_root is not None:
-        other = candidate_root / value
-        assert other.resolve().is_relative_to(candidate_root.resolve()), value
-        if other.is_file():
-            return other, True
-    raise AssertionError(f'missing required accepted path: {value}')
+    assert local.is_file(), f'missing required accepted path: {value}'
+    return local
 
 
 def check_action_core_shape(doc: dict) -> None:
@@ -76,12 +44,11 @@ def check_action_core_shape(doc: dict) -> None:
     assert 'workflow' not in doc and 'schedule' not in doc
 
 
-def check_catalog(candidate_root: Path | None) -> tuple[int, int]:
+def check_catalog() -> tuple[int, int]:
     action_dirs = sorted(p for p in ACTIONS.iterdir() if p.is_dir() and re.fullmatch(r'VT\d\d', p.name))
     ids = {p.name for p in action_dirs}
-    assert EXPECTED_V1 <= ids, f'missing V1 Actions: {EXPECTED_V1 - ids}'
+    assert REQUIRED_ACTIONS <= ids, f'missing first-library Actions: {REQUIRED_ACTIONS - ids}'
     unit_ids: set[str] = set()
-    candidate_used: list[str] = []
     variants: dict[tuple[str, str], dict] = {}
     stage_count = 0
     for folder in action_dirs:
@@ -115,18 +82,16 @@ def check_catalog(candidate_root: Path | None) -> tuple[int, int]:
             inp = v['inputs']
             assert set(inp) == {'brief', 'reference_pngs', 'visual_cases'}
             if inp['brief'] is not None:
-                resolve_repo_path(inp['brief'], candidate_root, allow_candidate=False)
+                resolve_repo_path(inp['brief'])
             assert isinstance(inp['reference_pngs'], list) and isinstance(inp['visual_cases'], list)
             if doc['kind'] in ('reference_creation', 'reference_edit'):
                 assert inp['reference_pngs'], f'{key} requires pinned PNG'
             for reference in inp['reference_pngs']:
                 assert set(reference) == {'path', 'sha256'}
                 assert re.fullmatch('[0-9a-f]{64}', reference['sha256'])
-                file, pending = resolve_repo_path(reference['path'], candidate_root, allow_candidate=True)
+                file = resolve_repo_path(reference['path'])
                 assert file.read_bytes()[:8] == b'\x89PNG\r\n\x1a\n', file
                 assert hashlib.sha256(file.read_bytes()).hexdigest() == reference['sha256'], file
-                if pending:
-                    candidate_used.append(reference['path'])
             for case in inp['visual_cases']:
                 assert re.fullmatch('clip-[a-z0-9]+', case)
                 folder_path = REPO / 'practical-tests/visual/cases' / case
@@ -136,9 +101,7 @@ def check_catalog(candidate_root: Path | None) -> tuple[int, int]:
                 assert (folder_path / 'contact_sheet.png').is_file()
             assert isinstance(v['legacy_sources'], list)
             for legacy in v['legacy_sources']:
-                _, pending = resolve_repo_path(legacy, candidate_root, allow_candidate=True)
-                if pending:
-                    candidate_used.append(legacy)
+                resolve_repo_path(legacy)
             assert isinstance(v['steps'], list) and v['steps']
             for step in v['steps']:
                 assert set(step) in ({'unit_id', 'work_prompt', 'evaluation_prompt'},
@@ -146,12 +109,26 @@ def check_catalog(candidate_root: Path | None) -> tuple[int, int]:
                 assert re.fullmatch(r'(?:VT\d\d|SV\d\d)\.[A-Za-z0-9.]+', step['unit_id'])
                 assert step['unit_id'] not in unit_ids, step['unit_id']
                 unit_ids.add(step['unit_id'])
-                resolve_repo_path(step['work_prompt'], candidate_root, allow_candidate=False)
+                prompt_file = resolve_repo_path(step['work_prompt'])
+                prompt_text = prompt_file.read_text(encoding='utf-8')
+                if doc['kind'] != 'evaluation':
+                    assert step['unit_id'] in prompt_text, step['unit_id']
+                    assert 'submission.md' in prompt_text, prompt_file
+                    assert 'image_gen' in prompt_text, prompt_file
+                    assert f'actionId={folder.name}' in prompt_text, prompt_file
+                    assert f'variantId={v["id"]}' in prompt_text, prompt_file
+                for reference in inp['reference_pngs']:
+                    if doc['kind'] != 'evaluation':
+                        # Second stage of a reference-edit flow inherits the
+                        # previously pinned PNG; the handoff binds both stages.
+                        if len(v['steps']) == 1 or step == v['steps'][0]:
+                            assert reference['path'] in prompt_text, prompt_file
+                            assert reference['sha256'] in prompt_text, prompt_file
                 if step['evaluation_prompt'] is None:
                     assert doc['kind'] == 'evaluation'
                 else:
                     assert '_evaluator/' not in step['work_prompt']
-                    resolve_repo_path(step['evaluation_prompt'], candidate_root, allow_candidate=False)
+                    resolve_repo_path(step['evaluation_prompt'])
                 for case in step.get('case_ids', []):
                     assert case in inp['visual_cases'], (step['unit_id'], case)
                 stage_count += 1
@@ -166,24 +143,13 @@ def check_catalog(candidate_root: Path | None) -> tuple[int, int]:
             assert set(item) == {'action_id', 'variant_id'}
             assert (item['action_id'], item['variant_id']) in variants
         print(f'COLLECTION_OK {c["id"]} {len(c["items"])} variants')
-    if candidate_used:
-        assert candidate_root is not None
-        print('CANDIDATE_REFERENCE_ONLY: reference-driven Actions BLOCKED until these paths exist in accepted main:')
-        for p in sorted(set(candidate_used)):
-            print('  ' + p)
-    else:
-        print('REFERENCE_INPUTS_ACCEPTED_IN_CURRENT_TREE')
-    print(f'ACTION_CATALOG_PASS actions={len(action_dirs)} variants={len(variants)} stages={stage_count} candidate={bool(candidate_used)}')
+    print('REFERENCE_INPUTS_ACCEPTED_IN_CURRENT_TREE')
+    print(f'ACTION_CATALOG_PASS actions={len(action_dirs)} variants={len(variants)} stages={stage_count}')
     return len(action_dirs), stage_count
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--candidate-reference-root', type=Path, help='PR16 candidate checkout for pre-merge structural review only; not accepted as runnable main')
-    args = parser.parse_args()
-    if args.candidate_reference_root:
-        assert args.candidate_reference_root.is_dir()
-    check_catalog(args.candidate_reference_root)
+    check_catalog()
 
 
 if __name__ == '__main__':

@@ -1,0 +1,31 @@
+schema_version: 1
+action_id: VT09
+kind: reference_creation
+capability: combine_visual_refs
+difficulty_basis: visual_detail
+default_variant: crate-barrel-fusion-l2
+variants:
+  - id: crate-barrel-fusion-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: Объект остаётся умеренно детализированным L2; число референсов и последовательная правка — другие оси
+        сложности.
+    inputs:
+      brief: null
+      reference_pngs:
+        - path: practical-tests/reference-scenarios/references/crate-reference.png
+          sha256: 3e9ea5e033788a814aeb09ee4202c52f37050bcee54476812a9e11b52c8d5588
+        - path: practical-tests/reference-scenarios/references/barrel-reference.png
+          sha256: 9e2760321fcec35be396eb0973e78f5f37a296d132adcfd824ffb4b23b379383
+      visual_cases: []
+    steps:
+      - unit_id: VT09.fusion.01
+        work_prompt: practical-tests/actions/VT09/prompts/01-combine.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+      - unit_id: VT09.fusion.02
+        work_prompt: practical-tests/actions/VT09/prompts/02-edit.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/reference-scenarios/RS03/01-work.md
+      - practical-tests/reference-scenarios/RS03/02-work.md

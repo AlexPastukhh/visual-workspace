@@ -1,0 +1,9 @@
+schema_version: 1
+id: reference-quality-v1
+description: Точность SVG по PNG и последующее локальное изменение; требует
+  принятого reference-scenarios в main.
+items:
+  - action_id: VT07
+    variant_id: bomb-circle-l1
+  - action_id: VT08
+    variant_id: top-down-crate-l2

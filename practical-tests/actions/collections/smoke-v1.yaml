@@ -1,0 +1,8 @@
+schema_version: 1
+id: smoke-v1
+description: Небольшая проверка создания и слепого просмотра уже готовых 2D-клипов.
+items:
+  - action_id: VT01
+    variant_id: crystal-text-l1
+  - action_id: VT11
+    variant_id: existing-turnaround-pair

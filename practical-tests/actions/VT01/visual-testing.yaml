@@ -1,0 +1,22 @@
+schema_version: 1
+action_id: VT01
+kind: authoring
+capability: create_2d
+difficulty_basis: visual_detail
+default_variant: crystal-text-l1
+variants:
+  - id: crystal-text-l1
+    difficulty:
+      level: L1
+      basis: visual_detail
+      rationale: Один шестиугольный силуэт, сердцевина и тонкий ободок, без анимации.
+    inputs:
+      brief: practical-tests/authoring/A01-2d-static.md
+      reference_pngs: []
+      visual_cases: []
+    steps:
+      - unit_id: VT01.crystal.01
+        work_prompt: practical-tests/actions/VT01/prompts/create.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/prompts-tool-safe/C01-create-2d-asset.md

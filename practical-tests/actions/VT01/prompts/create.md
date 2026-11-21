@@ -1,0 +1,9 @@
+# VT01.crystal.01 — создать оригинальный 2D-кристалл (L1)
+
+НОВЫЙ независимый чат с Fortis Repo. Работай инструментами Visual Workspace: реальный редактируемый SVG, экспорт и проверка в Godot. **Не используй image_gen, text-to-image и другие AI-генераторы изображений ни для ассета, ни для QA.** При недоступных инструментах укажи BLOCKED. Это создание, не публикация: никакого GitHub Issue/PR и записей в репозиторий.
+
+Сначала получи реальное UTC T0 через Fortis Repo **до** чтения README, затем выполни bootstrap Visual Workspace, прочитай `WORKFLOW.md`, UC-VIS-001/004/008 и `practical-tests/TIMING.md`; фиксируй T1–T5 реальными показаниями часов. Создай уникальный `runId` и папку `/workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<runId>/`; только она предназначена для исходников, экспорта, Godot-проекта, QA и отчёта.
+
+**Заказ:** точно исполни уже существующий письменный brief `practical-tests/authoring/A01-2d-static.md`: оригинальный светящийся шестиугольный игровой кристалл 64×64, голубая сердцевина, тонкий янтарный ободок, прозрачный фон; экспорт и честный игровой просмотр в Godot 4.7. Отдай редактируемый source, PNG, Godot-сцену, реальный полноразмерный кадр, команды проверки, выявленные недостатки и `timing.md`. Не выдавай чужие заготовки или нарисованное AI изображение за собственный результат.
+
+После завершения сохрани указатель `reports/units/VT01.crystal.01/submission.md` в собственной папке run по `practical-tests/UNIT-SUBMISSION-CONTRACT.md`: `scenarioId=VT01:crystal-text-l1`, `actionId=VT01`, `variantId=crystal-text-l1`, `unitId=VT01.crystal.01`, исходный prompt path, точный accepted main Git HEAD, фактические output/source/evidence/timing пути, собственный вердикт и ограничения. Для репо-write, GitHub и source Git SHA укажи N/A. Сообщи точный `runId` и handoff path; не выполняй независимую оценку сам.

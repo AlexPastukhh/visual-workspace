@@ -1,0 +1,31 @@
+schema_version: 1
+action_id: VT11
+kind: visual_review
+capability: review_2d
+difficulty_basis: defect_detectability
+default_variant: existing-turnaround-pair
+variants:
+  - id: existing-turnaround-pair
+    difficulty:
+      level: null
+      basis: defect_detectability
+      rationale: "Не калибровано: не раскрывать скрытый ключ и не назначать трудность по названию fixture."
+    inputs:
+      brief: null
+      reference_pngs: []
+      visual_cases:
+        - clip-k7
+        - clip-m4
+    steps:
+      - unit_id: SV01.01
+        work_prompt: practical-tests/review-scenarios/SV01/01-review-k7.md
+        evaluation_prompt: practical-tests/review-scenarios/SV01/01-evaluate.md
+        case_ids:
+          - clip-k7
+      - unit_id: SV01.02
+        work_prompt: practical-tests/review-scenarios/SV01/02-review-m4.md
+        evaluation_prompt: practical-tests/review-scenarios/SV01/02-evaluate.md
+        case_ids:
+          - clip-m4
+    legacy_sources:
+      - practical-tests/prompts-tool-safe/V05-review-2d-pair.md

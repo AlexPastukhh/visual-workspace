@@ -103,6 +103,33 @@ are optional for production and other visual prompts.
   results, but **no comparable total timing**. Never retroactively infer
   their duration from prose or timestamps embedded in a path.
 
+## Extension: mandatory Issue delivery for selected baseline Actions
+
+Для **VT01.crystal, VT02, VT03, VT04** в принятой версии промптов
+GitHub Issue с owner PNG-превью является обязательным последним
+этапом **того же теста**, а не отдельным тестом. В отличие от ранней
+Workfiles-only версии, **T5 ставится после публикации, typed Gateway
+readback, duplicate check и сохранения финального отчёта**; следовательно
+T5−T0 включает полный путь до готовности к human review. T4 по-прежнему
+означает окончание производства/QA; для анализа времени обязательно
+добавить реальные UTC **P0** (начало подготовки к публикации сразу
+после T4) и **P1** (подтверждённый Issue + readback/duplicate check),
+P1−P0 фиксировать отдельно. Не считать только время Gateway WRITE временем
+всей публикации. `duration_seconds` для предварительного Issue payload
+целочисленное и должно отражать уже измеренный этап (например T4−T0),
+**не будущий T5**. Финальное T5 и полная длительность — в Workfiles handoff.
+
+Для **VT11/VT12** T5 закрывает первый frozen unit без Issue, затем второй
+этап в том же runner chat имеет S2.0–S2.5. Публиковать Issue c замороженными
+выводами обоих unit **после** результатов второго этапа, до S2.5; P0/P1
+внутри этого этапа. Не раскрывать ключ и не пропускать независимый
+process-only gate между частями. Считать отдельно T5−T0, S2.5−S2.0,
+P1−P0 и паузу между сообщениями. См.
+[OWNER-ISSUE-DELIVERY](actions/OWNER-ISSUE-DELIVERY.md).
+
+Ранние прогоны без Issue не являются сравнимыми по T5−T0 с новой
+версией; их значения не переписывать задним числом.
+
 ## Extension: multi-message versioned scenarios SC01–SC05
 The original T0–T5 definition is **unchanged** for the *first* message of a scenario. Record T0 before README, T1 after bootstrap, T2 after brief/plan, T3 after first real inspected Godot full-size frame, T4 after v1 creation/QA, T5 after the v1 report is saved and checked. T5 closes **only stage 01**, not the full owner-review conversation.
 For later **messages in the same chat**, record observed UTC marks in the same `timing.md` (never invent timestamps):

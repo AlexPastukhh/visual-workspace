@@ -1,0 +1,12 @@
+# Frozen reference PNGs — CC0 provenance
+
+Only the four PNG images linked below are production inputs for the test-taking agent. Each source page independently states CC0. Local PNGs are pinned; preserve hashes and create a NEW scenario version if a reference changes. Original SVG/AI files downloaded for verification were not placed into the accepted repo, to avoid trivial source reuse. The original artwork is not the new editable output.
+
+| PNG input | Dimensions / SHA256 | Source page and license | Original downloaded file SHA256 | Transformation |
+| --- | --- | --- | --- | --- |
+| [bomb-circle-reference.png](bomb-circle-reference.png) | 256×256; 25323922ceb32c03fb171dee01d1d5d3bd55a2f9d78dac2a40194923a699e745 | [Znevs, CC0](https://opengameart.org/content/bomb-sprite-vector-image) | bomb_circle.png: 25323922ceb32c03fb171dee01d1d5d3bd55a2f9d78dac2a40194923a699e745 | Original PNG, byte-for-byte identical |
+| [cartoon_wooden_crate-reference.png](cartoon_wooden_crate-reference.png) | 256×256; 034315917477a48cfd74b6858768dc0040c1a66320b76b4f4c90854d114618b7 | [lunavorax, CC0](https://opengameart.org/content/cartoon-wooden-crate) | cartoon_wooden_crate.svg: 7bd8a404a8be762f8700eb1eb45bcdeb6786e67f18fb74b7f2468bcd24469f7f | Rendered from upstream CC0 SVG by Godot 4.7.2 and fitted inside 256 px, no image-generation |
+| [crate-reference.png](crate-reference.png) | 181×256; 3e9ea5e033788a814aeb09ee4202c52f37050bcee54476812a9e11b52c8d5588 | [Warspawn, CC0](https://opengameart.org/content/cartoon-wooden-crate-0) | crate.svg: bb1d3e484eae92e1f969e363446f4451e5d64a9b2dbe17a41f24f1f28cfc3c8b | Rendered from upstream CC0 SVG by Godot 4.7.2 and fitted inside 256 px, no image-generation |
+| [barrel-reference.png](barrel-reference.png) | 181×256; 9e2760321fcec35be396eb0973e78f5f37a296d132adcfd824ffb4b23b379383 | [Warspawn, CC0](https://opengameart.org/content/cartoon-barrel) | barrel.svg: 46ce6df2001afd6262a10654cc522302e2161d2e03a5b5c0597454cdb4d7cf9b | Rendered from upstream CC0 SVG by Godot 4.7.2 and fitted inside 256 px, no image-generation |
+
+The source pages/license labels were inspected 2026-11-21. These references are not proprietary game screenshots, site logos, or other non-CC0 preview assets. A runner can browse public URLs, so the textual no-source-reuse rule is not a technical access barrier. Review independent source/tool provenance; an imported reference PNG is not an independently reproduced asset.

@@ -1,0 +1,16 @@
+# RS04.01 — 2D-референс → настоящая 3D-модель
+
+Работай через Fortis Repo в НОВОМ независимом чате с Visual Workspace. Перед чтением README зафиксируй реальное UTC T0, затем прочитай /workspace/repo/README.md, /workspace/repo/AGENTS.md, accepted visual-workspace/README.md, WORKFLOW.md, применимые UC-VIS-001–005/008/009, QA и practical-tests/TIMING.md. Создай отдельный зарегистрированный task worktree для новых редактируемых исходников и Git source SHA; все screenshots/QA/timing/reports одного сценария складывай в одну новую уникальную Workfiles папку /workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<runId>/.
+
+**Это тест СОЗДАНИЯ ПО РЕФЕРЕНСУ.** Смотри только зафиксированные PNG в practical-tests/reference-scenarios/references/; исходный SVG/AI/3D объект автора не скачивай, не импортируй и не трассируй автоматически как свой результат. Не считай вставку reference PNG в Godot самостоятельным созданием. Используй реальные собственные SVG/Blender/Godot source/edit/export и проверь реальные полноразмерные Godot/Blender кадры. Запрещены image_gen и любые AI image-generation инструменты вместо собственной работы или QA. Если это недоступно — BLOCKED, а не синтетическая подмена. Сверяй референс и экспорт side-by-side при одинаковом размере; качество нельзя доказывать только сводной метрикой.
+
+**Даю явное разрешение опубликовать только собственные QA-проверенные PNG в НОВОМ GitHub Issue visual-workspace** через typed Gateway UC-VIS-009 после live capabilities/ALLOW и подготовки неизменного payload digest. Запиши actual requestId, Issue, baseRunId, assetId, полные source SHA, PNG SHA, receipt/readback. Не публикуй оригинальные CC0-референсы под видом созданных ассетов; не пользуйся прямым PAT/HTTP, не повторяй UNCERTAIN и не создавай fallback issue. Публикация — ещё не принятие.
+
+**Заданные PNG-референсы:**
+- practical-tests/reference-scenarios/references/crate-reference.png
+
+**Заказ:** По единственному изометрическому PNG деревянного ящика создай в Blender 5.x НАСТОЯЩУЮ геометрическую 3D-модель: деревянный объём с торцевыми гранями, верхним ободом, досками и диагональными планками. Не делай billboard/плоскость с текстурой картинки и не импортируй чужую готовую mesh. Для камеры, близкой к рисунку, визуально приблизь пропорции, угол, цвет и освещение. Невозможные к восстановлению по одной картинке скрытые стороны дострой как правдоподобную гипотезу; не заявляй их точное совпадение с неизвестным оригиналом. Сохрани .blend, экспорт .glb, Godot 4.7 сцену и минимум четыре полноразмерных PNG: сопоставимый исходный вид, фронт, бок и задний вид.
+
+**Воспроизводимость:** вычисли и запиши SHA256 каждого реально показанного pinned reference PNG из accepted main и сверь с references/PROVENANCE.md; укажи accepted main HEAD. Сохрани независимый собственный исходник, а не содержимое исходной картинки.
+
+**После исполнения:** сохрани фактический указатель доказательств по контракту practical-tests/UNIT-SUBMISSION-CONTRACT.md: /workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<runId>/reports/units/RS04.01/submission.md. Укажи actual runId, source full Git SHA, источник и результат, paths PNG/QA, Issue/revision/comment (или N/A), timings/receipts и ограничения. Не читай _evaluator/ или соседний evaluate-файл, не изменяй исторические SC/SV/C/V.

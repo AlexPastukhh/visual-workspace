@@ -64,10 +64,13 @@ def check_catalog() -> tuple[int, int]:
         assert isinstance(doc['variants'], list) and doc['variants']
         assert any(v['id'] == doc['default_variant'] for v in doc['variants'])
         for v in doc['variants']:
-            assert set(v) == {'id', 'difficulty', 'inputs', 'steps', 'legacy_sources'}
+            assert set(v) == {'id', 'difficulty', 'human_review_required', 'inputs', 'steps', 'legacy_sources'}
             key = (folder.name, v['id'])
             assert key not in variants and re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', v['id'])
             variants[key] = v
+            # A requirement of the *variant*, just like its difficulty. Do not
+            # replace this explicit bool with truthy YAML strings or a default.
+            assert type(v['human_review_required']) is bool, key
             difficulty = v['difficulty']
             assert set(difficulty) == {'level', 'basis', 'rationale'}
             assert difficulty['basis'] == doc['difficulty_basis']

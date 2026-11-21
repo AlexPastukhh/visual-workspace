@@ -10,6 +10,7 @@ variants:
       level: L2
       basis: visual_detail
       rationale: "Несколько геометрических частей и цветовых элементов: корпус, крышка, шов, застёжка."
+    human_review_required: true
     inputs:
       brief: practical-tests/authoring/A02-3d-static.md
       reference_pngs: []

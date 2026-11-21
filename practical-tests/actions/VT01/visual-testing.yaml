@@ -10,6 +10,7 @@ variants:
       level: L1
       basis: visual_detail
       rationale: Один шестиугольный силуэт, сердцевина и тонкий ободок, без анимации.
+    human_review_required: true
     inputs:
       brief: practical-tests/authoring/A01-2d-static.md
       reference_pngs: []
@@ -25,6 +26,7 @@ variants:
       level: L1
       basis: visual_detail
       rationale: Округлый силуэт, горловина, фитиль и два блика; текст без доступа к картинке.
+    human_review_required: true
     inputs:
       brief: null
       reference_pngs: []

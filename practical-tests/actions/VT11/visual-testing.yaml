@@ -10,6 +10,7 @@ variants:
       level: null
       basis: defect_detectability
       rationale: "Не калибровано: не раскрывать скрытый ключ и не назначать трудность по названию fixture."
+    human_review_required: false
     inputs:
       brief: null
       reference_pngs: []

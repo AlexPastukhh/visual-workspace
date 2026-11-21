@@ -43,6 +43,17 @@ variants:
         self.assertEqual(obj['variants'][0]['count'], 12)
         self.assertIsNone(obj['variants'][0]['other'])
 
+    def test_human_review_policy_of_existing_variants(self):
+        creation = {'VT01', 'VT02', 'VT03', 'VT04', 'VT07', 'VT08', 'VT09', 'VT10'}
+        chat_only = {'VT11', 'VT12', 'VT15'}
+        for id in sorted(creation | chat_only):
+            definition = parse((ROOT / id / 'visual-testing.yaml').read_text(encoding='utf-8'))
+            for variant in definition['variants']:
+                with self.subTest(action=id, variant=variant['id']):
+                    flag = variant['human_review_required']
+                    self.assertIs(type(flag), bool)
+                    self.assertEqual(flag, id in creation)
+
     def test_reject_non_contract_yaml(self):
         invalid = [
             'name: x\nname: y\n',               # duplicates

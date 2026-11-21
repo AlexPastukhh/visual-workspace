@@ -17,6 +17,25 @@ The executor and evaluator are **different chats**. Each completed scenario stag
 5. The final executor reply mentions the exact handoff path and runId. The owner can supply just this runId with the adjacent planned evaluator prompt in a **fresh evaluator chat**.
 6. Evaluator first opens the exact original prompt and real raw source/images, then self-review and handoff claims; writes /workspace/repo/Workfiles/visual-workspace-practical-tests/evaluations/<runId>/<unitId>/decision.md. It does not change original evidence, source, GitHub or evaluation key.
 
+## Новый Action human-first gate (отдельно от исторических SC/SV)
+
+Для локальных `practical-tests/actions/VTxx/visual-testing.yaml` сначала
+проверяется `variants[].human_review_required`:
+
+- `true`: исполнитель сдаёт Workfiles evidence, **человек** смотрит визуальный
+  результат и оставляет реальный отзыв `evaluations/<runId>/<unitId>/human-review.md`,
+  **затем** отдельный чат VT15 получает эту запись и проверяет остальные
+  критерии. До неё он **не начинает** ревью и не пишет `decision.md`.
+  Чат фиксирует только `TECHNICAL_ONLY / NOT_FINAL`, а не полный PASS.
+  Общий исход после обоих отзывов принадлежит owner/orchestrator.
+- `false`: обычная независимая чат-проверка. Слепые SV01/SV02 по-прежнему
+  используют свои специальные evaluator-промпты и не раскрывают ключ раньше
+  времени.
+
+См. [единый порядок](actions/HUMAN-REVIEW.md). Старые SC/RS/SV prompts и
+прежние outcomes не переписываются задним числом, и наличие human flag
+само по себе **не** считается фактическим человеческим отзывом.
+
 ## Backwards compatibility and protection against guessing
 
 For runs predating this contract (such as SC01.01 created under earlier prompts), the handoff may not exist. In that case the evaluator can inspect the **uniquely identified** existing run folder and reports, with the supplied runId and exact Git source SHA / issue identity. Never pick the newest run when multiple candidates match, never invent a source SHA or pretend an absent handoff exists. Missing proof is INCONCLUSIVE; a delayed handoff should not be backfilled as a fictional originally submitted artifact.

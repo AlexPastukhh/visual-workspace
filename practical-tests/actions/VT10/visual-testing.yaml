@@ -11,6 +11,7 @@ variants:
       basis: visual_detail
       rationale: Исходный ящик умеренно детализирован; пространственная реконструкция — сложная операция, но не
         автоматический L3.
+    human_review_required: true
     inputs:
       brief: null
       reference_pngs:

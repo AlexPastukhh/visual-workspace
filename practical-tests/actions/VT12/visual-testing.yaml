@@ -10,6 +10,7 @@ variants:
       level: null
       basis: defect_detectability
       rationale: "Не калибровано: временные нарушения и исправные контролы оцениваются без раскрытия ключа."
+    human_review_required: false
     inputs:
       brief: null
       reference_pngs: []

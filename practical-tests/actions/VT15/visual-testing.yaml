@@ -10,6 +10,7 @@ variants:
       level: null
       basis: not_applicable
       rationale: "Служебный Action: оценка зависит от проверяемого задания, собственной шкалы нет."
+    human_review_required: false
     inputs:
       brief: null
       reference_pngs: []

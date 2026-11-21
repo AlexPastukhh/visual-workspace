@@ -11,6 +11,7 @@ variants:
       basis: visual_detail
       rationale: Объект остаётся умеренно детализированным L2; число референсов и последовательная правка — другие оси
         сложности.
+    human_review_required: true
     inputs:
       brief: null
       reference_pngs:

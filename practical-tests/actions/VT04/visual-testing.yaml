@@ -10,6 +10,7 @@ variants:
       level: L2
       basis: visual_detail
       rationale: Простой low-poly корпус, три опоры и подвижная голова; длительности и интеграция оцениваются отдельно.
+    human_review_required: true
     inputs:
       brief: practical-tests/authoring/A04-3d-animation.md
       reference_pngs: []

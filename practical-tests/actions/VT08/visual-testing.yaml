@@ -10,6 +10,7 @@ variants:
       level: L2
       basis: visual_detail
       rationale: Деревянная рамка, диагональные балки и внутренние доски; сохраняются неизменяемые элементы при правке.
+    human_review_required: true
     inputs:
       brief: null
       reference_pngs:

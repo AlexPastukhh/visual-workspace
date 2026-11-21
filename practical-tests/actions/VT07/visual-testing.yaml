@@ -10,6 +10,7 @@ variants:
       level: L1
       basis: visual_detail
       rationale: Компактный округлый силуэт, один фитиль, тени и несколько бликов.
+    human_review_required: true
     inputs:
       brief: null
       reference_pngs:
@@ -27,6 +28,7 @@ variants:
       level: L2
       basis: visual_detail
       rationale: Квадратная рамка, X-образные перекладины и отдельные доски — больше деталей, чем у бомбы.
+    human_review_required: true
     inputs:
       brief: null
       reference_pngs:

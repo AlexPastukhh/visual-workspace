@@ -17,6 +17,21 @@ The executor and evaluator are **different chats**. Each completed scenario stag
 5. The final executor reply mentions the exact handoff path and runId. The owner can supply just this runId with the adjacent planned evaluator prompt in a **fresh evaluator chat**.
 6. Evaluator first opens the exact original prompt and real raw source/images, then self-review and handoff claims; writes /workspace/repo/Workfiles/visual-workspace-practical-tests/evaluations/<runId>/<unitId>/decision.md. It does not change original evidence, source, GitHub or evaluation key.
 
+## Публикация Issue для выбранной базовой кампании
+
+Для VT01.crystal/VT02/VT03/VT04/VT11/VT12 текущие Action work prompts
+обязательно включают [owner-facing Issue](actions/OWNER-ISSUE-DELIVERY.md):
+runner после QA сохраняет реальную PNG-витрину через typed Gateway,
+ссылка URL/number, runId, requestId, receipt/readback, PNG SHA, сведения
+об обязательной human-review и фактический P0–P1 при наличии.
+Поля GitHub Issue **не N/A**, если результата для owner-review ещё не
+существует, ставить ISSUE_PUBLICATION_BLOCKED; N/A допустимо для source
+Git SHA и PR, если они действительно не создавались. Для слепых VT11/12
+первый unit замораживается до публикации, единое Issue создаётся только
+после второго unit, без доступа к ключу. Ответы по ключу оценивает другой чат.
+Источник правды о GitHub delivery — UC-VIS-009; исторические SC/SV
+промпты не меняются.
+
 ## Новый Action human-first gate (отдельно от исторических SC/SV)
 
 Для локальных `practical-tests/actions/VTxx/visual-testing.yaml` сначала

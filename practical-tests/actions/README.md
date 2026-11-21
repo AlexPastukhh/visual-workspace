@@ -94,9 +94,13 @@ Action в целом.** `visual_detail` описывает видимый рез
 unit — включая человека, если он требуется. Исполнитель обязан предоставить
 реальные полноразмерные кадры и Godot/Blender QA, а не image_gen-подмену.
 
-Исполнитель не изменяет `main` и не публикует GitHub Issue. Он сохраняет
-собственные source, export, PNG, проект, QA, точные T0–T5 (и этапные S-метки)
-и `runs/<runId>/reports/units/<unitId>/submission.md` по
+Исполнитель не изменяет `main` и не публикует GitHub PR/source. Для **базовых
+VT01.crystal, VT02, VT03, VT04, VT11 и VT12** owner-facing GitHub Issue
+с PNG **обязателен в рамках каждого Action**, через штатный typed Fortis
+Gateway по [OWNER-ISSUE-DELIVERY](OWNER-ISSUE-DELIVERY.md) (не отдельный тест).
+Промпты других вариантов до отдельного решения сохраняют старое поведение.
+Runner сохраняет source, export, PNG, проект, QA, точные T0–T5 / S-метки,
+Issue URL/receipt и `runs/<runId>/reports/units/<unitId>/submission.md` по
 [контракту](../UNIT-SUBMISSION-CONTRACT.md). При `human_review_required: true`
 **сначала** человек смотрит предъявленный результат и его фактическое мнение
 сохраняется как `evaluations/<runId>/<unitId>/human-review.md` по
@@ -127,7 +131,9 @@ unit — только процессная проверка; ключ откры
 [unit gates](../_evaluator/unit-gates/README.md) и
 [UNIT-SUBMISSION-CONTRACT](../UNIT-SUBMISSION-CONTRACT.md), owner GitHub-review —
 [UC-VIS-009](../../docs/use-cases/media-github-review.md#uc-vis-009).
-Не дублируй их в каталоге и не считай реальную публикацию частью этих тестов.
+Не дублируй правила Gateway в каталоге. Для выбранных базовых Actions
+публикация Issue является обязательной частью сценария; её время входит
+в измеренный цикл исполнителя и дополнительно отмечается P0–P1.
 
 ## Проверка целостности (не выполнение Actions)
 

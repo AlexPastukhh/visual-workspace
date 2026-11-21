@@ -118,6 +118,25 @@ def check_catalog() -> tuple[int, int]:
                     assert step['unit_id'] in prompt_text, step['unit_id']
                     assert 'submission.md' in prompt_text, prompt_file
                     assert 'image_gen' in prompt_text, prompt_file
+                # Owner-facing PNG Issue is a mandatory part of the selected
+                # baseline Action work, not a separate test or a fake N/A.
+                issue_variants = {
+                    ('VT01', 'crystal-text-l1'),
+                    ('VT02', 'sci-fi-crate-text-l2'),
+                    ('VT03', 'lantern-idle-pulse-l2'),
+                    ('VT04', 'scanner-drone-l2'),
+                    ('VT11', 'existing-turnaround-pair'),
+                    ('VT12', 'existing-jumps-and-walk'),
+                }
+                if key in issue_variants:
+                    assert 'OWNER-ISSUE-DELIVERY.md' in prompt_text, prompt_file
+                    assert ('GitHub Issue' in prompt_text or folder.name in ('VT11', 'VT12') and 'Issue' in prompt_text), prompt_file
+                    assert v['human_review_required'] is (folder.name not in ('VT11', 'VT12'))
+                    if folder.name in ('VT11', 'VT12'):
+                        if step['unit_id'].endswith('.01'):
+                            assert 'не создавай Issue сейчас' in prompt_text, prompt_file
+                        else:
+                            assert 'После заморозки обоих ответов' in prompt_text, prompt_file
                     assert f'actionId={folder.name}' in prompt_text, prompt_file
                     assert f'variantId={v["id"]}' in prompt_text, prompt_file
                 for reference in inp['reference_pngs']:

@@ -22,3 +22,20 @@ variants:
         evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
     legacy_sources:
       - practical-tests/reference-scenarios/RS01/01-work.md
+  - id: top-down-crate-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: Квадратная рамка, X-образные перекладины и отдельные доски — больше деталей, чем у бомбы.
+    inputs:
+      brief: null
+      reference_pngs:
+        - path: practical-tests/reference-scenarios/references/cartoon_wooden_crate-reference.png
+          sha256: 034315917477a48cfd74b6858768dc0040c1a66320b76b4f4c90854d114618b7
+      visual_cases: []
+    steps:
+      - unit_id: VT07.crate.01
+        work_prompt: practical-tests/actions/VT07/prompts/reproduce-crate.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/reference-scenarios/RS02/01-work.md

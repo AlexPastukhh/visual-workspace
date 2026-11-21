@@ -1,53 +1,121 @@
-# Visual Workspace — test Actions, V1
+# Visual Workspace — каталог тестовых Actions
 
-Это **локальный каталог из 7 тестовых Actions**. Он использует словарь Action System, но не изменяет Action Core, не регистрирует Actions в Core автоматически и не запускает управляемые AI workflows. Нормативные принципы тестов и сложности — [UC-VIS-008](../../docs/use-cases/README.md#uc-vis-008); здесь только исполняемые варианты, навигация и проверка целостности. Текущее состояние конкретных прогонов и оценки — **в Workfiles**, не в этом каталоге.
+Локальная библиотека **11 повторяемых тестовых Actions** и их конкретных вариантов.
+Нормативные принципы проектирования тестов и сложности принадлежат
+[UC-VIS-008](../../docs/use-cases/README.md#uc-vis-008); этот каталог хранит только
+задания, входы, проверяемые варианты, маршруты запуска и независимой оценки.
+История реальных попыток и отчёты живут в Workfiles, не в репозитории.
+**Это ручные испытания через Fortis Repo, а не исполнение Action Core или
+автоматическая регистрация Actions**. Action Core не изменяется.
 
-| Action | Проверяемая способность | Вариант V1 | Вход | Условная сложность | Этапы |
-| --- | --- | --- | --- | --- | --- |
-| [VT01](VT01/visual-testing.yaml) | Создать 2D по описанию | `crystal-text-l1` | [A01](../authoring/A01-2d-static.md), кристалл | `L1 / visual_detail` | [Создать](VT01/prompts/create.md) |
-| [VT02](VT02/visual-testing.yaml) | Создать 3D по описанию | `sci-fi-crate-text-l2` | [A02](../authoring/A02-3d-static.md), контейнер | `L2 / visual_detail` | [Создать](VT02/prompts/create.md) |
-| [VT07](VT07/visual-testing.yaml) | Воссоздать 2D по одному PNG | `bomb-circle-l1` | CC0 бомба из [PR #16](https://github.com/AlexPastukhh/visual-workspace/pull/16) | `L1 / visual_detail` | [Воспроизвести](VT07/prompts/reproduce.md) |
-| [VT08](VT08/visual-testing.yaml) | Воссоздать и локально изменить | `top-down-crate-l2` | CC0 ящик сверху из [PR #16](https://github.com/AlexPastukhh/visual-workspace/pull/16) | `L2 / visual_detail` | [Воспроизвести](VT08/prompts/01-reproduce.md) → [Изменить](VT08/prompts/02-edit.md) |
-| [VT11](VT11/visual-testing.yaml) | Слепой анализ готовых 2D клипов | `existing-turnaround-pair` | `clip-k7`, `clip-m4` | `unrated / defect_detectability` | [SV01](../review-scenarios/README.md) |
-| [VT12](VT12/visual-testing.yaml) | Слепой анализ готовых 3D клипов | `existing-jumps-and-walk` | `clip-r2`, `clip-t9`, `clip-w8` | `unrated / defect_detectability` | [SV02](../review-scenarios/README.md) |
-| [VT15](VT15/visual-testing.yaml) | Независимо оценить один unit | `single-unit` | Задание, реальный run и QA | `not_applicable` | [Оценить](VT15/prompts/evaluate-unit.md) |
+| Action | Способность | Вариант(ы) | Вход / основное испытание |
+| --- | --- | --- | --- |
+| [VT01](VT01/visual-testing.yaml) | Создать 2D по тексту | `crystal-text-l1`, `bomb-text-l1` | [A01](../authoring/A01-2d-static.md) / оригинальная бомба без картинки; L1 |
+| [VT02](VT02/visual-testing.yaml) | Создать 3D по тексту | `sci-fi-crate-text-l2` | [A02](../authoring/A02-3d-static.md), низкополигональный контейнер; L2 |
+| [VT03](VT03/visual-testing.yaml) | Создать 2D-анимацию | `lantern-idle-pulse-l2` | [A03](../authoring/A03-2d-animation.md), фонарь с Idle/Pulse; L2 |
+| [VT04](VT04/visual-testing.yaml) | Создать 3D-анимацию | `scanner-drone-l2` | [A04](../authoring/A04-3d-animation.md), дрон с Idle/Scan/Activate; L2 |
+| [VT07](VT07/visual-testing.yaml) | Воспроизвести 2D по одному PNG | `bomb-circle-l1`, `top-down-crate-l2` | Закреплённые PNG бомбы и ящика; L1 / L2 |
+| [VT08](VT08/visual-testing.yaml) | Воспроизвести и изменить 2D | `top-down-crate-l2` | Тот же PNG ящика, затем перекрасить только внутренние доски; L2 |
+| [VT09](VT09/visual-testing.yaml) | Объединить два 2D-референса | `crate-barrel-fusion-l2` | Изометрический ящик + бочка → новый контейнер; затем изменяется металл; L2 |
+| [VT10](VT10/visual-testing.yaml) | Построить 3D по 2D-референсу | `isometric-crate-3d-l2` | Изометрический PNG ящика → настоящая Blender-геометрия; L2 |
+| [VT11](VT11/visual-testing.yaml) | Слепо проверить 2D-анимации | `existing-turnaround-pair` | `clip-k7`, `clip-m4`; сложность обнаружения не калибрована |
+| [VT12](VT12/visual-testing.yaml) | Слепо проверить 3D-анимации | `existing-jumps-and-walk` | `clip-r2`, `clip-t9`, `clip-w8`; сложность обнаружения не калибрована |
+| [VT15](VT15/visual-testing.yaml) | Независимая оценка | `single-unit` | Проверка одной завершённой единицы; служебный Action |
 
-**Сложность относится к варианту, не к Action в целом.** Для создания L1–L3 отражают визуальную детализацию; для поиска дефектов — трудность обнаружения. Существующие пять клипов **пока не калиброваны**; не определять уровень по секретному ответу, названию кейса или количеству кадров. Нет нужды добавлять новые искусственно дефектные материалы. Другие сложные Actions (создание анимации/мини-игры, совмещение референсов, 2D→3D, проверка нескольких заказов) остаются в историческом наборе, не в V1.
+**Уровень сложности — атрибут варианта и выбранного основания, не свойство
+Action в целом.** `visual_detail` описывает видимый результат; операция
+создания, анимация, число источников, 2D→3D и стоимость QA — другие оси.
+Для уже имеющихся 2D/3D-клипов `defect_detectability` не калиброван:
+не оценивай сложность по имени fixture или скрытому ответу. Новые намеренно
+дефектные ассеты на этом этапе не готовятся.
 
 ## Состав и связь с Action Core
 
-- Каждый `VTxx/action.yaml` использует только допустимые в действующем Action Core ключи `name`, `category`, `instruction`. Категория `visual_testing`. **Нет** `workflow` и `schedule`: ручные сообщения ChatGPT нельзя выдавать за programmatic workflow.
-- В соседнем `visual-testing.yaml` лежат версия схемы, стабильный `action_id`, `capability`, `kind`, `difficulty_basis`, конкретные `variants`, rationale, исходные briefs и закреплённые PNG с SHA256, этапы `unit_id` / `work_prompt` / `evaluation_prompt`, указатели на старые определения. Эти поля пока **не** подаются в Core валидатор как верхнеуровневые поля.
-- При будущем подключении `ActionVersion` соответствует версии определения в Git, а не заменяет версии выходных PNG. Один `ActionRun` логически соответствует одной попытке в новом чате и одному `runId`; два этапа VT08, SV01 или SV02 в том же чате — связанные units внутри этого run, не два независимых холодных прогона. Реальной регистрации ActionVersion или ActionRun в Core здесь **ещё нет**.
-- Исторические C/SC/SV/RS и их файлы не мигрируются задним числом. Для VT11/VT12 переиспользуются **неизменённые** SV01/SV02 work/evaluate prompts и существующий закрытый ключ. ID `SVxx.yy` оставлены у исторических units; новые unit IDs `VTxx.*` относятся только к новым промптам.
+Каждый `VTxx/action.yaml` содержит только действующие ключи Core:
+`name`, `category`, `instruction`; `workflow` и `schedule` отсутствуют,
+поскольку эти тесты выполняет вручную новый чат, а не программный worker.
+`visual-testing.yaml` хранит локальную версию схемы, стабильные `action_id`,
+`capability`, `kind`, `difficulty_basis`, варианты, краткое основание
+сложности, пути pinned-входов и их SHA256, этапы и указатели на неизменённые
+исторические тесты. Core не получает специфичные поля как собственные.
 
-## Выбрать и выполнить
+**Одна попытка — один уникальный `runId` и новый чат.** Последовательные
+сообщения VT08/VT09 и обёрнутые SV01/SV02 — связанные units того же run,
+а не два независимых прогона модели. `ActionVersion` пока соответствует
+проверяемому Git HEAD и точным определениям; в Core никакие `ActionRun`
+или версии не создаются автоматически. Старые C/SC/SV/RS, их входы, закрытый
+ключ и результаты не переименовываются и не переписываются задним числом.
 
-1. Выбери один variant прямо в `visual-testing.yaml` либо по [коллекциям](collections/) (`smoke-v1`, `reference-quality-v1`, `visual-review-existing-v1`). Collection — только **выборка**, не отдельный Action и не автоматический пакетный запуск.
-2. Перед запуском проверь, что **каждый вход уже в принятом `visual-workspace/main`**. Для VT07/VT08 нужны два соответствующих PNG из четырёх, подготовленных в [PR #16](https://github.com/AlexPastukhh/visual-workspace/pull/16); эти варианты **BLOCKED до принятия/проверки точных файлов**. Если по состоянию Git ветка ещё не слита, запускать по открытой PR-ветке или веб-копии вместо main нельзя. Содержимое PNG не копируется в каталог Actions.
-3. Открой новый независимый чат с Fortis Repo и передай **полный текст только нужного `work_prompt`**. Следующий `step` отправляется **отдельным сообщением в тот же исходный чат**, только после завершения и независимой оценки предыдущего. Не посылай оба этапа заранее.
-4. Исполнитель создаёт **одну новую** `/workspace/repo/Workfiles/visual-workspace-practical-tests/runs/<runId>/` на весь run, измеряет настоящие T0–T5 (и этапные S-метки), сохраняет свои source/export/PNG/QA и `reports/units/<unitId>/submission.md` по [контракту](../UNIT-SUBMISSION-CONTRACT.md). Новые V1 authoring/reference тесты **не публикуют в GitHub** и не изменяют принятый repo. Для устаревших C-промптов нет ретроактивного handoff.
-5. Передай **точные** `actionId`, `variantId`, `runId`, `unitId` в **новый** чат-оценщик. Для VT01/VT02/VT07/VT08 используй общий [VT15 evaluator](VT15/prompts/evaluate-unit.md). Для VT11/VT12 используй **собственный** соседний SV evaluate-промпт каждого этапа, чтобы не раскрыть скрытый ключ до окончания всей последовательности. Оценщик сохраняет `evaluations/<runId>/<unitId>/decision.md` и не изменяет runner outputs.
-6. Сохраняй первый результат, оценку и каждое отдельное исправление, даже если дальнейшая попытка лучше. При `BLOCKED`/`INCONCLUSIVE` не подменяй отсутствующие evidence выдуманными. Сравнивай повторные запуски только с учётом exact accepted Git HEAD, variant/fixture SHA, prompt revision, доступных инструментов и реально измеренного времени.
+## Что копировать в новый чат
 
-**Разделение обязанностей:** этот каталог — определения; [TIMING](../TIMING.md) — замеры; [UNIT-SUBMISSION-CONTRACT](../UNIT-SUBMISSION-CONTRACT.md) и [unit-gates](../_evaluator/unit-gates/README.md) — handoff и независимая проверка; [UC-VIS-009](../../docs/use-cases/media-github-review.md#uc-vis-009) — отдельный добровольно разрешаемый owner-review с GitHub Issue. Здесь его нет.
+- **Создание по тексту:** [VT01 кристалл](VT01/prompts/create.md),
+  [VT01 бомба](VT01/prompts/create-bomb.md), [VT02 3D контейнер](VT02/prompts/create.md),
+  [VT03 фонарь](VT03/prompts/create.md), [VT04 дрон](VT04/prompts/create.md).
+- **По визуальным референсам:** [VT07 бомба](VT07/prompts/reproduce.md),
+  [VT07 ящик](VT07/prompts/reproduce-crate.md),
+  [VT08 ящик, этап 1](VT08/prompts/01-reproduce.md),
+  [VT08 изменить, этап 2](VT08/prompts/02-edit.md),
+  [VT09 объединить, этап 1](VT09/prompts/01-combine.md),
+  [VT09 изменить, этап 2](VT09/prompts/02-edit.md),
+  [VT10 3D ящик](VT10/prompts/create.md).
+- **Готовые клипы, без новых дефектных входов:**
+  [VT11 этап 1](VT11/prompts/01-review.md),
+  [VT11 этап 2](VT11/prompts/02-review.md),
+  [VT12 этап 1](VT12/prompts/01-review.md),
+  [VT12 этап 2](VT12/prompts/02-review.md). Эти **обёртки** добавляют
+  `actionId`/`variantId`, а оригинальные SV01/SV02 work/evaluate файлы
+  читаются и выполняются из репозитория в неизменённом виде.
+- **Независимая проверка:** [VT15](VT15/prompts/evaluate-unit.md) для
+  VT01/02/03/04/07/08/09/10; для VT11/12 использовать **соседние
+  evaluator-промпты SV01/SV02**, с отдельным итоговым blind scoring после
+  завершения второй части, без преждевременного раскрытия ключа.
 
-## Проверка каталога
+Открой новый чат с Fortis Repo и отправь полный текст **одного** work-промпта
+(для VT11/VT12 — одного wrapper-промпта). Продолжения отправляй отдельно
+**в тот же чат**, только после сдачи и независимой проверки предыдущего
+unit. Реально просмотри полноразмерные кадры и Godot/Blender QA,
+не заменяя результат `image_gen` или картинкой из исходного PNG.
 
-Схема V1 проверяется локально без исполнения Actions. Используй Python 3 с `PyYAML>=6.0.2,<7` (совпадает с зависимостью действующего Core):
+Исполнитель не изменяет `main` и не публикует GitHub Issue. Он сохраняет
+собственные source, export, PNG, проект, QA, точные T0–T5 (и этапные S-метки)
+и `runs/<runId>/reports/units/<unitId>/submission.md` по
+[контракту](../UNIT-SUBMISSION-CONTRACT.md). В отдельный чат-оценщик передают
+точные **actionId, variantId, runId, unitId**; его ответ хранится
+`evaluations/<runId>/<unitId>/decision.md` в Workfiles. Для последовательных
+изменений VT08/VT09 сравнение **версий исходника и реального изображения**
+обязательно, предыдущий результат не переписывать. Отсутствие доказательства
+помечать `INCONCLUSIVE` или `BLOCKED`, не считать качественным PASS.
+
+**Подбор вместо тотального прогона:** см. [коллекции](collections/):
+`smoke-v1`, `matched-object-v1`, `animation-v1`, `reference-quality-v1`,
+`reference-operations-v1`, `visual-review-existing-v1`. Collection —
+не отдельный Action и не автоматический многошаговый запуск. Разные входы
+бомбы по тексту и PNG нельзя считать одинаковыми по визуальному эталону:
+это сопоставление способности по двум модальностям, **не** пиксельное
+сравнение. Нужные четыре PNG с provenance и SHA256 уже приняты в
+[каталоге референсов](../reference-scenarios/references/PROVENANCE.md).
+
+Общие правила измерения принадлежат [TIMING](../TIMING.md), оценки и handoff —
+[unit gates](../_evaluator/unit-gates/README.md) и
+[UNIT-SUBMISSION-CONTRACT](../UNIT-SUBMISSION-CONTRACT.md), owner GitHub-review —
+[UC-VIS-009](../../docs/use-cases/media-github-review.md#uc-vis-009).
+Не дублируй их в каталоге и не считай реальную публикацию частью этих тестов.
+
+## Проверка целостности (не выполнение Actions)
 
 ```bash
 python3 practical-tests/actions/verify_catalog.py
+python3 practical-tests/actions/test_yaml_subset.py
 python3 practical-tests/verify_fixtures.py
 ```
 
-Пока PR #16 не в `main`, первая команда **преднамеренно остановится** из-за отсутствующих PNG. Для структурного review до слияния можно проверить точные файлы из зарегистрированного worktree PR #16, но это **не** означает готовность к запуску:
-
-```bash
-python3 practical-tests/actions/verify_catalog.py --candidate-reference-root \
-  /workspace/repo/Worktrees/visual-workspace/reference-scenarios-pilot-20261121
-```
-
-В этом режиме вывод содержит `CANDIDATE_REFERENCE_ONLY` и `candidate=True`. После merge PR #16 следует повторить проверку **без** `--candidate-reference-root` и подтвердить `REFERENCE_INPUTS_ACCEPTED_IN_CURRENT_TREE`. Отдельно сопоставь семантику `action.yaml` с текущим `validate_action_document` в Action Core; local checker консервативно ограничивает Core-совместимые поля, но не делает сетевых вызовов и не заменяет реальный Core.
-
-**Состояние V1:** YAML, промпты и контрольная структура подготовлены; фактические ActionRun/оценки **не выполнялись**. Ready ≠ run PASS.
+Проверка **не требует pip/PyYAML**: читается ограниченный, явно поддерживаемый
+набор YAML (вложенные словари, списки, строковые и простые скалярные значения).
+При неподдерживаемом YAML синтаксисе она завершается отказом, не пытаясь
+неявно исполнять неизвестные конструкции. Проверяются пути только из
+принятого Git, PNG с точным SHA256, связь unit/prompts/evaluator и выборки;
+любое изменение формата потребует проверенного расширения парсера.
+`action.yaml` отдельно проверяется на текущей семантике валидатора Core
+до доставки новой ревизии. **Наличие исходников и валидного каталога не
+означает, что Actions уже были выполнены и оценены**: первые независимые
+ChatGPT runs — отдельное следующее действие.

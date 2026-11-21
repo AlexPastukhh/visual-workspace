@@ -1,2 +1,0 @@
-# YAML parsing for the local catalog checker; the same major version used by Action Core.
-PyYAML>=6.0.2,<7

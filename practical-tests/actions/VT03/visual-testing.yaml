@@ -1,0 +1,22 @@
+schema_version: 1
+action_id: VT03
+kind: authoring
+capability: animate_2d
+difficulty_basis: visual_detail
+default_variant: lantern-idle-pulse-l2
+variants:
+  - id: lantern-idle-pulse-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: Несколько частей рамки и светящегося центра; повышенная сложность исполнения из-за анимации — отдельная ось.
+    inputs:
+      brief: practical-tests/authoring/A03-2d-animation.md
+      reference_pngs: []
+      visual_cases: []
+    steps:
+      - unit_id: VT03.lantern.01
+        work_prompt: practical-tests/actions/VT03/prompts/create.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/prompts-tool-safe/C03-create-2d-animation.md

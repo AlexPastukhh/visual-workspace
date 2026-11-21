@@ -1,0 +1,12 @@
+schema_version: 1
+id: matched-object-v1
+description: "Сопоставимые простые объекты: бомба по тексту / PNG и ящик по PNG с или без последующего изменения."
+items:
+  - action_id: VT01
+    variant_id: bomb-text-l1
+  - action_id: VT07
+    variant_id: bomb-circle-l1
+  - action_id: VT07
+    variant_id: top-down-crate-l2
+  - action_id: VT08
+    variant_id: top-down-crate-l2

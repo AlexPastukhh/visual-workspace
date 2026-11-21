@@ -1,0 +1,22 @@
+schema_version: 1
+action_id: VT04
+kind: authoring
+capability: animate_3d
+difficulty_basis: visual_detail
+default_variant: scanner-drone-l2
+variants:
+  - id: scanner-drone-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: Простой low-poly корпус, три опоры и подвижная голова; длительности и интеграция оцениваются отдельно.
+    inputs:
+      brief: practical-tests/authoring/A04-3d-animation.md
+      reference_pngs: []
+      visual_cases: []
+    steps:
+      - unit_id: VT04.drone.01
+        work_prompt: practical-tests/actions/VT04/prompts/create.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/prompts-tool-safe/C04-create-3d-animation.md

@@ -1,0 +1,8 @@
+schema_version: 1
+id: animation-v1
+description: Целевые проверки создания 2D и 3D анимаций по двум существующим briefs.
+items:
+  - action_id: VT03
+    variant_id: lantern-idle-pulse-l2
+  - action_id: VT04
+    variant_id: scanner-drone-l2

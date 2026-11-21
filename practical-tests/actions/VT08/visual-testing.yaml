@@ -1,0 +1,28 @@
+schema_version: 1
+action_id: VT08
+kind: reference_edit
+capability: reproduce_and_edit_2d
+difficulty_basis: visual_detail
+default_variant: top-down-crate-l2
+variants:
+  - id: top-down-crate-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: Деревянная рамка, диагональные балки и внутренние доски; сохраняются неизменяемые элементы при правке.
+    inputs:
+      brief: null
+      reference_pngs:
+        - path: practical-tests/reference-scenarios/references/cartoon_wooden_crate-reference.png
+          sha256: 034315917477a48cfd74b6858768dc0040c1a66320b76b4f4c90854d114618b7
+      visual_cases: []
+    steps:
+      - unit_id: VT08.crate.01
+        work_prompt: practical-tests/actions/VT08/prompts/01-reproduce.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+      - unit_id: VT08.crate.02
+        work_prompt: practical-tests/actions/VT08/prompts/02-edit.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/reference-scenarios/RS02/01-work.md
+      - practical-tests/reference-scenarios/RS02/02-work.md

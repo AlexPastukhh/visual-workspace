@@ -13,6 +13,11 @@ remain their own source of truth; this kit does not replace them.
 Здесь остаются конкретные промпты, fixtures, контракты оценки и процедура запуска;
 исторические имена SC/SV/RS не переименовываются задним числом.
 
+**Новая локальная библиотека V1:** [7 совместимых по YAML Actions](actions/README.md)
+с конкретными вариантами, существующими референсами, промптами, выборками и
+проверкой целостности. Это отдельная точка входа для новых Action-тестов;
+старые C/SC/SV/RS файлы и их результаты остаются на прежних местах.
+
 The original V01–V09 and C01–C06 benchmark prompts remain **immutable**:
 visual blind tests and standard C-creation tests do not publish fixtures or
 GitHub Issues by default. The historical VR01 prompt exercises one versioned

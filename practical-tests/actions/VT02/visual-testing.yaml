@@ -1,0 +1,22 @@
+schema_version: 1
+action_id: VT02
+kind: authoring
+capability: create_3d
+difficulty_basis: visual_detail
+default_variant: sci-fi-crate-text-l2
+variants:
+  - id: sci-fi-crate-text-l2
+    difficulty:
+      level: L2
+      basis: visual_detail
+      rationale: "Несколько геометрических частей и цветовых элементов: корпус, крышка, шов, застёжка."
+    inputs:
+      brief: practical-tests/authoring/A02-3d-static.md
+      reference_pngs: []
+      visual_cases: []
+    steps:
+      - unit_id: VT02.crate.01
+        work_prompt: practical-tests/actions/VT02/prompts/create.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/prompts-tool-safe/C02-create-3d-asset.md

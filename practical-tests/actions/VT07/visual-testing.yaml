@@ -1,0 +1,24 @@
+schema_version: 1
+action_id: VT07
+kind: reference_creation
+capability: reproduce_2d
+difficulty_basis: visual_detail
+default_variant: bomb-circle-l1
+variants:
+  - id: bomb-circle-l1
+    difficulty:
+      level: L1
+      basis: visual_detail
+      rationale: Компактный округлый силуэт, один фитиль, тени и несколько бликов.
+    inputs:
+      brief: null
+      reference_pngs:
+        - path: practical-tests/reference-scenarios/references/bomb-circle-reference.png
+          sha256: 25323922ceb32c03fb171dee01d1d5d3bd55a2f9d78dac2a40194923a699e745
+      visual_cases: []
+    steps:
+      - unit_id: VT07.bomb.01
+        work_prompt: practical-tests/actions/VT07/prompts/reproduce.md
+        evaluation_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+    legacy_sources:
+      - practical-tests/reference-scenarios/RS01/01-work.md

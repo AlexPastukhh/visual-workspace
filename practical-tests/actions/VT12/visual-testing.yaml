@@ -1,0 +1,33 @@
+schema_version: 1
+action_id: VT12
+kind: visual_review
+capability: review_3d
+difficulty_basis: defect_detectability
+default_variant: existing-jumps-and-walk
+variants:
+  - id: existing-jumps-and-walk
+    difficulty:
+      level: null
+      basis: defect_detectability
+      rationale: "Не калибровано: временные нарушения и исправные контролы оцениваются без раскрытия ключа."
+    inputs:
+      brief: null
+      reference_pngs: []
+      visual_cases:
+        - clip-r2
+        - clip-t9
+        - clip-w8
+    steps:
+      - unit_id: SV02.01
+        work_prompt: practical-tests/review-scenarios/SV02/01-review-jumps.md
+        evaluation_prompt: practical-tests/review-scenarios/SV02/01-evaluate.md
+        case_ids:
+          - clip-r2
+          - clip-t9
+      - unit_id: SV02.02
+        work_prompt: practical-tests/review-scenarios/SV02/02-review-walk.md
+        evaluation_prompt: practical-tests/review-scenarios/SV02/02-evaluate.md
+        case_ids:
+          - clip-w8
+    legacy_sources:
+      - practical-tests/prompts-tool-safe/V06-review-3d-trio.md

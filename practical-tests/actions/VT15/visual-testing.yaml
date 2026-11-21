@@ -1,0 +1,22 @@
+schema_version: 1
+action_id: VT15
+kind: evaluation
+capability: independent_evaluation
+difficulty_basis: not_applicable
+default_variant: single-unit
+variants:
+  - id: single-unit
+    difficulty:
+      level: null
+      basis: not_applicable
+      rationale: "Служебный Action: оценка зависит от проверяемого задания, собственной шкалы нет."
+    inputs:
+      brief: null
+      reference_pngs: []
+      visual_cases: []
+    steps:
+      - unit_id: VT15.evaluate
+        work_prompt: practical-tests/actions/VT15/prompts/evaluate-unit.md
+        evaluation_prompt: null
+    legacy_sources:
+      - practical-tests/_evaluator/unit-gates/independent-review-prompt.md

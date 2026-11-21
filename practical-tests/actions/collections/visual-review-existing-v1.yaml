@@ -1,0 +1,8 @@
+schema_version: 1
+id: visual-review-existing-v1
+description: Только готовые 2D и 3D клипы без подготовки или исправления дефектных ассетов.
+items:
+  - action_id: VT11
+    variant_id: existing-turnaround-pair
+  - action_id: VT12
+    variant_id: existing-jumps-and-walk
